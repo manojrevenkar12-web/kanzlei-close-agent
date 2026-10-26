@@ -11,6 +11,9 @@ type Metrics = Record<string, unknown> & {
   booked_automatically_share: number;
   automatic_wrong: number;
   automatic_wrong_share: number;
+  no_staff_wrong?: number;
+  no_staff_wrong_share?: number;
+  final_right: number;
   no_staff_touch_share: number;
   first_proposal_right: number;
   review_proposal_right: number;
@@ -42,6 +45,15 @@ const ROWS: { key: keyof Metrics; label: string; fmt: (m: Metrics) => string }[]
     label: "Davon falsch",
     fmt: (m) => `${m.automatic_wrong} (${percent(m.automatic_wrong_share)})`,
   },
+  {
+    key: "no_staff_wrong",
+    label: "Ohne Prüfung gebucht und falsch (allein oder nach Antwort des Mandanten)",
+    fmt: (m) =>
+      m.no_staff_wrong === undefined
+        ? "nicht gemessen"
+        : `${m.no_staff_wrong} (${percent(m.no_staff_wrong_share ?? 0)})`,
+  },
+  { key: "final_right", label: "Endgültige Buchung wie die Wahrheit", fmt: (m) => percent(m.final_right) },
   {
     key: "no_staff_touch_share",
     label: "Ohne Handgriff im Team (Agent oder Antwort des Mandanten)",

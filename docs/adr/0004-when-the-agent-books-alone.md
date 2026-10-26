@@ -23,4 +23,6 @@ before the agent sees a new client, not hoped for.
 
 ## Consequences
 - On unfamiliar firms the agent books less on its own (39–43 % on the blind sets against 89 % on the
-  development months) rather than more wrongly: both blind sets have 0 wrong automatic bookings today.
+  development months) rather than more wrongly: all blind sets have 0 wrong automatic bookings today.
+- A client's answer settles only the question it answers; a booking made after it goes through the
+  same checks. The gate counts both kinds of booking nobody looked at.

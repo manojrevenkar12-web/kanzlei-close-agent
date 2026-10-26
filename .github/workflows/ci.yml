@@ -75,7 +75,7 @@ jobs:
         working-directory: backend
         run: |
           set -o pipefail
-          python -m kanzlei_sim evaluate --sets dev,v1,v2 2>&1 | tee ../evaluate.log
+          python -m kanzlei_sim evaluate --sets dev,v1,v2,v3 2>&1 | tee ../evaluate.log
           python -m kanzlei_sim gate 2>&1 | tee -a ../evaluate.log
       - name: First runs of blind sets are never rewritten
         run: git diff --exit-code -- reports/blind/*/FIRST_RUN.json

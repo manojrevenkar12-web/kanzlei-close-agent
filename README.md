@@ -19,27 +19,39 @@ client, reviewer and advisor, and every booking and every VAT Kennzahl is compar
 The blind sets were written by someone who never saw the code; a set's first run is recorded once and
 never rewritten. Without a language model.
 
-| | Development months | Blind v1, first run | Blind v1, after study | **Blind v2, first run** |
+| | Development months | Blind v1, first run | Blind v2, first run | **Blind v3, first run** |
 | --- | ---: | ---: | ---: | ---: |
-| Items (payments and invoices) | 604 | 189 | 189 | **222** |
-| Booked by the agent alone | 89.2 % | 52.9 % | 38.6 % | **42.8 %** |
+| Items (payments and invoices) | 604 | 189 | 222 | **193** |
+| Booked by the agent alone | 89.2 % | 52.9 % | 42.8 % | **39.4 %** |
 | … of which wrong | 0 | 5 | 0 | **0** |
-| No staff action (agent or client answer) | 94.9 % | 60.3 % | 47.1 % | **53.2 %** |
-| First proposal right | 98.2 % | 75.1 % | 83.6 % | **83.8 %** |
-| Questions to clients that were needed | 96.6 % | 33.3 % | 93.0 % | **98.2 %** |
-| VAT return exact to the cent | 27 / 27 | 2 / 5 | 5 / 5 | **6 / 6** |
-| Months signed off | 27 / 27 | 4 / 5 | 5 / 5 | **6 / 6** |
+| Booked after a client's answer, nobody looked: wrong | 0 | n/a | 5 of 23 | **0 of 5** |
+| No staff action (agent or client answer) | 93.7 % | 60.3 % | 53.2 % | **42.0 %** |
+| First proposal right | 98.2 % | 75.1 % | 83.8 % | **82.9 %** |
+| Final bookings matching the answer key | 100 % | 93.1 % | 97.6 % | **100 %** |
+| Questions to clients that were needed | 96.6 % | 33.3 % | 98.2 % | **100 %** |
+| VAT return exact to the cent | 27 / 27 | 2 / 5 | 6 / 6 | **5 / 5** |
+| Months signed off | 27 / 27 | 4 / 5 | 6 / 6 | **5 / 5** |
 
-What this says: on firms it has never seen, the agent books less on its own instead of booking wrongly,
-because the threshold is set on a bound (at most 1 % wrong at 95 % confidence, [ADR 4](docs/adr/0004-when-the-agent-books-alone.md))
-and rules stop anything risky. Blind v1 found real gaps (reverse charge for foreign services without a
-rate, an EU sale without the customer's VAT id, double bookings from several answers); they were fixed
-and v1 became a regression set. v2 was written after that and ran once: no wrong automatic booking and
-every VAT return exact. 97.6 % of v2's final bookings match the answer key line for line; the rest
-differ in the expense account, not in the VAT. Staff minutes are an estimate from `config/close.yaml`
-(about 158 against 555 by hand for v2), not a measurement.
+On firms it has never seen, the agent books less on its own instead of booking wrongly: the threshold
+is set on a bound (at most 1 % wrong at 95 % confidence, [ADR 4](docs/adr/0004-when-the-agent-books-alone.md))
+and rules stop anything risky. Each blind set found something, and each was studied only after its
+first run was recorded:
 
-`reports/evaluation.json` has every number; `reports/blind/*/FIRST_RUN.json` the first runs.
+- **v1** found tax gaps: reverse charge for foreign services invoiced without a rate, an EU sale without
+  the customer's VAT id, and double bookings when a client answered twice. Fixed; v1 became a
+  regression set.
+- **v2** had no wrong automatic booking and every VAT return exact, but 5 of 23 items booked after a
+  client's answer had the wrong expense family: the answer brought a receipt, and the engine treated
+  that as settling what the payment was. Now an answer decides only the question asked, and the
+  evaluation and release gate count every booking nobody looked at. v2 became a regression set.
+- **v3**, written after that fix, ran once: nothing booked without staff was wrong, every final booking
+  matches the answer key, every question asked was needed, every VAT return exact.
+
+Today all three blind sets and the development months run at 0 wrong bookings without staff and 100 %
+final bookings right. Staff minutes are an estimate from `config/close.yaml` (145 against 483 by hand
+for v3), not a measurement.
+
+`reports/evaluation.json` has every number for today's code; `reports/blind/*/FIRST_RUN.json` the first runs, as recorded.
 
 ## What it does
 
@@ -112,9 +124,9 @@ cd ../web && npm ci && npm run dev                # http://localhost:5173
 Tests and evaluation:
 
 ```bash
-cd backend && ruff check src tests && mypy && pytest -q            # 67 tests, Postgres needed
+cd backend && ruff check src tests && mypy && pytest -q            # 68 tests, Postgres needed
 cd web && npm run lint && npm run typecheck && npm test            # 46 component and flow tests
-python -m kanzlei_sim evaluate --sets dev,v1,v2 && python -m kanzlei_sim gate
+python -m kanzlei_sim evaluate --sets dev,v1,v2,v3 && python -m kanzlei_sim gate
 cd web && E2E_LINKS=../backend/.demo-links.json npx playwright test   # desktop and phone
 python -m kanzlei_sim train                                         # classifier and decision model
 ```

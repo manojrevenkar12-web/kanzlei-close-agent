@@ -5,7 +5,7 @@ Fast feedback:
 - `cd backend && ruff check src tests && ruff format --check src tests && mypy && pytest -q`. The db
   tests need PostgreSQL: `KANZLEI_TEST_ADMIN_URL`, default `postgresql://postgres:postgres@localhost:5432/postgres`.
 - `cd web && npm run lint && npm run typecheck && npm test`.
-- `python -m kanzlei_sim evaluate --sets dev,v1,v2 && python -m kanzlei_sim gate` (about ten minutes),
+- `python -m kanzlei_sim evaluate --sets dev,v1,v2,v3 && python -m kanzlei_sim gate` (about ten minutes),
   then `python -m kanzlei_sim seed --reset --links .demo-links.json`, the API, `npm run preview` and
   `npx playwright test` with `E2E_LINKS`.
 

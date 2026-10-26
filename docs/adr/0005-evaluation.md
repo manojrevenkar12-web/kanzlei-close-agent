@@ -22,4 +22,8 @@ Real client data cannot be used to develop this, and a demo on hand-picked examp
 - v1 first run: 5 of 100 automatic bookings wrong, VAT exact in 2 of 5 months. Studied, fixed, now a
   regression set: 0 wrong, 5 of 5 exact.
 - v2 first run (after those fixes, unseen): 0 of 95 automatic bookings wrong, VAT exact in 6 of 6
-  months, all months signed off.
+  months, but 5 of 23 bookings made after a client's answer had the wrong family. Studied: an answer
+  now decides only the question asked, and the gate bounds every booking nobody looked at. Now a
+  regression set.
+- v3 first run (after that fix, unseen): 0 wrong bookings without staff, every final booking right,
+  VAT exact in 5 of 5 months.
