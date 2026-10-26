@@ -1,0 +1,1116 @@
+firm: {id: kw-leipzig, name: "Steuerkanzlei Wendt & Kowalczyk", city: "Leipzig", chart: SKR03, berater_nr: 61842}
+staff:
+  - {login: k.wendt, name: "Katrin Wendt", role: berater}
+  - {login: m.oezdemir, name: "Mehmet Özdemir", role: buchhaltung}
+  - {login: l.reichelt, name: "Luisa Reichelt", role: buchhaltung}
+
+clients:
+  # ---------------------------------------------------------------------------------------------
+  # Dentallabor, OPOS, Soll-Versteuerung, monatliche Voranmeldung
+  # ---------------------------------------------------------------------------------------------
+  - id: kw-4101
+    mandant_nr: 4101
+    name: "Zahntechnik Brückner GmbH"
+    legal_form: GmbH
+    industry: "Gewerbliches Dentallabor (Kronen, Brücken, Kombinationsarbeiten, CAD/CAM), 3 Beschäftigte und Geschäftsführerin"
+    booking_method: opos
+    vat_regime: soll
+    vat_period: monat
+    iban: auto
+    vat_id: auto
+    contact_name: "Ramona Brückner"
+    contact_email: "r.brueckner@zahntechnik-brueckner.example"
+    assigned: [m.oezdemir]
+    parties:
+      - {key: aurodent, name: "Aurodent Scheidegut GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Goldschmiedeweg 14", postcode: "75172", city: "Pforzheim"}
+      - {key: kessler, name: "Dentalbedarf Kessler KG", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Zschopauer Str. 77", postcode: "09126", city: "Chemnitz"}
+      - {key: alpenblank, name: "Alpenblank Zirkonwerk GmbH", role: supplier, iban: auto, vat_id: auto, country: AT, street: "Gewerbepark Süd 6", postcode: "6060", city: "Hall in Tirol"}
+      - {key: occluform, name: "Occluform Software AG", role: supplier, iban: auto, vat_id: auto, country: CH, street: "Hardturmweg 22", postcode: "8005", city: "Zürich"}
+      - {key: fraeszentrum, name: "Fräszentrum Mitteldeutschland GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "An der Saalebrücke 3", postcode: "06114", city: "Halle (Saale)"}
+      - {key: roemer, name: "Römer Labortechnik GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Industriestr. 41", postcode: "91126", city: "Schwabach"}
+      - {key: ehrhardt, name: "Laborservice Ehrhardt, Inh. Uwe Ehrhardt", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Am Mühlgraben 9", postcode: "04416", city: "Markkleeberg"}
+      - {key: vermieter, name: "Grundstücksgemeinschaft Hentschel GbR", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Lindenthaler Str. 61", postcode: "04155", city: "Leipzig"}
+      - {key: strom, name: "Energieversorgung Parthenaue GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Parthenstr. 2", postcode: "04425", city: "Taucha"}
+      - {key: telefon, name: "LinieEins Telekommunikation GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Storkower Str. 120", postcode: "10407", city: "Berlin"}
+      - {key: leasing, name: "Kfz-Leasing Sachsenring GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Am Ring 4", postcode: "08056", city: "Zwickau"}
+      - {key: tanke_gohlis, name: "Tankstelle Am Gohliser Schlösschen", role: supplier, iban: null, vat_id: auto, country: DE, street: "Menckestr. 30", postcode: "04155", city: "Leipzig"}
+      - {key: autohof, name: "Autohof Schkeuditz Nord", role: supplier, iban: null, vat_id: auto, country: DE, street: "Am Autohof 1", postcode: "04435", city: "Schkeuditz"}
+      - {key: kaiserbad, name: "Restaurant Kaiserbad Gohlis", role: supplier, iban: null, vat_id: auto, country: DE, street: "Gohliser Str. 18", postcode: "04155", city: "Leipzig"}
+      - {key: hotel, name: "Hotel Elbhaven Altona", role: supplier, iban: null, vat_id: auto, country: DE, street: "Große Elbstr. 140", postcode: "22767", city: "Hamburg"}
+      - {key: fernzug, name: "Fernzug Mitteldeutschland GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Willy-Brandt-Platz 9", postcode: "04109", city: "Leipzig"}
+      - {key: akademie, name: "Dentalforum Akademie GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Kehrwiederspitze 5", postcode: "20457", city: "Hamburg"}
+      - {key: sommer, name: "Zahnarztpraxis Dr. Ingrid Sommer", role: customer, iban: auto, vat_id: null, country: DE, street: "Eutritzscher Str. 44", postcode: "04129", city: "Leipzig"}
+      - {key: albrecht, name: "Gemeinschaftspraxis Dr. Albrecht & Dr. Nguyen", role: customer, iban: auto, vat_id: null, country: DE, street: "Gottschedstr. 12", postcode: "04109", city: "Leipzig"}
+      - {key: lindenau, name: "MVZ Zahnmedizin Lindenau GmbH", role: customer, iban: auto, vat_id: null, country: DE, street: "Merseburger Str. 210", postcode: "04178", city: "Leipzig"}
+      - {key: reuter, name: "Zahnarztpraxis Fabian Reuter", role: customer, iban: auto, vat_id: null, country: DE, street: "Hauptstr. 77", postcode: "04416", city: "Markkleeberg"}
+      - {key: huebner, name: "Dirk Hübner", role: other, iban: auto, vat_id: null}
+      - {key: kraus, name: "Svetlana Kraus", role: other, iban: auto, vat_id: null}
+      - {key: pohle, name: "Jannik Pohle", role: other, iban: auto, vat_id: null}
+      - {key: gf, name: "Ramona Brückner", role: other, iban: auto, vat_id: null}
+      - {key: krankenkasse, name: "Gesundheitskasse Westsachsen", role: other, iban: auto, vat_id: null}
+      - {key: finanzamt, name: "Finanzamt Leipzig-Nord", role: other, iban: auto, vat_id: null}
+      - {key: innung, name: "Zahntechniker-Innung Westsachsen", role: other, iban: auto, vat_id: null}
+      - {key: bank, name: "Volksbank Elster-Saale eG", role: other, iban: null, vat_id: null}
+    history:
+      - {party: aurodent, family: goods, tax: V19, amount: -3480.00, months: 12, vary: 0.4}
+      - {party: kessler, family: goods, tax: V19, amount: -720.00, months: 12, vary: 0.4, per_month: 2}
+      - {party: alpenblank, family: goods, tax: IGE19, amount: -1860.00, months: 6, vary: 0.3}
+      - {party: occluform, family: software, tax: RC_DRITT19, amount: -365.00, months: 12}
+      - {party: fraeszentrum, family: subcontractor, tax: V19, amount: -2250.00, months: 10, vary: 0.4}
+      - {party: vermieter, family: rent, tax: V19, amount: -2380.00, months: 12}
+      - {party: strom, family: utilities, tax: V19, amount: -464.10, months: 12}
+      - {party: telefon, family: telecom, tax: V19, amount: -83.30, months: 12}
+      - {party: leasing, family: vehicle_leasing, tax: V19, amount: -416.50, months: 12}
+      - {party: tanke_gohlis, family: fuel, tax: V19, amount: -82.00, months: 12, vary: 0.2, per_month: 2}
+      - {party: huebner, family: payroll, tax: NONE, amount: -2648.90, months: 12, vary: 0.02}
+      - {party: kraus, family: payroll, tax: NONE, amount: -2311.40, months: 12, vary: 0.02}
+      - {party: pohle, family: payroll, tax: NONE, amount: -1984.75, months: 12, vary: 0.02}
+      - {party: gf, family: payroll, tax: NONE, amount: -4150.00, months: 12}
+      - {party: krankenkasse, family: social_security, tax: NONE, amount: -4790.00, months: 12, vary: 0.03}
+      - {party: finanzamt, family: wage_tax, tax: NONE, amount: -2065.00, months: 12, vary: 0.05}
+      - {party: finanzamt, family: vat_payment, tax: NONE, amount: -560.00, months: 12, vary: 0.6}
+      - {party: innung, family: memberships, tax: NONE, amount: -48.00, months: 12}
+      - {party: bank, family: bank_fees, tax: NONE, amount: -37.20, months: 12, vary: 0.1}
+      - {party: sommer, family: revenue, tax: U7, amount: 5400.00, months: 12, vary: 0.3}
+      - {party: albrecht, family: revenue, tax: U7, amount: 4800.00, months: 12, vary: 0.4, per_month: 2}
+      - {party: lindenau, family: revenue, tax: U7, amount: 9200.00, months: 12, vary: 0.3}
+      - {party: reuter, family: revenue, tax: U7, amount: 1650.00, months: 9, vary: 0.4}
+    months:
+      "2026-09":
+        # --- Ausgangsrechnungen an Zahnarztpraxen -------------------------------------------
+        - id: r01
+          kind: invoice
+          party: sommer
+          document:
+            format: zugferd
+            direction: out
+            number: "AR-2026-0901"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-28
+            lines:
+              - {text: "Zahntechnische Leistungen BEL II, Auftrag 26-0812, Brücke 3-gliedrig 34-36", net: 1842.60, rate: 7, category: S}
+              - {text: "Edelmetall-Legierung Aurolux 60, 18,4 g", net: 1012.00, rate: 7, category: S}
+          truth: {family: revenue, tax: U7}
+        - id: r02
+          kind: invoice
+          party: albrecht
+          document:
+            format: zugferd
+            direction: out
+            number: "AR-2026-0907"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-02
+            lines:
+              - {text: "Kombinationsarbeit OK, Teleskopkronen 13/23, Modellguss, Auftrag 26-0821", net: 4210.00, rate: 7, category: S}
+              - {text: "Edelmetall-Legierung Aurolux 60, 27,0 g", net: 1486.50, rate: 7, category: S}
+          truth: {family: revenue, tax: U7}
+        - id: r03
+          kind: invoice
+          party: lindenau
+          document:
+            format: xrechnung-cii
+            direction: out
+            number: "AR-2026-0911"
+            issue_date: 2026-09-04
+            delivery_date: 2026-09-03
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 14 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Zahntechnische Leistungen, Sammelrechnung August, 11 Aufträge lt. Anlage", net: 6380.00, rate: 7, category: S}
+              - {text: "Zirkonoxidgerüste vollanatomisch, 8 Einheiten", net: 1140.00, rate: 7, category: S}
+          truth: {family: revenue, tax: U7}
+        - id: r04
+          kind: invoice
+          party: reuter
+          document:
+            format: pdf
+            direction: out
+            number: "AR-2026-0915"
+            issue_date: 2026-09-08
+            delivery_date: 2026-09-07
+            lines:
+              - {text: "Unterfütterung und Reparatur Totalprothese UK, Auftrag 26-0844", net: 1290.40, rate: 7, category: S}
+          truth: {family: revenue, tax: U7}
+        - id: r05
+          kind: invoice
+          party: sommer
+          document:
+            format: zugferd
+            direction: out
+            number: "AR-2026-0922"
+            issue_date: 2026-09-15
+            delivery_date: 2026-09-14
+            lines:
+              - {text: "Zahntechnische Leistungen, 2 Einzelkronen Zirkon 26/27, Auftrag 26-0861", net: 2416.80, rate: 7, category: S}
+          truth: {family: revenue, tax: U7}
+        - id: r06
+          kind: invoice
+          party: albrecht
+          document:
+            format: zugferd
+            direction: out
+            number: "AR-2026-0919"
+            issue_date: 2026-09-10
+            delivery_date: 2026-09-09
+            lines:
+              - {text: "Aufbissschiene adjustiert, 2 Stück, Auftrag 26-0852", net: 1935.00, rate: 7, category: S}
+          truth: {family: revenue, tax: U7}
+        # --- Zahlungseingänge -----------------------------------------------------------------
+        - id: z01
+          party: sommer
+          on: 2026-09-18
+          method: gutschrift
+          settles: [r01]
+          reference: "RG AR-2026-0901 Praxis Dr. Sommer"
+          truth: {family: clearing}
+        - id: z02
+          party: albrecht
+          on: 2026-09-24
+          method: gutschrift
+          settles: [r02, r06]
+          reference: "AR-2026-0907 + AR-2026-0919 Gemeinschaftspraxis Albrecht Nguyen"
+          truth: {family: clearing}
+        - id: z03
+          party: lindenau
+          on: 2026-09-16
+          method: gutschrift
+          settles: [r03]
+          skonto: true
+          reference: "AR-2026-0911 abzgl. 2 % Skonto MVZ Lindenau"
+          truth: {family: clearing}
+        - id: z04
+          party: reuter
+          on: 2026-09-29
+          method: gutschrift
+          settles: [r04]
+          reference: "Rechnung 0915 Reuter"
+          truth: {family: clearing}
+        - id: z05
+          party: kessler
+          on: 2026-09-21
+          method: gutschrift
+          amount: 142.80
+          reference: "KES/GS-26-0447"
+          says:
+            unknown_credit: {choice: refund}
+          truth: {family: goods, tax: V19}
+        # --- Eingangsrechnungen ---------------------------------------------------------------
+        - id: r10
+          kind: invoice
+          party: aurodent
+          document:
+            format: zugferd
+            number: "AD-2026-18833"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-01
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 10 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Dentallegierung Aurolux 60, 150 g", net: 3120.00, rate: 19, category: S}
+          truth: {family: goods, tax: V19}
+        - id: r11
+          kind: invoice
+          party: kessler
+          document:
+            format: pdf
+            number: "K-77120"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-02
+            lines:
+              - {text: "Verblendkeramik Set A2/A3", net: 486.00, rate: 19, category: S}
+              - {text: "Einbettmasse phosphatgebunden 5 kg", net: 214.50, rate: 19, category: S}
+              - {text: "Superhartgips Klasse IV 25 kg", net: 96.80, rate: 19, category: S}
+          truth: {family: goods, tax: V19}
+        - id: r12
+          kind: invoice
+          party: kessler
+          document:
+            format: pdf
+            number: "K-77391"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-11
+            lines:
+              - {text: "Prothesenkunststoff Heißpolymerisat 1 kg", net: 312.40, rate: 19, category: S}
+              - {text: "Polierpaste und Gummipolierer Sortiment", net: 88.60, rate: 19, category: S}
+          truth: {family: goods, tax: V19}
+        - id: r13
+          kind: invoice
+          party: alpenblank
+          document:
+            format: pdf
+            number: "AB-RE-26-3318"
+            issue_date: 2026-09-07
+            delivery_date: 2026-09-04
+            notes: "Steuerfreie innergemeinschaftliche Lieferung gem. Art. 138 MwStSystRL"
+            lines:
+              - {text: "Zirkonoxid-Ronden 98 mm, 3Y-TZP, Höhe 14-25 mm, 20 Stück", net: 1940.00, rate: 0, category: K}
+          truth: {family: goods, tax: IGE19}
+        - id: r14
+          kind: invoice
+          party: occluform
+          document:
+            format: pdf
+            number: "OCF-2026-09-1182"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            notes: "Reverse Charge: Steuerschuldnerschaft des Leistungsempfängers"
+            lines:
+              - {text: "CAD-Software Modul Kronen & Brücken, Abonnement September 2026", net: 365.00, rate: 0, category: O}
+          truth: {family: software, tax: RC_DRITT19}
+        - id: r15
+          kind: invoice
+          party: fraeszentrum
+          document:
+            format: xrechnung-ubl
+            number: "FZM-26-2207"
+            issue_date: 2026-09-11
+            delivery_date: 2026-09-10
+            lines:
+              - {text: "Fräsen Zirkongerüste, 14 Einheiten", net: 1610.00, rate: 19, category: S}
+              - {text: "Fräsen Titanabutments individuell, 4 Stück", net: 560.00, rate: 19, category: S}
+          truth: {family: subcontractor, tax: V19}
+        - id: r16
+          kind: invoice
+          party: roemer
+          document:
+            format: zugferd
+            number: "RLT-2026-0457"
+            issue_date: 2026-09-15
+            delivery_date: 2026-09-14
+            lines:
+              - {text: "Sinterofen HT-1600 für Zirkonoxid, inkl. Inbetriebnahme", net: 6480.00, rate: 19, category: S}
+              - {text: "Transport und Aufstellung", net: 240.00, rate: 19, category: S}
+          truth: {family: equipment, tax: V19}
+        - id: r17
+          kind: invoice
+          party: ehrhardt
+          document:
+            format: pdf
+            number: "E-26/118"
+            issue_date: 2026-09-08
+            delivery_date: 2026-09-07
+            missing: [seller_tax_id]
+            lines:
+              - {text: "Reparatur 5-Achs-Fräsmaschine, Spindelwechsel, 6 Std.", net: 780.00, rate: 19, category: S}
+              - {text: "Ersatzteil Spindellagersatz", net: 342.00, rate: 19, category: S}
+          says:
+            invoice_incomplete: {choice: upload}
+          truth: {family: repairs, tax: V19}
+        # --- Zahlungsausgänge auf Eingangsrechnungen -------------------------------------------
+        - id: z10
+          party: aurodent
+          on: 2026-09-09
+          method: ueberweisung
+          settles: [r10]
+          skonto: true
+          reference: "AD-2026-18833 abzgl. 2 % Skonto KdNr 40817"
+          truth: {family: clearing}
+        - id: z11
+          party: kessler
+          on: 2026-09-25
+          method: ueberweisung
+          settles: [r11, r12]
+          reference: "K-77120 K-77391 Kd 11934"
+          truth: {family: clearing}
+        - id: z13
+          party: alpenblank
+          on: 2026-09-17
+          method: ueberweisung
+          settles: [r13]
+          reference: "AB-RE-26-3318"
+          truth: {family: clearing}
+        - id: z14
+          party: occluform
+          on: 2026-09-10
+          method: lastschrift
+          settles: [r14]
+          reference: "OCF-2026-09-1182 Mandatsref OCF-DE-22817"
+          truth: {family: clearing}
+        - id: z15
+          party: fraeszentrum
+          on: 2026-09-23
+          method: ueberweisung
+          settles: [r15]
+          reference: "FZM-26-2207"
+          truth: {family: clearing}
+        - id: z16
+          party: roemer
+          on: 2026-09-29
+          method: ueberweisung
+          settles: [r16]
+          reference: "RLT-2026-0457 Sinterofen"
+          truth: {family: clearing}
+        - id: z17
+          party: ehrhardt
+          on: 2026-09-22
+          method: ueberweisung
+          settles: [r17]
+          reference: "Rechnung E-26/118"
+          truth: {family: clearing}
+        # --- Direkt vom Bankkonto gebucht ----------------------------------------------------
+        - id: e01
+          party: vermieter
+          on: 2026-09-01
+          method: ueberweisung
+          amount: -2380.00
+          reference: "Miete 09/2026 Laborräume Lindenthaler Str. 61 inkl. USt"
+          truth: {family: rent, tax: V19}
+        - id: e02
+          party: strom
+          on: 2026-09-15
+          method: lastschrift
+          reference: "Abschlag September Vertragskonto 3107745"
+          document:
+            format: zugferd
+            number: "EP-2026-09-551208"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Abschlag Strom September 2026", net: 390.00, rate: 19, category: S}
+          truth: {family: utilities, tax: V19}
+        - id: e03
+          party: telefon
+          on: 2026-09-04
+          method: lastschrift
+          reference: "Kd 8817402 Rechnung 09/2026"
+          document:
+            format: pdf
+            number: "L1-2026-09-8817402"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Business Festnetz und Internet 250 Mbit/s, September", net: 70.00, rate: 19, category: S}
+          truth: {family: telecom, tax: V19}
+        - id: e04
+          party: leasing
+          on: 2026-09-01
+          method: lastschrift
+          amount: -416.50
+          reference: "Leasingrate 09/2026 Vertrag LV-55-20931 L-ZB 412"
+          truth: {family: vehicle_leasing, tax: V19}
+        - id: e05
+          party: tanke_gohlis
+          on: 2026-09-07
+          method: karte
+          reference: "Kartenzahlung Tankstelle Gohliser Schloesschen"
+          document:
+            format: pdf
+            number: "Bon 2241-7718"
+            issue_date: 2026-09-05
+            delivery_date: 2026-09-05
+            lines:
+              - {text: "Diesel 51,8 l", net: 74.20, rate: 19, category: S}
+          truth: {family: fuel, tax: V19}
+        - id: e06
+          party: autohof
+          on: 2026-09-21
+          method: karte
+          reference: "Kartenzahlung Autohof Schkeuditz"
+          document:
+            format: pdf
+            number: "Bon 08-55190"
+            issue_date: 2026-09-18
+            delivery_date: 2026-09-18
+            arrives: on_request
+            lines:
+              - {text: "Diesel 46,3 l", net: 66.80, rate: 19, category: S}
+          says:
+            missing_receipt: {choice: upload}
+          truth: {family: fuel, tax: V19}
+        - id: e07
+          party: tanke_gohlis
+          on: 2026-09-28
+          method: karte
+          reference: "Kartenzahlung Tankstelle Gohliser Schloesschen"
+          document:
+            format: pdf
+            number: "Bon 2241-8102"
+            issue_date: 2026-09-25
+            delivery_date: 2026-09-25
+            arrives: never
+            lines:
+              - {text: "Diesel 49,1 l", net: 70.71, rate: 19, category: S}
+          says:
+            missing_receipt: {choice: no_receipt, purpose: "Diesel für das Kurierfahrzeug, Auslieferung an die Praxen"}
+          truth: {family: fuel, tax: NONE}
+        - id: e08
+          party: kaiserbad
+          on: 2026-09-17
+          method: karte
+          reference: "Kartenzahlung Restaurant Kaiserbad"
+          document:
+            format: pdf
+            number: "Rechnung 4471"
+            issue_date: 2026-09-16
+            delivery_date: 2026-09-16
+            lines:
+              - {text: "Speisen", net: 118.50, rate: 19, category: S}
+              - {text: "Getränke", net: 46.20, rate: 19, category: S}
+          says:
+            meals_details: {choice: details, occasion: "Abstimmung Implantatprothetik-Fälle und neue Preisliste mit der Praxis Albrecht/Nguyen", participants: "Dr. Tobias Albrecht, Dr. Linh Nguyen, Ramona Brückner"}
+          truth: {family: meals, tax: V19}
+        - id: e09
+          party: hotel
+          on: 2026-09-28
+          method: karte
+          reference: "Kartenzahlung Hotel Elbhaven Hamburg"
+          document:
+            format: pdf
+            number: "H-2026-118402"
+            issue_date: 2026-09-26
+            delivery_date: 2026-09-26
+            lines:
+              - {text: "Übernachtung Einzelzimmer 24.-26.09.2026, 2 Nächte", net: 238.00, rate: 7, category: S}
+              - {text: "Frühstück, 2 x", net: 33.61, rate: 19, category: S}
+          truth: {family: travel_lodging}
+        - id: e10
+          party: akademie
+          on: 2026-09-02
+          method: ueberweisung
+          reference: "TN-Gebühr Fachtagung Digitale Zahntechnik Brückner RE DFA-26-0731"
+          document:
+            format: pdf
+            number: "DFA-26-0731"
+            issue_date: 2026-08-27
+            delivery_date: 2026-09-25
+            lines:
+              - {text: "Teilnahmegebühr Fachtagung Digitale Zahntechnik 25.-26.09.2026, 1 Person", net: 490.00, rate: 19, category: S}
+          truth: {family: training, tax: V19}
+        - id: e11
+          party: fernzug
+          on: 2026-09-14
+          method: karte
+          reference: "Fernzug Ticket Leipzig-Hamburg"
+          document:
+            format: pdf
+            number: "FT-7731-0912"
+            issue_date: 2026-09-12
+            delivery_date: 2026-09-24
+            lines:
+              - {text: "Fahrkarte Leipzig Hbf - Hamburg Hbf und zurück, 24./26.09., Flexpreis 2. Klasse", net: 168.22, rate: 7, category: S}
+          truth: {family: travel_transport, tax: V7}
+        - id: e12
+          party: huebner
+          on: 2026-09-29
+          method: ueberweisung
+          amount: -2651.38
+          reference: "Gehalt 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e13
+          party: kraus
+          on: 2026-09-29
+          method: ueberweisung
+          amount: -2309.74
+          reference: "Gehalt 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e14
+          party: pohle
+          on: 2026-09-29
+          method: ueberweisung
+          amount: -1987.20
+          reference: "Gehalt 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e15
+          party: gf
+          on: 2026-09-29
+          method: ueberweisung
+          amount: -4150.00
+          reference: "Gehalt GF 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e16
+          party: krankenkasse
+          on: 2026-09-28
+          method: lastschrift
+          amount: -4812.66
+          reference: "Beitragsnachweis 09/2026 BNR 40433187"
+          truth: {family: social_security, tax: NONE}
+        - id: e17
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -2071.44
+          reference: "StNr 232/104/55813 LSt 08/2026 SolZ KiSt"
+          truth: {family: wage_tax, tax: NONE}
+        - id: e18
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -541.27
+          reference: "StNr 232/104/55813 USt 08/2026"
+          truth: {family: vat_payment, tax: NONE}
+        - id: e19
+          party: bank
+          on: 2026-09-30
+          method: lastschrift
+          amount: -38.15
+          reference: "Entgelte Kontoführung 09/2026"
+          truth: {family: bank_fees, tax: NONE}
+
+  # ---------------------------------------------------------------------------------------------
+  # Bäckerei mit Café, direkt, Ist-Versteuerung, monatlich
+  # ---------------------------------------------------------------------------------------------
+  - id: kw-4102
+    mandant_nr: 4102
+    name: "Backhaus Lindner e.K."
+    legal_form: e.K.
+    industry: "Handwerksbäckerei mit Café, eine Filiale; Barkasse plus Kartenterminal, Auszahlung der Kartenumsätze wöchentlich"
+    booking_method: direkt
+    vat_regime: ist
+    vat_period: monat
+    iban: auto
+    vat_id: auto
+    contact_name: "Tobias Lindner"
+    contact_email: "t.lindner@backhaus-lindner.example"
+    assigned: [l.reichelt]
+    parties:
+      - {key: muehle, name: "Mühle Wiederitzsch Gebr. Sander GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Mühlenweg 3", postcode: "04158", city: "Leipzig"}
+      - {key: molkerei, name: "Molkerei Elsteraue eG", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Auenstr. 12", postcode: "06686", city: "Lützen"}
+      - {key: roesterei, name: "Rösterei Bohnenkamm GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Spinnereistr. 7", postcode: "04179", city: "Leipzig"}
+      - {key: getraenke, name: "Getränke-Fachgroßhandel Saalbach GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Zwenkauer Str. 90", postcode: "04420", city: "Markranstädt"}
+      - {key: nowak, name: "Opakowania Nowak sp. z o.o.", role: supplier, iban: auto, vat_id: auto, country: PL, street: "ul. Fabryczna 18", postcode: "59-900", city: "Zgorzelec"}
+      - {key: grossmarkt, name: "Großmarkt Sachsenpark Cash & Carry", role: supplier, iban: null, vat_id: auto, country: DE, street: "Am Sachsenpark 6", postcode: "04356", city: "Leipzig"}
+      - {key: kassenpay, name: "Kassenpay Zahlungsdienste GmbH", role: other, iban: auto, vat_id: auto, country: DE, street: "Mainzer Landstr. 211", postcode: "60326", city: "Frankfurt am Main"}
+      - {key: kassalind, name: "Kassalind OÜ", role: supplier, iban: auto, vat_id: auto, country: EE, street: "Tartu mnt 84", postcode: "10112", city: "Tallinn"}
+      - {key: vermieter, name: "Erbengemeinschaft Pohl", role: supplier, iban: auto, vat_id: null, country: DE, street: "Rathausstr. 9", postcode: "04416", city: "Markkleeberg"}
+      - {key: stadtwerke, name: "Stadtwerke Pleißeland GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Bahnhofstr. 20", postcode: "04416", city: "Markkleeberg"}
+      - {key: gas, name: "Gasversorgung Elster-Pleiße GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Gasweg 1", postcode: "04552", city: "Borna"}
+      - {key: funkwerk, name: "Funkwerk Mobil GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Hafenweg 4", postcode: "48155", city: "Münster"}
+      - {key: hoyer, name: "Kältetechnik Hoyer, Inh. Ralf Hoyer", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Gewerbering 5", postcode: "04463", city: "Großpösna"}
+      - {key: vogtland, name: "Bäckereitechnik Vogtland GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Industriestr. 12", postcode: "08523", city: "Plauen"}
+      - {key: wochenkurier, name: "Verlag Markkleeberger Wochenkurier GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Hauptstr. 41", postcode: "04416", city: "Markkleeberg"}
+      - {key: hwk, name: "Handwerkskammer Leipzig-Land", role: other, iban: auto, vat_id: null, country: DE, street: "Kammerplatz 1", postcode: "04103", city: "Leipzig"}
+      - {key: versicherung, name: "Mitteldeutsche Gewerbeversicherung VVaG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Versicherungsallee 3", postcode: "01069", city: "Dresden"}
+      - {key: tanke, name: "Tankstelle Koburger Straße", role: supplier, iban: null, vat_id: auto, country: DE, street: "Koburger Str. 101", postcode: "04416", city: "Markkleeberg"}
+      - {key: gartencenter, name: "Gartencenter Grünwerk Zwenkau", role: supplier, iban: null, vat_id: auto, country: DE, street: "Am Hafen 2", postcode: "04442", city: "Zwenkau"}
+      - {key: falkenrath, name: "Ingenieurbüro Falkenrath GmbH", role: customer, iban: auto, vat_id: auto, country: DE, street: "Bornaische Str. 120", postcode: "04279", city: "Leipzig"}
+      - {key: kasse, name: "Ladenkasse Backhaus Lindner (Einzahlungsautomat)", role: other, iban: null, vat_id: null}
+      - {key: weise, name: "Carola Weise", role: other, iban: auto, vat_id: null}
+      - {key: petzold, name: "Marcel Petzold", role: other, iban: auto, vat_id: null}
+      - {key: ilgner, name: "Franziska Ilgner", role: other, iban: auto, vat_id: null}
+      - {key: haubold, name: "Leon Haubold", role: other, iban: auto, vat_id: null}
+      - {key: krankenkasse, name: "Gesundheitskasse Westsachsen", role: other, iban: auto, vat_id: null}
+      - {key: finanzamt, name: "Finanzamt Leipzig-Süd", role: other, iban: auto, vat_id: null}
+      - {key: inhaber, name: "Tobias Lindner", role: other, iban: auto, vat_id: null}
+      - {key: bank, name: "Volksbank Elster-Saale eG", role: other, iban: null, vat_id: null}
+    history:
+      - {party: muehle, family: goods, tax: V7, amount: -1240.00, months: 12, vary: 0.2, per_month: 2}
+      - {party: molkerei, family: goods, tax: V7, amount: -690.00, months: 12, vary: 0.25, per_month: 2}
+      - {party: roesterei, family: goods, tax: V7, amount: -590.00, months: 12, vary: 0.3}
+      - {party: getraenke, family: goods, tax: V19, amount: -720.00, months: 12, vary: 0.3}
+      - {party: nowak, family: goods, tax: IGE19, amount: -1080.00, months: 4, vary: 0.3}
+      - {party: grossmarkt, family: goods, tax: V7, amount: -110.00, months: 12, vary: 0.5, per_month: 2}
+      - {party: kassenpay, family: revenue, tax: U7, amount: 6300.00, months: 12, vary: 0.15, per_month: 4}
+      - {party: kassenpay, family: bank_fees, tax: NONE, amount: -165.00, months: 12, vary: 0.2}
+      - {party: kasse, family: transfer, tax: NONE, amount: 3000.00, months: 12, vary: 0.2, per_month: 4}
+      - {party: kassalind, family: software, tax: RC_EU19, amount: -79.00, months: 12}
+      - {party: vermieter, family: rent, tax: NONE, amount: -1650.00, months: 12}
+      - {party: stadtwerke, family: utilities, tax: V19, amount: -583.10, months: 12}
+      - {party: gas, family: utilities, tax: V19, amount: -297.50, months: 12}
+      - {party: funkwerk, family: telecom, tax: V19, amount: -47.60, months: 12}
+      - {party: wochenkurier, family: advertising, tax: V19, amount: -142.80, months: 4}
+      - {party: versicherung, family: insurance, tax: NONE, amount: -128.40, months: 12}
+      - {party: tanke, family: fuel, tax: V19, amount: -78.00, months: 12, vary: 0.2, per_month: 2}
+      - {party: weise, family: payroll, tax: NONE, amount: -1688.40, months: 12, vary: 0.02}
+      - {party: petzold, family: payroll, tax: NONE, amount: -2104.10, months: 12, vary: 0.02}
+      - {party: ilgner, family: payroll, tax: NONE, amount: -1970.85, months: 12, vary: 0.02}
+      - {party: haubold, family: payroll, tax: NONE, amount: -812.40, months: 12}
+      - {party: krankenkasse, family: social_security, tax: NONE, amount: -4010.00, months: 12, vary: 0.03}
+      - {party: finanzamt, family: wage_tax, tax: NONE, amount: -648.00, months: 12, vary: 0.05}
+      - {party: finanzamt, family: vat_payment, tax: NONE, amount: -1430.00, months: 12, vary: 0.4}
+      - {party: inhaber, family: private_withdrawal, tax: NONE, amount: -2500.00, months: 12}
+      - {party: bank, family: bank_fees, tax: NONE, amount: -24.90, months: 12, vary: 0.15}
+    months:
+      "2026-09":
+        # --- Kartenumsätze (Auszahlung brutto, Gebühren monatlich separat) ----------------------
+        - id: k01
+          party: kassenpay
+          on: 2026-09-01
+          method: gutschrift
+          reference: "Kassenpay Auszahlung KW35 Terminal 7741-02"
+          document:
+            format: pdf
+            direction: out
+            number: "KP-AZ-2026-35"
+            issue_date: 2026-08-31
+            delivery_date: 2026-08-30
+            lines:
+              - {text: "Kartenumsätze 7 % (Backwaren außer Haus) 24.-30.08.", net: 3962.62, rate: 7, category: S}
+              - {text: "Kartenumsätze 19 % (Café, Verzehr vor Ort, Getränke) 24.-30.08.", net: 1705.88, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: k02
+          party: kassenpay
+          on: 2026-09-08
+          method: gutschrift
+          reference: "Kassenpay Auszahlung KW36 Terminal 7741-02"
+          document:
+            format: pdf
+            direction: out
+            number: "KP-AZ-2026-36"
+            issue_date: 2026-09-07
+            delivery_date: 2026-09-06
+            lines:
+              - {text: "Kartenumsätze 7 % (Backwaren außer Haus) 31.08.-06.09.", net: 4118.69, rate: 7, category: S}
+              - {text: "Kartenumsätze 19 % (Café, Verzehr vor Ort, Getränke) 31.08.-06.09.", net: 1822.69, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: k03
+          party: kassenpay
+          on: 2026-09-15
+          method: gutschrift
+          reference: "Kassenpay Auszahlung KW37 Terminal 7741-02"
+          document:
+            format: pdf
+            direction: out
+            number: "KP-AZ-2026-37"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-13
+            lines:
+              - {text: "Kartenumsätze 7 % (Backwaren außer Haus) 07.-13.09.", net: 3874.77, rate: 7, category: S}
+              - {text: "Kartenumsätze 19 % (Café, Verzehr vor Ort, Getränke) 07.-13.09.", net: 1598.32, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: k04
+          party: kassenpay
+          on: 2026-09-22
+          method: gutschrift
+          reference: "Kassenpay Auszahlung KW38 Terminal 7741-02"
+          document:
+            format: pdf
+            direction: out
+            number: "KP-AZ-2026-38"
+            issue_date: 2026-09-21
+            delivery_date: 2026-09-20
+            lines:
+              - {text: "Kartenumsätze 7 % (Backwaren außer Haus) 14.-20.09.", net: 4201.40, rate: 7, category: S}
+              - {text: "Kartenumsätze 19 % (Café, Verzehr vor Ort, Getränke) 14.-20.09.", net: 1764.71, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: k05
+          party: kassenpay
+          on: 2026-09-29
+          method: gutschrift
+          reference: "Kassenpay Auszahlung KW39 Terminal 7741-02"
+          document:
+            format: pdf
+            direction: out
+            number: "KP-AZ-2026-39"
+            issue_date: 2026-09-28
+            delivery_date: 2026-09-27
+            lines:
+              - {text: "Kartenumsätze 7 % (Backwaren außer Haus) 21.-27.09.", net: 4045.79, rate: 7, category: S}
+              - {text: "Kartenumsätze 19 % (Café, Verzehr vor Ort, Getränke) 21.-27.09.", net: 1689.08, rate: 19, category: S}
+          truth: {family: revenue}
+        # --- Bareinzahlungen aus der Ladenkasse (Erlöse stehen im Kassenbuch) ---------------
+        - id: b01
+          party: kasse
+          on: 2026-09-03
+          method: gutschrift
+          amount: 2850.00
+          reference: "Einzahlung Automat Filiale 0412"
+          truth: {family: transfer, tax: NONE}
+        - id: b02
+          party: kasse
+          on: 2026-09-10
+          method: gutschrift
+          amount: 3120.00
+          reference: "Einzahlung Automat Filiale 0412"
+          truth: {family: transfer, tax: NONE}
+        - id: b03
+          party: kasse
+          on: 2026-09-17
+          method: gutschrift
+          amount: 2640.00
+          reference: "Einzahlung Automat Filiale 0412"
+          truth: {family: transfer, tax: NONE}
+        - id: b04
+          party: kasse
+          on: 2026-09-24
+          method: gutschrift
+          amount: 3385.00
+          reference: "Einzahlung Automat Filiale 0412"
+          truth: {family: transfer, tax: NONE}
+        # --- Wareneinkauf -------------------------------------------------------------------
+        - id: e01
+          party: muehle
+          on: 2026-09-04
+          method: ueberweisung
+          skonto: true
+          reference: "RE MW-26-04418 abzgl. 2 % Skonto Kd 2207"
+          document:
+            format: zugferd
+            number: "MW-26-04418"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 8 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Weizenmehl Type 550, 1.000 kg", net: 520.00, rate: 7, category: S}
+              - {text: "Roggenmehl Type 1150, 500 kg", net: 310.00, rate: 7, category: S}
+              - {text: "Dinkelmehl Type 630, 300 kg", net: 324.00, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: e02
+          party: muehle
+          on: 2026-09-18
+          method: ueberweisung
+          reference: "RE MW-26-04602 Kd 2207"
+          document:
+            format: zugferd
+            number: "MW-26-04602"
+            issue_date: 2026-09-15
+            delivery_date: 2026-09-15
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 8 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Weizenmehl Type 550, 1.200 kg", net: 640.00, rate: 7, category: S}
+              - {text: "Roggenmehl Type 1150, 450 kg", net: 290.00, rate: 7, category: S}
+              - {text: "Dinkelmehl Type 630, 170 kg", net: 188.00, rate: 7, category: S}
+              - {text: "Saatenmischung Sonnenblume/Kürbis/Leinsaat, 50 kg", net: 96.00, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: e03
+          party: molkerei
+          on: 2026-09-07
+          method: lastschrift
+          reference: "ME-2609-1187 Kd 30441"
+          document:
+            format: xrechnung-cii
+            number: "ME-2609-1187"
+            issue_date: 2026-09-04
+            delivery_date: 2026-09-03
+            lines:
+              - {text: "Butter 82 % Fett, 40 kg", net: 286.00, rate: 7, category: S}
+              - {text: "Schlagsahne 30 %, 60 l", net: 198.00, rate: 7, category: S}
+              - {text: "Vollmilch 3,5 %, 120 l", net: 132.00, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: e04
+          party: molkerei
+          on: 2026-09-21
+          method: lastschrift
+          reference: "ME-2609-1342 Kd 30441"
+          document:
+            format: xrechnung-cii
+            number: "ME-2609-1342"
+            issue_date: 2026-09-18
+            delivery_date: 2026-09-17
+            lines:
+              - {text: "Butter 82 % Fett, 44 kg", net: 312.00, rate: 7, category: S}
+              - {text: "Schlagsahne 30 %, 62 l", net: 204.00, rate: 7, category: S}
+              - {text: "Vollmilch 3,5 %, 115 l", net: 126.00, rate: 7, category: S}
+              - {text: "Speisequark 20 %, 25 kg", net: 61.50, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: e05
+          party: roesterei
+          on: 2026-09-11
+          method: lastschrift
+          reference: "BK-2026-0933"
+          document:
+            format: zugferd
+            number: "BK-2026-0933"
+            issue_date: 2026-09-08
+            delivery_date: 2026-09-08
+            lines:
+              - {text: "Espressobohnen Hausmischung, 24 kg", net: 456.00, rate: 7, category: S}
+              - {text: "Filterkaffee gemahlen, 8 kg", net: 112.00, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: e06
+          party: getraenke
+          on: 2026-09-14
+          method: ueberweisung
+          reference: "GS-118274 Backhaus Lindner"
+          document:
+            format: pdf
+            number: "GS-118274"
+            issue_date: 2026-09-09
+            delivery_date: 2026-09-09
+            lines:
+              - {text: "Apfelschorle, Mineralwasser, Limonaden lt. Lieferschein 55120", net: 486.30, rate: 19, category: S}
+              - {text: "Leergut/Pfand Kästen und Flaschen", net: 72.00, rate: 19, category: S}
+          truth: {family: goods, tax: V19}
+        - id: e07
+          party: nowak
+          on: 2026-09-09
+          method: ueberweisung
+          reference: "FV/2026/09/0311"
+          document:
+            format: pdf
+            number: "FV/2026/09/0311"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-01
+            notes: "Intra-Community supply, exempt under Art. 138 VAT Directive"
+            lines:
+              - {text: "Papiertüten Kraft, bedruckt Backhaus Lindner, 10.000 Stück", net: 690.00, rate: 0, category: K}
+              - {text: "Coffee-to-go-Becher 300 ml bedruckt, 4.000 Stück", net: 412.00, rate: 0, category: K}
+          truth: {family: goods, tax: IGE19}
+        - id: e08
+          party: grossmarkt
+          on: 2026-09-02
+          method: karte
+          reference: "Kartenzahlung Grossmarkt Sachsenpark"
+          document:
+            format: pdf
+            number: "Bon 0311-20945"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Eier Freiland, 360 Stück; Zucker 25 kg; Erdbeeren 10 kg", net: 146.70, rate: 7, category: S}
+              - {text: "Backpapier, Tortenscheiben", net: 31.60, rate: 19, category: S}
+          truth: {family: goods}
+        - id: e09
+          party: grossmarkt
+          on: 2026-09-25
+          method: karte
+          reference: "Kartenzahlung Grossmarkt Sachsenpark"
+          document:
+            format: pdf
+            number: "Bon 0311-22871"
+            issue_date: 2026-09-24
+            delivery_date: 2026-09-24
+            arrives: never
+            lines:
+              - {text: "Sahne, Eier", net: 74.80, rate: 7, category: S}
+          says:
+            missing_receipt: {choice: no_receipt, purpose: "Sahne und Eier nachgekauft für die Wochenendtorten"}
+          truth: {family: goods, tax: NONE}
+        # --- Laufende Kosten -----------------------------------------------------------------
+        - id: e10
+          party: kassalind
+          on: 2026-09-03
+          method: lastschrift
+          reference: "KL-2026-09-44817 Kassalind subscription"
+          document:
+            format: pdf
+            number: "KL-2026-09-44817"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            notes: "Reverse charge - VAT to be accounted for by the recipient"
+            lines:
+              - {text: "Cloud-Kassensoftware, Lizenz 1 Filiale, September 2026", net: 79.00, rate: 0, category: AE}
+          truth: {family: software, tax: RC_EU19}
+        - id: e11
+          party: kassenpay
+          on: 2026-09-03
+          method: lastschrift
+          reference: "Kassenpay Entgelte 08/2026"
+          document:
+            format: pdf
+            number: "KP-GEB-2026-08-7741"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-31
+            lines:
+              - {text: "Transaktionsentgelte girocard August 2026", net: 96.40, rate: 0, category: E}
+              - {text: "Transaktionsentgelte Kreditkarten August 2026", net: 71.85, rate: 0, category: E}
+          truth: {family: bank_fees, tax: NONE}
+        - id: e12
+          party: vermieter
+          on: 2026-09-01
+          method: ueberweisung
+          amount: -1650.00
+          reference: "Miete Laden und Backstube Rathausstr. 9, 09/2026"
+          truth: {family: rent, tax: NONE}
+        - id: e13
+          party: stadtwerke
+          on: 2026-09-15
+          method: lastschrift
+          reference: "Abschlag Strom 09/2026 VK 7720155"
+          document:
+            format: zugferd
+            number: "SWP-26-0915-7720155"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Abschlag Strom September 2026", net: 490.00, rate: 19, category: S}
+          truth: {family: utilities, tax: V19}
+        - id: e14
+          party: gas
+          on: 2026-09-15
+          method: lastschrift
+          reference: "Abschlag Erdgas 09/2026 VK 61-33087"
+          document:
+            format: pdf
+            number: "GEP-2026-09-33087"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Abschlag Erdgas September 2026", net: 250.00, rate: 19, category: S}
+          truth: {family: utilities, tax: V19}
+        - id: e15
+          party: funkwerk
+          on: 2026-09-07
+          method: lastschrift
+          amount: -47.60
+          reference: "Funkwerk Mobil Kd 0177-2203 09/2026"
+          truth: {family: telecom, tax: V19}
+        - id: e16
+          party: hoyer
+          on: 2026-09-16
+          method: ueberweisung
+          reference: "Rechnung 26-0915 Kühltheke"
+          document:
+            format: pdf
+            number: "26-0915"
+            issue_date: 2026-09-11
+            delivery_date: 2026-09-10
+            missing: [seller_tax_id]
+            lines:
+              - {text: "Reparatur Kühltheke: Verdichter-Relais getauscht, Kältemittel nachgefüllt", net: 268.00, rate: 19, category: S}
+              - {text: "Anfahrt und Arbeitszeit 2,5 Std.", net: 187.50, rate: 19, category: S}
+          says:
+            invoice_incomplete: {choice: not_available}
+          truth: {family: repairs, tax: NONE}
+        - id: e17
+          party: vogtland
+          on: 2026-09-21
+          method: ueberweisung
+          reference: "BTV-2026-1187 Spiralkneter"
+          document:
+            format: zugferd
+            number: "BTV-2026-1187"
+            issue_date: 2026-09-16
+            delivery_date: 2026-09-16
+            lines:
+              - {text: "Spiralkneter SK 80, Teigkapazität 80 kg, 1 Stück", net: 3780.00, rate: 19, category: S}
+              - {text: "Lieferung, Aufstellung und Einweisung", net: 170.00, rate: 19, category: S}
+          truth: {family: equipment, tax: V19}
+        - id: e18
+          party: wochenkurier
+          on: 2026-09-11
+          method: ueberweisung
+          reference: "Anzeige Herbstaktion RE 2026-3381"
+          document:
+            format: pdf
+            number: "2026-3381"
+            issue_date: 2026-09-04
+            delivery_date: 2026-09-03
+            lines:
+              - {text: "Anzeige 1/8 Seite Herbstaktion Zwiebelkuchen, Ausgaben 03.09. und 10.09.", net: 120.00, rate: 19, category: S}
+          truth: {family: advertising, tax: V19}
+        - id: e19
+          party: hwk
+          on: 2026-09-17
+          method: ueberweisung
+          reference: "Beitragsbescheid 2026 Betriebsnr 0412-88"
+          document:
+            format: pdf
+            number: "BB-2026-0412-88"
+            issue_date: 2026-08-20
+            delivery_date: 2026-08-20
+            lines:
+              - {text: "Kammerbeitrag 2026, Grund- und Zusatzbeitrag", net: 318.00, rate: 0, category: O}
+          truth: {family: memberships, tax: NONE}
+        - id: e20
+          party: versicherung
+          on: 2026-09-01
+          method: lastschrift
+          amount: -128.40
+          reference: "Betriebsinhalts- und Ertragsausfallversicherung 09/2026"
+          truth: {family: insurance, tax: NONE}
+        - id: e21
+          party: tanke
+          on: 2026-09-10
+          method: karte
+          reference: "Kartenzahlung Tankstelle Koburger Str"
+          document:
+            format: pdf
+            number: "Bon 5531-0909"
+            issue_date: 2026-09-09
+            delivery_date: 2026-09-09
+            lines:
+              - {text: "Diesel 47,9 l (Lieferwagen)", net: 68.40, rate: 19, category: S}
+          truth: {family: fuel, tax: V19}
+        # --- Löhne und Abgaben ---------------------------------------------------------------
+        - id: e22
+          party: weise
+          on: 2026-09-30
+          method: ueberweisung
+          amount: -1691.85
+          reference: "Lohn 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e23
+          party: petzold
+          on: 2026-09-30
+          method: ueberweisung
+          amount: -2098.62
+          reference: "Lohn 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e24
+          party: ilgner
+          on: 2026-09-30
+          method: ueberweisung
+          amount: -1975.10
+          reference: "Lohn 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e25
+          party: haubold
+          on: 2026-09-30
+          method: ueberweisung
+          amount: -812.40
+          reference: "Ausbildungsvergütung 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e26
+          party: krankenkasse
+          on: 2026-09-28
+          method: lastschrift
+          amount: -4036.72
+          reference: "Beitragsnachweis 09/2026 BNR 51190427"
+          truth: {family: social_security, tax: NONE}
+        - id: e27
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -655.30
+          reference: "StNr 231/245/07714 LSt 08/2026"
+          truth: {family: wage_tax, tax: NONE}
+        - id: e28
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -1512.88
+          reference: "StNr 231/245/07714 USt 08/2026"
+          truth: {family: vat_payment, tax: NONE}
+        - id: e29
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -1850.00
+          reference: "StNr 231/245/07714 ESt-VZ III/2026"
+          truth: {family: private_withdrawal, tax: NONE}
+        # --- Privat und Unklares --------------------------------------------------------------
+        - id: e30
+          party: inhaber
+          on: 2026-09-04
+          method: ueberweisung
+          amount: -2500.00
+          reference: "Privatentnahme 09/2026"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e31
+          party: gartencenter
+          on: 2026-09-14
+          method: karte
+          reference: "Kartenzahlung Gruenwerk Zwenkau"
+          document:
+            format: pdf
+            number: "Bon 17-66120"
+            issue_date: 2026-09-12
+            delivery_date: 2026-09-12
+            lines:
+              - {text: "Gartenlounge-Set Polyrattan, 4-teilig", net: 671.43, rate: 19, category: S}
+              - {text: "Herbstbepflanzung Heide, Chrysanthemen", net: 58.88, rate: 7, category: S}
+          says:
+            private_or_business: {choice: private}
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e32
+          party: falkenrath
+          on: 2026-09-22
+          method: gutschrift
+          reference: "Ueberweisung"
+          document:
+            format: pdf
+            direction: out
+            number: "2026-117"
+            issue_date: 2026-09-11
+            delivery_date: 2026-09-11
+            arrives: on_request
+            lines:
+              - {text: "Torten und Blechkuchen für Firmenfeier, geliefert 11.09., ohne Service", net: 486.00, rate: 7, category: S}
+          says:
+            unknown_credit: {choice: customer, invoice_no: "2026-117"}
+          truth: {family: revenue, tax: U7}
+        - id: e33
+          party: bank
+          on: 2026-09-30
+          method: lastschrift
+          amount: -26.40
+          reference: "Entgelte Kontoführung und Einzahlungen 09/2026"
+          truth: {family: bank_fees, tax: NONE}
