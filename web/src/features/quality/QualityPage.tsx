@@ -32,15 +32,47 @@ interface Evaluation {
 
 const ROWS: { key: keyof Metrics; label: string; fmt: (m: Metrics) => string }[] = [
   { key: "items", label: "Posten (Bankumsätze und Rechnungseingänge)", fmt: (m) => String(m.items) },
-  { key: "booked_automatically_share", label: "Vom Agenten allein gebucht", fmt: (m) => percent(m.booked_automatically_share) },
-  { key: "automatic_wrong", label: "Davon falsch", fmt: (m) => `${m.automatic_wrong} (${percent(m.automatic_wrong_share)})` },
-  { key: "no_staff_touch_share", label: "Ohne Handgriff im Team (Agent oder Antwort des Mandanten)", fmt: (m) => percent(m.no_staff_touch_share) },
-  { key: "first_proposal_right", label: "Erster Vorschlag richtig", fmt: (m) => percent(m.first_proposal_right) },
-  { key: "review_proposal_right", label: "Vorschlag richtig, wo das Team geprüft hat", fmt: (m) => percent(m.review_proposal_right) },
-  { key: "client_questions", label: "Fragen an Mandanten (davon nötig)", fmt: (m) => `${m.client_questions} (${percent(m.questions_needed_share)})` },
+  {
+    key: "booked_automatically_share",
+    label: "Vom Agenten allein gebucht",
+    fmt: (m) => percent(m.booked_automatically_share),
+  },
+  {
+    key: "automatic_wrong",
+    label: "Davon falsch",
+    fmt: (m) => `${m.automatic_wrong} (${percent(m.automatic_wrong_share)})`,
+  },
+  {
+    key: "no_staff_touch_share",
+    label: "Ohne Handgriff im Team (Agent oder Antwort des Mandanten)",
+    fmt: (m) => percent(m.no_staff_touch_share),
+  },
+  {
+    key: "first_proposal_right",
+    label: "Erster Vorschlag richtig",
+    fmt: (m) => percent(m.first_proposal_right),
+  },
+  {
+    key: "review_proposal_right",
+    label: "Vorschlag richtig, wo das Team geprüft hat",
+    fmt: (m) => percent(m.review_proposal_right),
+  },
+  {
+    key: "client_questions",
+    label: "Fragen an Mandanten (davon nötig)",
+    fmt: (m) => `${m.client_questions} (${percent(m.questions_needed_share)})`,
+  },
   { key: "parked", label: "Auf dem Klärungskonto (Mandant antwortet nicht)", fmt: (m) => String(m.parked) },
-  { key: "vat_return_exact_months", label: "Voranmeldung auf den Cent wie die Wahrheit", fmt: (m) => `${m.vat_return_exact_months} von ${m.client_months} Monaten` },
-  { key: "staff_minutes_estimate", label: "Geschätzte Teamminuten (von Hand: Schätzung)", fmt: (m) => `${Math.round(m.staff_minutes_estimate)} (${Math.round(m.manual_minutes_estimate)})` },
+  {
+    key: "vat_return_exact_months",
+    label: "Voranmeldung auf den Cent wie die Wahrheit",
+    fmt: (m) => `${m.vat_return_exact_months} von ${m.client_months} Monaten`,
+  },
+  {
+    key: "staff_minutes_estimate",
+    label: "Geschätzte Teamminuten (von Hand: Schätzung)",
+    fmt: (m) => `${Math.round(m.staff_minutes_estimate)} (${Math.round(m.manual_minutes_estimate)})`,
+  },
 ];
 
 const NAMES: Record<string, string> = { dev: "Entwicklungsmonate" };
@@ -53,12 +85,23 @@ export default function QualityPage() {
         title="Wie gut ist der Agent?"
         lede="Gemessen an simulierten Kanzleien, bei denen die richtige Buchung jedes Postens bekannt ist. Die Blindsätze hat jemand geschrieben, der den Code nie gesehen hat; ihr erster Lauf wird festgehalten und nicht überschrieben."
       />
-      <QueryState query={ev} skeleton={<SkeletonRows rows={10} label="Auswertung wird geladen" />} isEmpty={(d) => Object.keys(d.sets).length === 0} empty={<EmptyState title="Noch keine Auswertung" />}>
+      <QueryState
+        query={ev}
+        skeleton={<SkeletonRows rows={10} label="Auswertung wird geladen" />}
+        isEmpty={(d) => Object.keys(d.sets).length === 0}
+        empty={<EmptyState title="Noch keine Auswertung" />}
+      >
         {(d) => {
-          const cols = [
-            ...Object.entries(d.first_runs).map(([k, v]) => ({ key: `${k}-first`, title: `${k}, erster Lauf`, m: v })),
-            ...Object.entries(d.sets).map(([k, v]) => ({ key: k, title: NAMES[k] ?? `${k}, heute`, m: v })),
-          ];
+          // Development months first, then each blind set: its recorded first run next to today's run.
+          const names = [...new Set([...Object.keys(d.sets), ...Object.keys(d.first_runs)])].sort((a, b) =>
+            a === "dev" ? -1 : b === "dev" ? 1 : a.localeCompare(b),
+          );
+          const cols = names.flatMap((k) => [
+            ...(d.first_runs[k]
+              ? [{ key: `${k}-first`, title: `${k}, erster Lauf`, m: d.first_runs[k] }]
+              : []),
+            ...(d.sets[k] ? [{ key: k, title: NAMES[k] ?? `${k}, heute`, m: d.sets[k] }] : []),
+          ]);
           return (
             <div className={styles.wrap}>
               <table className={styles.table}>
@@ -86,7 +129,8 @@ export default function QualityPage() {
                 </tbody>
               </table>
               <p className={styles.note}>
-                Stand {new Date(d.generated_at).toLocaleString("de-DE")}. Gemessen ohne Sprachmodell. Die Minuten sind eine Schätzung aus config/close.yaml, keine Messung.
+                Stand {new Date(d.generated_at).toLocaleString("de-DE")}. Gemessen ohne Sprachmodell. Die
+                Minuten sind eine Schätzung aus config/close.yaml, keine Messung.
               </p>
             </div>
           );

@@ -68,7 +68,16 @@ export interface ItemSummary {
 }
 
 export interface ItemsResponse {
-  client: { id: string; name: string; mandant_nr: number; booking_method: string; vat_regime: string; vat_period: string; legal_form: string; industry: string };
+  client: {
+    id: string;
+    name: string;
+    mandant_nr: number;
+    booking_method: string;
+    vat_regime: string;
+    vat_period: string;
+    legal_form: string;
+    industry: string;
+  };
   chart: string;
   status: CloseStatus;
   run_summary: Record<string, unknown> | null;
@@ -143,7 +152,14 @@ export interface QueryBundle {
   sent_at: string;
   due_on: string;
   answered_at: string | null;
-  items: { item_id: number; reason: string; reason_label: string; question: string; answer: Record<string, unknown> | null; state: string }[];
+  items: {
+    item_id: number;
+    reason: string;
+    reason_label: string;
+    question: string;
+    answer: Record<string, unknown> | null;
+    state: string;
+  }[];
 }
 
 export interface UstvaRow {
@@ -163,8 +179,18 @@ export interface Ustva {
   files_this_month: boolean;
   history_months: number;
   kleinunternehmer: boolean;
-  checks: { open_review: number; open_client: number; bank_reconciled: boolean; bank_difference_cents: number };
-  close: { status: CloseStatus; signed_by?: string | null; signed_at?: string | null; export_sha256?: string | null };
+  checks: {
+    open_review: number;
+    open_client: number;
+    bank_reconciled: boolean;
+    bank_difference_cents: number;
+  };
+  close: {
+    status: CloseStatus;
+    signed_by?: string | null;
+    signed_at?: string | null;
+    export_sha256?: string | null;
+  };
   history: { period: string; kz81: number; kz66: number; kz83: number }[];
 }
 
@@ -180,7 +206,13 @@ export interface PortalBundle {
   period: string;
   due_on: string;
   status: string;
-  items: { item_id: number; reason: string; question: string; options: PortalOption[]; answer: Record<string, unknown> | null }[];
+  items: {
+    item_id: number;
+    reason: string;
+    question: string;
+    options: PortalOption[];
+    answer: Record<string, unknown> | null;
+  }[];
 }
 
 export interface RolloutFirm {
@@ -205,6 +237,13 @@ export interface RolloutFirm {
 export interface Rollout {
   period: string;
   firms: RolloutFirm[];
-  corrections: { firm_id: string; from_family: string | null; to_family: string | null; from_label: string | null; to_label: string | null; n: number }[];
+  corrections: {
+    firm_id: string;
+    from_family: string | null;
+    to_family: string | null;
+    from_label: string | null;
+    to_label: string | null;
+    n: number;
+  }[];
   unmapped_accounts: { firm_id: string; account: number; name: string; rows: number }[];
 }

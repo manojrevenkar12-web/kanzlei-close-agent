@@ -39,7 +39,11 @@ function Vat({ u, clientId, period }: { u: Ustva; clientId: string; period: stri
   return (
     <div className={styles.vat}>
       <section className={styles.vatSheet} aria-label="Umsatzsteuer-Voranmeldung">
-        <Stamp show={signed} label="Festgeschrieben" sub={u.close.signed_at ? `${date(u.close.signed_at)}, ${u.close.signed_by ?? ""}` : undefined} />
+        <Stamp
+          show={signed}
+          label="Festgeschrieben"
+          sub={u.close.signed_at ? `${date(u.close.signed_at)}, ${u.close.signed_by ?? ""}` : undefined}
+        />
         <h2 className={styles.h2}>Umsatzsteuer-Voranmeldung</h2>
         <p className={styles.small}>
           {u.kleinunternehmer
@@ -94,11 +98,23 @@ function Vat({ u, clientId, period }: { u: Ustva; clientId: string; period: stri
       <aside className={styles.vatSide} aria-label="Freigabe">
         <h2 className={styles.h2}>Freigabe</h2>
         <ul className={styles.checks}>
-          <li className={open === 0 ? styles.ok : styles.notOk}>{open === 0 ? "Alle Posten gebucht oder geparkt" : `${open} Posten offen (${u.checks.open_review} Prüfung, ${u.checks.open_client} Mandant)`}</li>
-          <li className={u.checks.bank_reconciled ? styles.ok : styles.notOk}>
-            {u.checks.bank_reconciled ? "Bank abgestimmt" : `Bank nicht abgestimmt (${amount(u.checks.bank_difference_cents)} €)`}
+          <li className={open === 0 ? styles.ok : styles.notOk}>
+            {open === 0
+              ? "Alle Posten gebucht oder geparkt"
+              : `${open} Posten offen (${u.checks.open_review} Prüfung, ${u.checks.open_client} Mandant)`}
           </li>
-          <li className={u.flags.length === 0 ? styles.ok : styles.warnItem}>{u.flags.length === 0 ? "Keine Auffälligkeiten gegenüber den Vormonaten" : `${u.flags.length} Auffälligkeiten`}</li>
+          <li className={u.checks.bank_reconciled ? styles.ok : styles.notOk}>
+            {u.checks.bank_reconciled
+              ? "Bank abgestimmt"
+              : open > 0
+                ? `Bank: ${amount(Math.abs(u.checks.bank_difference_cents))} € stecken in offenen Posten`
+                : `Bank nicht abgestimmt (${amount(u.checks.bank_difference_cents)} €)`}
+          </li>
+          <li className={u.flags.length === 0 ? styles.ok : styles.warnItem}>
+            {u.flags.length === 0
+              ? "Keine Auffälligkeiten gegenüber den Vormonaten"
+              : `${u.flags.length} Auffälligkeiten`}
+          </li>
         </ul>
         {u.flags.map((f) => (
           <Notice key={f.kz} tone="warn">
@@ -120,10 +136,17 @@ function Vat({ u, clientId, period }: { u: Ustva; clientId: string; period: stri
                 Auffälligkeiten geprüft
               </label>
             )}
-            <Button variant="primary" disabled={open > 0 || !u.checks.bank_reconciled || (u.flags.length > 0 && !ack)} busy={signOff.isPending} onClick={() => signOff.mutate(ack)}>
+            <Button
+              variant="primary"
+              disabled={open > 0 || !u.checks.bank_reconciled || (u.flags.length > 0 && !ack)}
+              busy={signOff.isPending}
+              onClick={() => signOff.mutate(ack)}
+            >
               Monat festschreiben
             </Button>
-            <p className={styles.small}>Danach sind die Buchungen unveränderbar (GoBD). Korrekturen gehen in einen offenen Monat.</p>
+            <p className={styles.small}>
+              Danach sind die Buchungen unveränderbar (GoBD). Korrekturen gehen in einen offenen Monat.
+            </p>
           </>
         ) : (
           <p className={styles.small}>Festgeschrieben wird von der Steuerberatung.</p>
@@ -141,11 +164,20 @@ function Trend({ history, current, period }: { history: Ustva["history"]; curren
   const max = Math.max(1, ...points.map((x) => Math.abs(x.v)));
   return (
     <figure className={styles.trend}>
-      <figcaption className={styles.small}>Kz 83 der letzten zwölf Monate und dieses Monats</figcaption>
-      <div className={styles.bars} role="img" aria-label={points.map((x) => `${shortMonth(x.p)}: ${amount(x.v)} €`).join(", ")}>
+      <figcaption className={styles.small}>
+        Kz 83 der letzten zwölf Monate und dieses Monats (blau). Rot: Erstattung, grau: Zahllast.
+      </figcaption>
+      <div
+        className={styles.bars}
+        role="img"
+        aria-label={points.map((x) => `${shortMonth(x.p)}: ${amount(x.v)} €`).join(", ")}
+      >
         {points.map((x) => (
           <div key={x.p} className={styles.barCol} title={`${shortMonth(x.p)}: ${amount(x.v)} €`}>
-            <div className={x.p === period ? styles.barNow : x.v < 0 ? styles.barNeg : styles.bar} style={{ height: `${Math.max(2, (Math.abs(x.v) / max) * 100)}%` }} />
+            <div
+              className={x.p === period ? styles.barNow : x.v < 0 ? styles.barNeg : styles.bar}
+              style={{ height: `${Math.max(2, (Math.abs(x.v) / max) * 100)}%` }}
+            />
           </div>
         ))}
       </div>

@@ -110,7 +110,7 @@ def test_close_review_sign_off_and_lock(pool: Pool, engine: Engine, month_in_pro
         out = engine.sign_off(conn, client_id, PERIOD, berater, acknowledge_flags=True)
         assert len(out["sha256"]) == 64
     with as_user(pool, berater) as conn:
-        name, data = engine.export(conn, client_id, PERIOD)
+        _name, data = engine.export(conn, client_id, PERIOD)
         header, rows = read_buchungsstapel(data)
         assert header.locked and header.chart == "03" and rows
         total = conn.execute(

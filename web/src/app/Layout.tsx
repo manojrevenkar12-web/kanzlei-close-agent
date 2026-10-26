@@ -4,7 +4,11 @@ import { NavLink, Outlet } from "react-router-dom";
 import { session, useSession } from "../shared/lib/session";
 import styles from "./Layout.module.css";
 
-const ROLE: Record<string, string> = { buchhaltung: "Buchhaltung", berater: "Steuerberatung", gruppe: "Gruppe" };
+const ROLE: Record<string, string> = {
+  buchhaltung: "Buchhaltung",
+  berater: "Steuerberatung",
+  gruppe: "Gruppe",
+};
 
 export function Layout() {
   const s = useSession();

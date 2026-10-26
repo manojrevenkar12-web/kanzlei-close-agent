@@ -4,7 +4,11 @@
   place-items: start center;
   padding: var(--s-12) var(--gutter);
   background:
-    repeating-linear-gradient(180deg, transparent 0 calc(var(--s-8) - 1px), var(--ruling) calc(var(--s-8) - 1px) var(--s-8)),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 calc(var(--s-8) - 1px),
+      var(--ruling) calc(var(--s-8) - 1px) var(--s-8)
+    ),
     var(--paper);
 }
 .sheet {
@@ -56,7 +60,9 @@
   background: var(--sheet);
   text-align: left;
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+  transition:
+    border-color var(--dur-fast) var(--ease),
+    background var(--dur-fast) var(--ease);
 }
 .person:hover:not(:disabled) {
   border-color: var(--action);

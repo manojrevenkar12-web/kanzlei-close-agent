@@ -72,7 +72,7 @@ def test_every_rendered_document_reads_back(world: list[Any]) -> None:
         name, data = render.document(c, party, doc)
         inv, fmt, _ = Engine.read_document(Engine.__new__(Engine), data, name)
         seen[fmt] = seen.get(fmt, 0) + 1
-        net, tax, gross = render.totals(doc)
+        _net, _tax, gross = render.totals(doc)
         assert inv.gross_cents == gross, (fmt, doc.number)
         if "invoice_no" not in doc.missing:
             assert inv.invoice_no == doc.number, (fmt, doc.number)

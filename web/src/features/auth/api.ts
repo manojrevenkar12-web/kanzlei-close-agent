@@ -12,7 +12,10 @@ export function useSignIn() {
   return useMutation({
     mutationFn: async (login: string) => {
       const { token } = await api.post<{ token: string }>("/api/session", { login });
-      session.set({ token, user: { login, name: login, role: "buchhaltung", firm: null, can_sign_off: false } });
+      session.set({
+        token,
+        user: { login, name: login, role: "buchhaltung", firm: null, can_sign_off: false },
+      });
       const user = await api.get<User>("/api/me");
       session.set({ token, user });
       return user;

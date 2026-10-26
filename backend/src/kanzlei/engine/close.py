@@ -1175,7 +1175,8 @@ class Engine:
             "flags": [{"kz": f.kz, "text": f.text} for f in flags],
             "due_on": due.isoformat(),
             "quarterly": quarterly,
-            "files_this_month": (not quarterly) or end.month in (3, 6, 9, 12),
+            "files_this_month": client.vat_regime not in ("klein", "befreit")
+            and ((not quarterly) or end.month in (3, 6, 9, 12)),
             "history_months": len(history),
             "kleinunternehmer": client.vat_regime == "klein",
         }

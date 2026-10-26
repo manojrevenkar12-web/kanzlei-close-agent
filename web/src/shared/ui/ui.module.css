@@ -275,3 +275,31 @@
   border-left-color: var(--st-auto);
   background: var(--st-auto-tint);
 }
+
+.months {
+  display: flex;
+  gap: var(--s-1);
+  padding: var(--s-1);
+  background: var(--sheet);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+.month,
+.monthOn {
+  border: none;
+  background: transparent;
+  padding: var(--s-1) var(--s-3);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--ink-2);
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+.month:hover {
+  background: var(--sheet-alt);
+}
+.monthOn {
+  background: var(--ink);
+  color: var(--sheet);
+}

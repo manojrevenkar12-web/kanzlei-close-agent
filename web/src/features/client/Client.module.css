@@ -69,7 +69,7 @@
 .rowOn {
   width: 100%;
   display: grid;
-  grid-template-columns: 5.25rem 1fr auto;
+  grid-template-columns: 5.25rem minmax(0, 1fr) auto;
   grid-template-areas:
     "date main amount"
     "date state state";
@@ -120,6 +120,13 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-1);
+  min-width: 0;
+}
+.rowState > * {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .keys {
   padding: var(--s-2) var(--s-4);
@@ -457,6 +464,15 @@
   }
 }
 @media (max-width: 720px) {
+  .row,
+  .rowOn {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "main amount"
+      "date date"
+      "state state";
+    padding: var(--s-3);
+  }
   .detail,
   .vatSheet {
     padding: var(--s-4);

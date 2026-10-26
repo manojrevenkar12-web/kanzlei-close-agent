@@ -1,7 +1,3 @@
-.months {
-  display: flex;
-  gap: var(--s-1);
-}
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -98,5 +94,36 @@
   }
   .accounts li {
     grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .table thead {
+    display: none;
+  }
+  .table tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-2) var(--s-4);
+    padding: var(--s-4) 0;
+    border-bottom: 1px solid var(--ruling);
+  }
+  .table th,
+  .table td {
+    padding: 0;
+    border: none;
+  }
+  .table tbody th,
+  .runwayCell {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+  .table td[data-label]:not(.runwayCell) {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--s-2);
+  }
+  .table td[data-label]:not(.runwayCell)::before {
+    content: attr(data-label);
+    color: var(--ink-3);
   }
 }

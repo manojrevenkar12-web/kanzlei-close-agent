@@ -20,7 +20,10 @@ const FIELD: Record<string, string> = {
 
 export default function PortalPage() {
   const { token = "" } = useParams();
-  const bundle = useQuery({ queryKey: ["portal", token], queryFn: () => api.get<PortalBundle>(`/api/portal/${token}`) });
+  const bundle = useQuery({
+    queryKey: ["portal", token],
+    queryFn: () => api.get<PortalBundle>(`/api/portal/${token}`),
+  });
   return (
     <main className={styles.page}>
       <QueryState
@@ -43,13 +46,27 @@ function Bundle({ b, token }: { b: PortalBundle; token: string }) {
         <p className={styles.firm}>{b.firm}</p>
         <h1 className={styles.title}>Fragen zur Buchhaltung {monthLabel(b.period)}</h1>
         <p className={styles.lede}>
-          {b.client}: {open === 0 ? "Danke, alle Fragen sind beantwortet." : `${open} ${open === 1 ? "Frage ist" : "Fragen sind"} offen. Bitte bis ${date(b.due_on)} beantworten.`}
+          {b.client}:{" "}
+          {open === 0
+            ? "Danke, alle Fragen sind beantwortet."
+            : `${open} ${open === 1 ? "Frage ist" : "Fragen sind"} offen. Bitte bis ${date(b.due_on)} beantworten.`}
         </p>
       </header>
       <ol className={styles.list}>
         {b.items.map((i, n) => (
-          <motion.li key={i.item_id} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: n * m.stagger, duration: m.base }}>
-            <Question token={token} itemId={i.item_id} question={i.question} options={i.options} answered={!!i.answer} />
+          <motion.li
+            key={i.item_id}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: n * m.stagger, duration: m.base }}
+          >
+            <Question
+              token={token}
+              itemId={i.item_id}
+              question={i.question}
+              options={i.options}
+              answered={!!i.answer}
+            />
           </motion.li>
         ))}
       </ol>
@@ -57,7 +74,19 @@ function Bundle({ b, token }: { b: PortalBundle; token: string }) {
   );
 }
 
-function Question({ token, itemId, question, options, answered }: { token: string; itemId: number; question: string; options: PortalOption[]; answered: boolean }) {
+function Question({
+  token,
+  itemId,
+  question,
+  options,
+  answered,
+}: {
+  token: string;
+  itemId: number;
+  question: string;
+  options: PortalOption[];
+  answered: boolean;
+}) {
   const qc = useQueryClient();
   const [choice, setChoice] = useState<string>("");
   const [fields, setFields] = useState<Record<string, string>>({});
@@ -100,7 +129,13 @@ function Question({ token, itemId, question, options, answered }: { token: strin
         <div className={styles.options}>
           {options.map((o) => (
             <label key={o.value} className={choice === o.value ? styles.optionOn : styles.option}>
-              <input type="radio" name={name} value={o.value} checked={choice === o.value} onChange={() => setChoice(o.value)} />
+              <input
+                type="radio"
+                name={name}
+                value={o.value}
+                checked={choice === o.value}
+                onChange={() => setChoice(o.value)}
+              />
               {o.label}
             </label>
           ))}
@@ -108,13 +143,22 @@ function Question({ token, itemId, question, options, answered }: { token: strin
         {choice === "upload" && (
           <label className={styles.field}>
             Beleg (PDF oder E-Rechnung)
-            <input type="file" accept=".pdf,.xml,image/*" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+            <input
+              type="file"
+              accept=".pdf,.xml,image/*"
+              onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+            />
           </label>
         )}
         {needs.map((n) => (
           <label key={n} className={styles.field}>
             {FIELD[n] ?? n}
-            <input value={fields[n] ?? ""} onChange={(e) => setFields({ ...fields, [n]: e.target.value })} maxLength={300} required />
+            <input
+              value={fields[n] ?? ""}
+              onChange={(e) => setFields({ ...fields, [n]: e.target.value })}
+              maxLength={300}
+              required
+            />
           </label>
         ))}
       </fieldset>

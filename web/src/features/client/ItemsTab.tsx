@@ -26,12 +26,23 @@ function matches(i: ItemSummary, f: Filter): boolean {
   return i.state === f;
 }
 
-export function ItemsTab({ clientId, period, locked }: { clientId: string; period: string; locked: boolean }) {
+export function ItemsTab({
+  clientId,
+  period,
+  locked,
+}: {
+  clientId: string;
+  period: string;
+  locked: boolean;
+}) {
   const items = useItems(clientId, period);
   const decide = useDecide(clientId, period);
   const [filter, setFilter] = useState<Filter>("offen");
   const [selected, setSelected] = useState<number | null>(null);
-  const list = useMemo(() => (items.data?.items ?? []).filter((i) => matches(i, filter)), [items.data, filter]);
+  const list = useMemo(
+    () => (items.data?.items ?? []).filter((i) => matches(i, filter)),
+    [items.data, filter],
+  );
   const counts = useMemo(() => {
     const c: Record<string, number> = {};
     for (const f of FILTERS) c[f.key] = (items.data?.items ?? []).filter((i) => matches(i, f.key)).length;
@@ -50,7 +61,8 @@ export function ItemsTab({ clientId, period, locked }: { clientId: string; perio
       if (e.key === "k" && idx > 0) setSelected(list[idx - 1]?.id ?? null);
       if (e.key === "a" && current !== null && !locked) {
         const it = list[idx];
-        if (it?.state === "review" && !it.flags.some((f) => f.client)) decide.mutate({ id: current, d: { kind: "accept" } });
+        if (it?.state === "review" && !it.flags.some((f) => f.client))
+          decide.mutate({ id: current, d: { kind: "accept" } });
       }
     };
     window.addEventListener("keydown", onKey);
@@ -64,7 +76,8 @@ export function ItemsTab({ clientId, period, locked }: { clientId: string; perio
       isEmpty={(d) => d.items.length === 0}
       empty={
         <EmptyState title="Noch keine Posten">
-          Laden Sie den Kontoauszug des Monats hoch (CAMT.053) und führen Sie den Abschluss aus. Belege können vorher oder später kommen.
+          Laden Sie den Kontoauszug des Monats hoch (CAMT.053) und führen Sie den Abschluss aus. Belege können
+          vorher oder später kommen.
         </EmptyState>
       }
     >
@@ -73,24 +86,44 @@ export function ItemsTab({ clientId, period, locked }: { clientId: string; perio
           <section className={styles.listPane} aria-label="Posten">
             <div className={styles.filters} role="tablist" aria-label="Filter">
               {FILTERS.map((f) => (
-                <button key={f.key} role="tab" aria-selected={filter === f.key} className={filter === f.key ? styles.filterOn : styles.filter} onClick={() => setFilter(f.key)}>
+                <button
+                  key={f.key}
+                  role="tab"
+                  aria-selected={filter === f.key}
+                  className={filter === f.key ? styles.filterOn : styles.filter}
+                  onClick={() => setFilter(f.key)}
+                >
                   {f.label} <span className={styles.count}>{counts[f.key]}</span>
                 </button>
               ))}
             </div>
             {list.length === 0 ? (
               <EmptyState title={filter === "offen" ? "Nichts mehr offen" : "Keine Posten in dieser Ansicht"}>
-                {filter === "offen" ? "Alle Posten sind gebucht oder geparkt. Weiter mit der Umsatzsteuer und der Freigabe." : "Wählen Sie einen anderen Filter."}
+                {filter === "offen"
+                  ? "Alle Posten sind gebucht oder geparkt. Weiter mit der Umsatzsteuer und der Freigabe."
+                  : "Wählen Sie einen anderen Filter."}
               </EmptyState>
             ) : (
               <ol className={styles.list}>
                 {list.map((i, n) => (
-                  <motion.li key={i.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: Math.min(n, 20) * m.stagger, duration: m.base }}>
-                    <button type="button" className={i.id === current ? styles.rowOn : styles.row} aria-current={i.id === current || undefined} onClick={() => setSelected(i.id)}>
+                  <motion.li
+                    key={i.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: Math.min(n, 20) * m.stagger, duration: m.base }}
+                  >
+                    <button
+                      type="button"
+                      className={i.id === current ? styles.rowOn : styles.row}
+                      aria-current={i.id === current || undefined}
+                      onClick={() => setSelected(i.id)}
+                    >
                       <span className={styles.rowDate}>{date(i.date)}</span>
                       <span className={styles.rowMain}>
                         <span className={styles.rowName}>{i.counterparty || "ohne Namen"}</span>
-                        <span className={styles.rowSub}>{i.kind === "invoice" ? "Rechnungseingang" : i.family_label ?? "kein Vorschlag"}</span>
+                        <span className={styles.rowSub}>
+                          {i.kind === "invoice" ? "Rechnungseingang" : (i.family_label ?? "kein Vorschlag")}
+                        </span>
                       </span>
                       <Amount cents={i.amount_cents} />
                       <span className={styles.rowState}>
@@ -111,7 +144,11 @@ export function ItemsTab({ clientId, period, locked }: { clientId: string; perio
             </p>
           </section>
           <section className={styles.detailPane} aria-label="Posten im Detail">
-            {current === null ? <EmptyState title="Kein Posten gewählt" /> : <ItemDetail id={current} clientId={clientId} period={period} locked={locked} />}
+            {current === null ? (
+              <EmptyState title="Kein Posten gewählt" />
+            ) : (
+              <ItemDetail id={current} clientId={clientId} period={period} locked={locked} />
+            )}
           </section>
         </div>
       )}

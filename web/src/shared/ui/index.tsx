@@ -2,7 +2,7 @@ import type { UseQueryResult } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import type { ButtonHTMLAttributes, CSSProperties, ReactNode } from "react";
 
-import { amount as fmtAmount } from "../lib/format";
+import { amount as fmtAmount, shortMonth } from "../lib/format";
 import { motion as m, STATE_LABEL, STATES, type ItemState } from "../theme/tokens";
 import styles from "./ui.module.css";
 
@@ -16,9 +16,17 @@ export function Button({
   className,
   ...rest
 }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant; size?: "small"; busy?: boolean }) {
-  const cls = [styles.button, variant !== "default" && styles[variant], size && styles[size], className].filter(Boolean).join(" ");
+  const cls = [styles.button, variant !== "default" && styles[variant], size && styles[size], className]
+    .filter(Boolean)
+    .join(" ");
   return (
-    <button type="button" {...rest} className={cls} disabled={busy || rest.disabled} aria-busy={busy || undefined}>
+    <button
+      type="button"
+      {...rest}
+      className={cls}
+      disabled={busy || rest.disabled}
+      aria-busy={busy || undefined}
+    >
       {busy && <span className={styles.spinner} aria-hidden />}
       {children}
     </button>
@@ -39,7 +47,15 @@ export function SkeletonRows({ rows = 6, label }: { rows?: number; label: string
   );
 }
 
-export function EmptyState({ title, children, action }: { title: string; children?: ReactNode; action?: ReactNode }) {
+export function EmptyState({
+  title,
+  children,
+  action,
+}: {
+  title: string;
+  children?: ReactNode;
+  action?: ReactNode;
+}) {
   return (
     <section className={styles.state}>
       <h2 className={styles.stateTitle}>{title}</h2>
@@ -49,7 +65,15 @@ export function EmptyState({ title, children, action }: { title: string; childre
   );
 }
 
-export function ErrorState({ error, onRetry, title }: { error: unknown; onRetry?: () => void; title?: string }) {
+export function ErrorState({
+  error,
+  onRetry,
+  title,
+}: {
+  error: unknown;
+  onRetry?: () => void;
+  title?: string;
+}) {
   const message = error instanceof Error ? error.message : "Unbekannter Fehler";
   return (
     <section className={`${styles.state} ${styles.error}`} role="alert">
@@ -114,11 +138,24 @@ export function Amount({ cents, strong }: { cents: number; strong?: boolean }) {
 
 /** The month's runway: how much is booked by the agent, checked by staff, waiting on the
  * client, still to check, or parked. The one graphic the board is built around. */
-export function Runway({ counts, total, label }: { counts: Partial<Record<ItemState, number>>; total: number; label: string }) {
+export function Runway({
+  counts,
+  total,
+  label,
+}: {
+  counts: Partial<Record<ItemState, number>>;
+  total: number;
+  label: string;
+}) {
   const parts = STATES.map((s) => ({ s, n: counts[s] ?? 0 })).filter((p) => p.n > 0);
   const title = parts.map((p) => `${STATE_LABEL[p.s]}: ${p.n}`).join(", ");
   return (
-    <div className={styles.runway} role="img" aria-label={`${label}: ${title || "keine Posten"}`} title={title}>
+    <div
+      className={styles.runway}
+      role="img"
+      aria-label={`${label}: ${title || "keine Posten"}`}
+      title={title}
+    >
       {total === 0 ? (
         <div className={styles.runwayEmpty} />
       ) : (
@@ -137,7 +174,17 @@ export function Runway({ counts, total, label }: { counts: Partial<Record<ItemSt
   );
 }
 
-export function PageHead({ title, lede, actions, kicker }: { title: string; lede?: ReactNode; actions?: ReactNode; kicker?: ReactNode }) {
+export function PageHead({
+  title,
+  lede,
+  actions,
+  kicker,
+}: {
+  title: string;
+  lede?: ReactNode;
+  actions?: ReactNode;
+  kicker?: ReactNode;
+}) {
   return (
     <header className={styles.pageHead}>
       <div>
@@ -185,5 +232,34 @@ export function Notice({ tone = "info", children }: { tone?: "info" | "warn" | "
     >
       {children}
     </motion.div>
+  );
+}
+
+/** Month switcher shared by the board and the rollout: a segmented control over the latest months. */
+export function MonthSwitch({
+  months,
+  value,
+  onChange,
+}: {
+  months: string[];
+  value: string | undefined;
+  onChange: (p: string) => void;
+}) {
+  if (months.length < 2) return null;
+  return (
+    <div className={styles.months} role="tablist" aria-label="Monat">
+      {months.slice(0, 6).map((p) => (
+        <button
+          key={p}
+          type="button"
+          role="tab"
+          aria-selected={p === value}
+          className={p === value ? styles.monthOn : styles.month}
+          onClick={() => onChange(p)}
+        >
+          {shortMonth(p)}
+        </button>
+      ))}
+    </div>
   );
 }

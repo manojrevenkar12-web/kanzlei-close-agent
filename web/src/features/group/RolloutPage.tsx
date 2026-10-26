@@ -4,16 +4,32 @@ import { useSearchParams } from "react-router-dom";
 
 import { api } from "../../shared/api/client";
 import type { Rollout, RolloutFirm } from "../../shared/api/types";
-import { monthLabel, percent, shortMonth } from "../../shared/lib/format";
-import { Button, EmptyState, ErrorState, PageHead, QueryState, Runway, SkeletonRows } from "../../shared/ui";
+import { monthLabel, percent } from "../../shared/lib/format";
+import {
+  Button,
+  EmptyState,
+  ErrorState,
+  MonthSwitch,
+  PageHead,
+  QueryState,
+  Runway,
+  SkeletonRows,
+} from "../../shared/ui";
 import { useFamilies } from "../client/api";
 import styles from "./Rollout.module.css";
 
 export default function RolloutPage() {
-  const periods = useQuery({ queryKey: ["rollout-periods"], queryFn: () => api.get<string[]>("/api/rollout/periods") });
+  const periods = useQuery({
+    queryKey: ["rollout-periods"],
+    queryFn: () => api.get<string[]>("/api/rollout/periods"),
+  });
   const [params, setParams] = useSearchParams();
   const period = params.get("period") ?? periods.data?.[0];
-  const rollout = useQuery({ queryKey: ["rollout", period], queryFn: () => api.get<Rollout>(`/api/rollout?period=${period}`), enabled: !!period });
+  const rollout = useQuery({
+    queryKey: ["rollout", period],
+    queryFn: () => api.get<Rollout>(`/api/rollout?period=${period}`),
+    enabled: !!period,
+  });
   return (
     <>
       <PageHead
@@ -21,20 +37,26 @@ export default function RolloutPage() {
         kicker={period ? monthLabel(period) : undefined}
         lede="Wie weit der Agent in jeder Kanzlei der Gruppe trägt, wo Mitarbeiter ihn korrigieren und welche Konten aus übernommenen Kanzleien noch keiner Buchungsfamilie zugeordnet sind. Hier stehen nur Zahlen je Kanzlei, keine Mandantendaten."
         actions={
-          periods.data && periods.data.length > 1 ? (
-            <div className={styles.months}>
-              {periods.data.slice(0, 6).map((p) => (
-                <Button key={p} size="small" variant={p === period ? "primary" : "default"} onClick={() => setParams({ period: p })}>
-                  {shortMonth(p)}
-                </Button>
-              ))}
-            </div>
-          ) : undefined
+          <MonthSwitch
+            months={periods.data ?? []}
+            value={period}
+            onChange={(p) => setParams({ period: p })}
+          />
         }
       />
-      <QueryState query={periods} skeleton={<SkeletonRows label="Monate werden geladen" />} isEmpty={(d) => d.length === 0} empty={<EmptyState title="Noch keine Monate in Arbeit" />}>
+      <QueryState
+        query={periods}
+        skeleton={<SkeletonRows label="Monate werden geladen" />}
+        isEmpty={(d) => d.length === 0}
+        empty={<EmptyState title="Noch keine Monate in Arbeit" />}
+      >
         {() => (
-          <QueryState query={rollout} skeleton={<SkeletonRows rows={6} label="Kanzleien werden geladen" />} isEmpty={(d) => d.firms.length === 0} empty={<EmptyState title="Keine Kanzleien" />}>
+          <QueryState
+            query={rollout}
+            skeleton={<SkeletonRows rows={6} label="Kanzleien werden geladen" />}
+            isEmpty={(d) => d.firms.length === 0}
+            empty={<EmptyState title="Keine Kanzleien" />}
+          >
             {(r) => <RolloutView r={r} />}
           </QueryState>
         )}
@@ -77,15 +99,20 @@ function RolloutView({ r }: { r: Rollout }) {
         <h2 id="korr" className={styles.h2}>
           Was Mitarbeiter korrigieren
         </h2>
-        <p className={styles.small}>Die letzten 90 Tage: wo der Vorschlag falsch war. Daraus entstehen neue Regeln, Lexikon-Einträge oder Kontenzuordnungen.</p>
+        <p className={styles.small}>
+          Die letzten 90 Tage: wo der Vorschlag falsch war. Daraus entstehen neue Regeln, Lexikon-Einträge
+          oder Kontenzuordnungen.
+        </p>
         {r.corrections.length === 0 ? (
           <p className={styles.small}>Noch keine Korrekturen.</p>
         ) : (
           <ol className={styles.corrections}>
             {r.corrections.map((c, i) => (
               <li key={i}>
-                <span className={styles.n}>{c.n}×</span> {c.from_label ?? "kein Vorschlag"} <span aria-hidden>→</span>
-                <span className="visually-hidden">korrigiert zu</span> <strong>{c.to_label ?? "manuell"}</strong> <span className={styles.small}>({c.firm_id})</span>
+                <span className={styles.n}>{c.n}×</span> {c.from_label ?? "kein Vorschlag"}{" "}
+                <span aria-hidden>→</span>
+                <span className="visually-hidden">korrigiert zu</span>{" "}
+                <strong>{c.to_label ?? "manuell"}</strong> <span className={styles.small}>({c.firm_id})</span>
               </li>
             ))}
           </ol>
@@ -106,13 +133,29 @@ function Firm({ f }: { f: RolloutFirm }) {
           {f.chart}, {f.clients} Mandanten, {f.items} Posten
         </span>
       </th>
-      <td className={styles.runwayCell}>
-        <Runway label={f.firm_name} total={f.items} counts={{ auto: f.auto, done: reviewed + f.by_client, client: f.open_client, review: f.open_review, parked: f.parked }} />
+      <td className={styles.runwayCell} data-label="Stand">
+        <Runway
+          label={f.firm_name}
+          total={f.items}
+          counts={{
+            auto: f.auto,
+            done: reviewed + f.by_client,
+            client: f.open_client,
+            review: f.open_review,
+            parked: f.parked,
+          }}
+        />
       </td>
-      <td className={styles.num}>{percent(f.automation_share)}</td>
-      <td className={styles.num}>{percent(f.no_touch_share)}</td>
-      <td className={styles.num}>{reviewed ? percent(f.corrected / reviewed) : "–"}</td>
-      <td className={styles.num}>
+      <td className={styles.num} data-label="Automatisch">
+        {percent(f.automation_share)}
+      </td>
+      <td className={styles.num} data-label="Ohne Handgriff">
+        {percent(f.no_touch_share)}
+      </td>
+      <td className={styles.num} data-label="Korrigiert">
+        {reviewed ? percent(f.corrected / reviewed) : "–"}
+      </td>
+      <td className={styles.num} data-label="Festgeschrieben">
         {f.signed_off} / {f.clients}
       </td>
     </tr>
@@ -124,7 +167,8 @@ function Unmapped({ r }: { r: Rollout }) {
   const qc = useQueryClient();
   const [choice, setChoice] = useState<Record<string, string>>({});
   const map = useMutation({
-    mutationFn: ({ firm, account, family }: { firm: string; account: number; family: string }) => api.put(`/api/firms/${firm}/accounts/${account}`, { family }),
+    mutationFn: ({ firm, account, family }: { firm: string; account: number; family: string }) =>
+      api.put(`/api/firms/${firm}/accounts/${account}`, { family }),
     onSuccess: () => void qc.invalidateQueries({ queryKey: ["rollout"] }),
   });
   return (
@@ -132,7 +176,10 @@ function Unmapped({ r }: { r: Rollout }) {
       <h2 id="konten" className={styles.h2}>
         Konten ohne Zuordnung
       </h2>
-      <p className={styles.small}>Konten aus der DATEV-Historie übernommener Kanzleien, die der Standard-Kontenrahmen nicht kennt. Erst zugeordnet lernt der Agent aus ihnen.</p>
+      <p className={styles.small}>
+        Konten aus der DATEV-Historie übernommener Kanzleien, die der Standard-Kontenrahmen nicht kennt. Erst
+        zugeordnet lernt der Agent aus ihnen.
+      </p>
       {r.unmapped_accounts.length === 0 ? (
         <p className={styles.small}>Alle Konten sind zugeordnet.</p>
       ) : (
@@ -142,9 +189,16 @@ function Unmapped({ r }: { r: Rollout }) {
             return (
               <li key={key}>
                 <span>
-                  <strong>{a.account}</strong> <span className={styles.small}>{a.firm_id}, {a.rows} Buchungen</span>
+                  <strong>{a.account}</strong>{" "}
+                  <span className={styles.small}>
+                    {a.firm_id}, {a.rows} Buchungen
+                  </span>
                 </span>
-                <select aria-label={`Buchungsfamilie für Konto ${a.account}`} value={choice[key] ?? ""} onChange={(e) => setChoice({ ...choice, [key]: e.target.value })}>
+                <select
+                  aria-label={`Buchungsfamilie für Konto ${a.account}`}
+                  value={choice[key] ?? ""}
+                  onChange={(e) => setChoice({ ...choice, [key]: e.target.value })}
+                >
                   <option value="">Familie wählen</option>
                   {(families.data ?? []).map((f) => (
                     <option key={f.code} value={f.code}>
@@ -152,7 +206,14 @@ function Unmapped({ r }: { r: Rollout }) {
                     </option>
                   ))}
                 </select>
-                <Button size="small" disabled={!choice[key]} busy={map.isPending && map.variables?.account === a.account} onClick={() => map.mutate({ firm: a.firm_id, account: a.account, family: choice[key] ?? "" })}>
+                <Button
+                  size="small"
+                  disabled={!choice[key]}
+                  busy={map.isPending && map.variables?.account === a.account}
+                  onClick={() =>
+                    map.mutate({ firm: a.firm_id, account: a.account, family: choice[key] ?? "" })
+                  }
+                >
                   Zuordnen
                 </Button>
               </li>

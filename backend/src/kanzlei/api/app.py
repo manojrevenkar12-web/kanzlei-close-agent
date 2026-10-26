@@ -235,7 +235,9 @@ def build_app(deps: Deps) -> FastAPI:
             d["status"] = d["status"] or "offen"
             d["due_on"] = _due_date(end, cfg.due_day, cfg.dauerfrist_extra_months if d["dauerfrist"] else 0).isoformat()
             quarterly = d["vat_period"] == "quartal"
-            d["files_vat_this_month"] = (not quarterly) or end.month in (3, 6, 9, 12)
+            d["files_vat_this_month"] = d["vat_regime"] not in ("klein", "befreit") and (
+                (not quarterly) or end.month in (3, 6, 9, 12)
+            )
             out.append(d)
         return out
 

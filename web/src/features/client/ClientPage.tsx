@@ -9,7 +9,12 @@ import { ItemsTab } from "./ItemsTab";
 import { QueriesTab } from "./QueriesTab";
 import { VatTab } from "./VatTab";
 
-const STATUS: Record<string, string> = { offen: "nicht begonnen", in_arbeit: "in Arbeit", freigabe: "zur Freigabe", festgeschrieben: "festgeschrieben" };
+const STATUS: Record<string, string> = {
+  offen: "nicht begonnen",
+  in_arbeit: "in Arbeit",
+  freigabe: "zur Freigabe",
+  festgeschrieben: "festgeschrieben",
+};
 
 export default function ClientPage() {
   const { clientId = "", period = "", tab = "posten" } = useParams();
@@ -32,12 +37,36 @@ export default function ClientPage() {
             actions={
               !locked && (
                 <>
-                  <input ref={statementInput} type="file" accept=".xml" hidden onChange={(e) => e.target.files?.[0] && upload.mutate({ file: e.target.files[0], kind: "statement" })} />
-                  <input ref={docInput} type="file" accept=".xml,.pdf" hidden onChange={(e) => e.target.files?.[0] && upload.mutate({ file: e.target.files[0], kind: "document" })} />
-                  <Button size="small" onClick={() => statementInput.current?.click()} busy={upload.isPending && upload.variables?.kind === "statement"}>
+                  <input
+                    ref={statementInput}
+                    type="file"
+                    accept=".xml"
+                    hidden
+                    onChange={(e) =>
+                      e.target.files?.[0] && upload.mutate({ file: e.target.files[0], kind: "statement" })
+                    }
+                  />
+                  <input
+                    ref={docInput}
+                    type="file"
+                    accept=".xml,.pdf"
+                    hidden
+                    onChange={(e) =>
+                      e.target.files?.[0] && upload.mutate({ file: e.target.files[0], kind: "document" })
+                    }
+                  />
+                  <Button
+                    size="small"
+                    onClick={() => statementInput.current?.click()}
+                    busy={upload.isPending && upload.variables?.kind === "statement"}
+                  >
                     Kontoauszug (CAMT)
                   </Button>
-                  <Button size="small" onClick={() => docInput.current?.click()} busy={upload.isPending && upload.variables?.kind === "document"}>
+                  <Button
+                    size="small"
+                    onClick={() => docInput.current?.click()}
+                    busy={upload.isPending && upload.variables?.kind === "document"}
+                  >
                     Beleg hochladen
                   </Button>
                   <Button size="small" variant="primary" onClick={() => run.mutate()} busy={run.isPending}>
@@ -50,7 +79,9 @@ export default function ClientPage() {
         )}
       </QueryState>
       {upload.isError && <Notice tone="warn">{(upload.error as Error).message}</Notice>}
-      {upload.isSuccess && <Notice tone="ok">Datei übernommen. Mit „Abschluss ausführen“ wird sie zugeordnet.</Notice>}
+      {upload.isSuccess && (
+        <Notice tone="ok">Datei übernommen. Mit „Abschluss ausführen“ wird sie zugeordnet.</Notice>
+      )}
       {run.isError && <Notice tone="warn">{(run.error as Error).message}</Notice>}
       {run.isSuccess && (
         <Notice tone="ok">
@@ -59,17 +90,33 @@ export default function ClientPage() {
         </Notice>
       )}
       <nav className={styles.tabs} aria-label="Bereiche">
-        <NavLink end to={base} className={({ isActive }) => (isActive || tab === "posten" ? styles.tabOn : styles.tab)}>
+        <NavLink
+          end
+          to={base}
+          className={({ isActive }) => (isActive || tab === "posten" ? styles.tabOn : styles.tab)}
+        >
           Posten
         </NavLink>
-        <NavLink to={`${base}/rueckfragen`} className={({ isActive }) => (isActive ? styles.tabOn : styles.tab)}>
+        <NavLink
+          to={`${base}/rueckfragen`}
+          className={({ isActive }) => (isActive ? styles.tabOn : styles.tab)}
+        >
           Rückfragen
         </NavLink>
-        <NavLink to={`${base}/umsatzsteuer`} className={({ isActive }) => (isActive ? styles.tabOn : styles.tab)}>
+        <NavLink
+          to={`${base}/umsatzsteuer`}
+          className={({ isActive }) => (isActive ? styles.tabOn : styles.tab)}
+        >
           Umsatzsteuer und Freigabe
         </NavLink>
       </nav>
-      {tab === "rueckfragen" ? <QueriesTab clientId={clientId} period={period} /> : tab === "umsatzsteuer" ? <VatTab clientId={clientId} period={period} /> : <ItemsTab clientId={clientId} period={period} locked={locked} />}
+      {tab === "rueckfragen" ? (
+        <QueriesTab clientId={clientId} period={period} />
+      ) : tab === "umsatzsteuer" ? (
+        <VatTab clientId={clientId} period={period} />
+      ) : (
+        <ItemsTab clientId={clientId} period={period} locked={locked} />
+      )}
     </>
   );
 }

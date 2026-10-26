@@ -14,7 +14,20 @@ export function date(iso: string | null | undefined): string {
   return `${d}.${m}.${y}`;
 }
 
-const MONTHS = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+const MONTHS = [
+  "Januar",
+  "Februar",
+  "März",
+  "April",
+  "Mai",
+  "Juni",
+  "Juli",
+  "August",
+  "September",
+  "Oktober",
+  "November",
+  "Dezember",
+];
 
 export function monthLabel(period: string): string {
   const [y = "", m = ""] = period.split("-");

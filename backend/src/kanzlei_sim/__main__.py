@@ -223,12 +223,13 @@ def cmd_gate() -> int:
 
 
 def cmd_seed() -> None:
+    """The demo: three firms onboarded from their DATEV history, July and August closed the way a
+    firm closes them (client answers, staff review, sign-off), September in progress."""
     from kanzlei.db import as_user, create_pool, principal
     from kanzlei.migrate import migrate
-    from kanzlei.onboarding import import_package
     from kanzlei.storage import store_from_url
     from kanzlei_sim import render
-    from kanzlei_sim.run import opening_for
+    from kanzlei_sim.run import close_month, opening_for, seed
 
     s = settings()
     migrate(admin_url(), s.app_db_password)
@@ -239,32 +240,32 @@ def cmd_seed() -> None:
         ev.DecisionModel.load(config_dir() / close_config().decision_model_file),
     )
     firms = build()
-    tmp = Path(tempfile.mkdtemp(prefix="kca-seed-"))
-    from kanzlei.db import as_system
-
-    period = DEV[0]
+    seed(pool, firms, Path(tempfile.mkdtemp(prefix="kca-seed-")), HISTORY)
+    *closed, current = DEV
+    for period in closed:
+        for f in firms:
+            for c in f.clients:
+                r = close_month(eng, pool, f, c, period, opening_for(c, period), "demo")
+                print(f"{period} {c.name}: {'festgeschrieben' if r.signed else r.error}")
     for f in firms:
-        build_package(f, tmp / f.id, HISTORY)
-        with as_system(pool) as conn:
-            import_package(conn, tmp / f.id, actor="seed")
         for c in f.clients:
             who = principal(pool, c.assigned[0])
             assert who is not None
             with as_user(pool, who) as conn:
-                xml, _ = render.camt053(c, period, c.months[period], opening_for(c, period))
-                eng.import_statement(conn, c.id, xml, f"camt053_{c.mandant_nr}_{period}.xml", who)
-                for e in c.months[period]:
+                xml, _ = render.camt053(c, current, c.months[current], opening_for(c, current))
+                eng.import_statement(conn, c.id, xml, f"camt053_{c.mandant_nr}_{current}.xml", who)
+                for e in c.months[current]:
                     if e.document and e.document.arrives == "with_statement":
                         name, data = render.document(c, c.party(e.party), e.document)
                         eng.import_document(
                             conn, c.id, data, name, source="upload", direction=e.document.direction, actor=who
                         )
-                summary = eng.run(conn, c.id, period, who)
-                q = summary.get("query")
-                if q:
-                    print(f"{c.name}: portal link /portal/{q['token']}")
+                summary = eng.run(conn, c.id, current, who)
+            q = summary.get("query")
+            if q:
+                print(f"{current} {c.name}: portal /portal/{q['token']}")
     pool.close()
-    print(f"seeded {len(firms)} firms, month {period} in progress")
+    print(f"seeded {len(firms)} firms: {', '.join(closed)} signed off, {current} in progress")
 
 
 def main(argv: list[str] | None = None) -> int:

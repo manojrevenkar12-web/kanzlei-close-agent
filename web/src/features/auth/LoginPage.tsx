@@ -21,15 +21,24 @@ export default function LoginPage() {
 
   const go = (login: string) =>
     signIn.mutate(login, {
-      onSuccess: (u) => nav(from && from !== "/anmelden" ? from : u.role === "gruppe" ? "/gruppe" : "/abschluss", { replace: true }),
+      onSuccess: (u) =>
+        nav(from && from !== "/anmelden" ? from : u.role === "gruppe" ? "/gruppe" : "/abschluss", {
+          replace: true,
+        }),
     });
 
   return (
     <main className={styles.page}>
-      <motion.section className={styles.sheet} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: m.slow, ease: m.ease }}>
+      <motion.section
+        className={styles.sheet}
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: m.slow, ease: m.ease }}
+      >
         <h1 className={styles.title}>Monatsabschluss</h1>
         <p className={styles.lede}>
-          Bankumsätze und E-Rechnungen rein, geprüfte Buchungen, Umsatzsteuer-Voranmeldung und DATEV-Export raus. Demo-Zugang: wählen Sie eine Person.
+          Bankumsätze und E-Rechnungen rein, geprüfte Buchungen, Umsatzsteuer-Voranmeldung und DATEV-Export
+          raus. Demo-Zugang: wählen Sie eine Person.
         </p>
         {signIn.isError && <ErrorState error={signIn.error} title="Anmeldung fehlgeschlagen" />}
         <QueryState
@@ -38,14 +47,24 @@ export default function LoginPage() {
           isEmpty={(d) => d.length === 0}
           empty={<p>Keine Demo-Personen angelegt. Bitte erst `python -m kanzlei_sim seed` ausführen.</p>}
         >
-          {(list) => <People list={list} onPick={go} busy={signIn.isPending ? signIn.variables : undefined} />}
+          {(list) => (
+            <People list={list} onPick={go} busy={signIn.isPending ? signIn.variables : undefined} />
+          )}
         </QueryState>
       </motion.section>
     </main>
   );
 }
 
-function People({ list, onPick, busy }: { list: DemoUser[]; onPick: (login: string) => void; busy?: string }) {
+function People({
+  list,
+  onPick,
+  busy,
+}: {
+  list: DemoUser[];
+  onPick: (login: string) => void;
+  busy?: string;
+}) {
   const groups = new Map<string, DemoUser[]>();
   for (const u of list) {
     const k = u.firm ?? "Gruppe";
@@ -61,7 +80,13 @@ function People({ list, onPick, busy }: { list: DemoUser[]; onPick: (login: stri
           <ul className={styles.people}>
             {people.map((p) => (
               <li key={p.login}>
-                <button type="button" className={styles.person} onClick={() => onPick(p.login)} disabled={busy !== undefined} aria-busy={busy === p.login || undefined}>
+                <button
+                  type="button"
+                  className={styles.person}
+                  onClick={() => onPick(p.login)}
+                  disabled={busy !== undefined}
+                  aria-busy={busy === p.login || undefined}
+                >
                   <span className={styles.name}>{p.name}</span>
                   <span className={styles.role}>{ROLE[p.role]}</span>
                 </button>

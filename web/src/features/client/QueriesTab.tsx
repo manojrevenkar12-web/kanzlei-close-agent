@@ -4,7 +4,11 @@ import { Button, EmptyState, Notice, QueryState, SkeletonRows, Tag } from "../..
 import { useApplyAnswers, useQueries } from "./api";
 import styles from "./Client.module.css";
 
-const STATUS: Record<QueryBundle["status"], string> = { offen: "Wartet auf Antwort", beantwortet: "Beantwortet", geschlossen: "Erledigt" };
+const STATUS: Record<QueryBundle["status"], string> = {
+  offen: "Wartet auf Antwort",
+  beantwortet: "Beantwortet",
+  geschlossen: "Erledigt",
+};
 
 export function QueriesTab({ clientId, period }: { clientId: string; period: string }) {
   const queries = useQueries(clientId, period);
@@ -14,7 +18,12 @@ export function QueriesTab({ clientId, period }: { clientId: string; period: str
       query={queries}
       skeleton={<SkeletonRows rows={5} label="Rückfragen werden geladen" />}
       isEmpty={(d) => d.length === 0}
-      empty={<EmptyState title="Keine Rückfragen">Der Agent fragt den Mandanten nur, was in den Unterlagen fehlt: Belege, Anlässe von Bewirtungen, private oder betriebliche Zahlungen.</EmptyState>}
+      empty={
+        <EmptyState title="Keine Rückfragen">
+          Der Agent fragt den Mandanten nur, was in den Unterlagen fehlt: Belege, Anlässe von Bewirtungen,
+          private oder betriebliche Zahlungen.
+        </EmptyState>
+      }
     >
       {(list) => {
         const waiting = list.flatMap((q) => q.items).filter((i) => i.answer && i.state === "client").length;
@@ -28,7 +37,11 @@ export function QueriesTab({ clientId, period }: { clientId: string; period: str
                 </Button>
               </Notice>
             )}
-            {apply.isSuccess && <Notice tone="ok">{apply.data.applied} Antworten übernommen und nach den Regeln gebucht oder zur Prüfung gelegt.</Notice>}
+            {apply.isSuccess && (
+              <Notice tone="ok">
+                {apply.data.applied} Antworten übernommen und nach den Regeln gebucht oder zur Prüfung gelegt.
+              </Notice>
+            )}
             {list.map((q) => (
               <article key={q.id} className={styles.bundle} aria-label={q.subject}>
                 <header className={styles.bundleHead}>
@@ -42,7 +55,13 @@ export function QueriesTab({ clientId, period }: { clientId: string; period: str
                   {q.items.map((i) => (
                     <li key={i.item_id}>
                       <p>{i.question}</p>
-                      <p className={styles.small}>{i.answer ? `Antwort: ${Object.values(i.answer).filter((v) => typeof v === "string").join(", ")}` : "offen"}</p>
+                      <p className={styles.small}>
+                        {i.answer
+                          ? `Antwort: ${Object.values(i.answer)
+                              .filter((v) => typeof v === "string")
+                              .join(", ")}`
+                          : "offen"}
+                      </p>
                     </li>
                   ))}
                 </ol>

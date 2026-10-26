@@ -11,23 +11,40 @@ export const keys = {
 };
 
 export function useItems(clientId: string, period: string) {
-  return useQuery({ queryKey: keys.items(clientId, period), queryFn: () => api.get<ItemsResponse>(`/api/clients/${clientId}/periods/${period}/items`) });
+  return useQuery({
+    queryKey: keys.items(clientId, period),
+    queryFn: () => api.get<ItemsResponse>(`/api/clients/${clientId}/periods/${period}/items`),
+  });
 }
 
 export function useItem(id: number | null) {
-  return useQuery({ queryKey: keys.item(id ?? 0), queryFn: () => api.get<ItemDetailResponse>(`/api/items/${id}`), enabled: id !== null });
+  return useQuery({
+    queryKey: keys.item(id ?? 0),
+    queryFn: () => api.get<ItemDetailResponse>(`/api/items/${id}`),
+    enabled: id !== null,
+  });
 }
 
 export function useFamilies() {
-  return useQuery({ queryKey: ["families"], queryFn: () => api.get<Family[]>("/api/families"), staleTime: Infinity });
+  return useQuery({
+    queryKey: ["families"],
+    queryFn: () => api.get<Family[]>("/api/families"),
+    staleTime: Infinity,
+  });
 }
 
 export function useQueries(clientId: string, period: string) {
-  return useQuery({ queryKey: keys.queries(clientId, period), queryFn: () => api.get<QueryBundle[]>(`/api/clients/${clientId}/periods/${period}/queries`) });
+  return useQuery({
+    queryKey: keys.queries(clientId, period),
+    queryFn: () => api.get<QueryBundle[]>(`/api/clients/${clientId}/periods/${period}/queries`),
+  });
 }
 
 export function useUstva(clientId: string, period: string) {
-  return useQuery({ queryKey: keys.ustva(clientId, period), queryFn: () => api.get<Ustva>(`/api/clients/${clientId}/periods/${period}/ustva`) });
+  return useQuery({
+    queryKey: keys.ustva(clientId, period),
+    queryFn: () => api.get<Ustva>(`/api/clients/${clientId}/periods/${period}/ustva`),
+  });
 }
 
 function useRefresh(clientId: string, period: string) {
@@ -40,7 +57,11 @@ function useRefresh(clientId: string, period: string) {
   };
 }
 
-export type Decision = { kind: "accept" } | { kind: "correct"; family: string; tax: string | null; reason: string } | { kind: "park"; note: string } | { kind: "dismiss"; note: string };
+export type Decision =
+  | { kind: "accept" }
+  | { kind: "correct"; family: string; tax: string | null; reason: string }
+  | { kind: "park"; note: string }
+  | { kind: "dismiss"; note: string };
 
 export function useDecide(clientId: string, period: string) {
   const refresh = useRefresh(clientId, period);
@@ -49,7 +70,8 @@ export function useDecide(clientId: string, period: string) {
     mutationFn: ({ id, d }: { id: number; d: Decision }) => {
       const path = `/api/items/${id}/${d.kind}`;
       if (d.kind === "accept") return api.post<ItemDetailResponse>(path);
-      if (d.kind === "correct") return api.post<ItemDetailResponse>(path, { family: d.family, tax: d.tax, reason: d.reason });
+      if (d.kind === "correct")
+        return api.post<ItemDetailResponse>(path, { family: d.family, tax: d.tax, reason: d.reason });
       return api.post<ItemDetailResponse>(path, { note: d.note });
     },
     onSuccess: (data) => {
@@ -62,14 +84,23 @@ export function useDecide(clientId: string, period: string) {
 export function useRun(clientId: string, period: string) {
   const refresh = useRefresh(clientId, period);
   return useMutation({
-    mutationFn: () => api.post<{ items: number; created: { payment: number; invoice: number }; query?: { portal_link: string; items: number } }>(`/api/clients/${clientId}/periods/${period}/run`),
+    mutationFn: () =>
+      api.post<{
+        items: number;
+        created: { payment: number; invoice: number };
+        query?: { portal_link: string; items: number };
+      }>(`/api/clients/${clientId}/periods/${period}/run`),
     onSuccess: refresh,
   });
 }
 
 export function useApplyAnswers(clientId: string, period: string) {
   const refresh = useRefresh(clientId, period);
-  return useMutation({ mutationFn: () => api.post<{ applied: number }>(`/api/clients/${clientId}/periods/${period}/apply-answers`), onSuccess: refresh });
+  return useMutation({
+    mutationFn: () =>
+      api.post<{ applied: number }>(`/api/clients/${clientId}/periods/${period}/apply-answers`),
+    onSuccess: refresh,
+  });
 }
 
 export function useUpload(clientId: string, period: string) {
@@ -79,7 +110,10 @@ export function useUpload(clientId: string, period: string) {
       const form = new FormData();
       form.append("file", file);
       if (kind === "document") form.append("direction", "in");
-      return api.upload<Record<string, unknown>>(`/api/clients/${clientId}/${kind === "statement" ? "statements" : "documents"}`, form);
+      return api.upload<Record<string, unknown>>(
+        `/api/clients/${clientId}/${kind === "statement" ? "statements" : "documents"}`,
+        form,
+      );
     },
     onSuccess: refresh,
   });
@@ -88,7 +122,10 @@ export function useUpload(clientId: string, period: string) {
 export function useSignOff(clientId: string, period: string) {
   const refresh = useRefresh(clientId, period);
   return useMutation({
-    mutationFn: (acknowledge: boolean) => api.post<{ sha256: string; export: string }>(`/api/clients/${clientId}/periods/${period}/sign-off`, { acknowledge_flags: acknowledge }),
+    mutationFn: (acknowledge: boolean) =>
+      api.post<{ sha256: string; export: string }>(`/api/clients/${clientId}/periods/${period}/sign-off`, {
+        acknowledge_flags: acknowledge,
+      }),
     onSuccess: refresh,
   });
 }

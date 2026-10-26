@@ -15,6 +15,8 @@ from kanzlei.domain.models import Line
 from kanzlei.domain.money import split_gross, tax_on_net
 
 OUTPUT_SIDE = {"U19", "U7", "IGL", "EU_SVC", "RC_OUT", "FREI"}
+# The order of the form (USt 1 A).
+FORM_ORDER = ["81", "86", "41", "43", "21", "48", "60", "89", "46", "47", "84", "85", "66", "61", "67", "83"]
 
 
 @dataclass
@@ -70,7 +72,8 @@ def compute(
     deductible = sum(r.tax_cents for k, r in rows.items() if k in ("66", "61", "67"))
     r83 = row("83")
     r83.tax_cents = owed - deductible
-    return dict(sorted(rows.items(), key=lambda kv: (kv[0] == "83", kv[0])))
+    rank = {kz: i for i, kz in enumerate(FORM_ORDER)}
+    return dict(sorted(rows.items(), key=lambda kv: (rank.get(kv[0], 50), kv[0])))
 
 
 def to_json(rows: dict[str, Row]) -> list[dict[str, object]]:

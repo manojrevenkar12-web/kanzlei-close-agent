@@ -5,17 +5,43 @@ import { api } from "../../shared/api/client";
 import type { DocView, ItemDetailResponse, LineView } from "../../shared/api/types";
 import { amount, date, eur, TAX_LABEL } from "../../shared/lib/format";
 import { motion as m } from "../../shared/theme/tokens";
-import { Amount, Button, ErrorState, Notice, QueryState, SkeletonRows, StateBadge, Tag } from "../../shared/ui";
+import {
+  Amount,
+  Button,
+  ErrorState,
+  Notice,
+  QueryState,
+  SkeletonRows,
+  StateBadge,
+  Tag,
+} from "../../shared/ui";
 import { useDecide, useFamilies, useItem } from "./api";
 import styles from "./Client.module.css";
 
-export function ItemDetail({ id, clientId, period, locked }: { id: number; clientId: string; period: string; locked: boolean }) {
+export function ItemDetail({
+  id,
+  clientId,
+  period,
+  locked,
+}: {
+  id: number;
+  clientId: string;
+  period: string;
+  locked: boolean;
+}) {
   const item = useItem(id);
   return (
     <QueryState query={item} skeleton={<SkeletonRows rows={8} label="Posten wird geladen" />}>
       {(d) => (
         <AnimatePresence mode="wait">
-          <motion.article key={d.id} className={styles.detail} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: m.base, ease: m.ease }}>
+          <motion.article
+            key={d.id}
+            className={styles.detail}
+            initial={{ opacity: 0, x: 8 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: m.base, ease: m.ease }}
+          >
             <Detail d={d} clientId={clientId} period={period} locked={locked} />
           </motion.article>
         </AnimatePresence>
@@ -24,7 +50,17 @@ export function ItemDetail({ id, clientId, period, locked }: { id: number; clien
   );
 }
 
-function Detail({ d, clientId, period, locked }: { d: ItemDetailResponse; clientId: string; period: string; locked: boolean }) {
+function Detail({
+  d,
+  clientId,
+  period,
+  locked,
+}: {
+  d: ItemDetailResponse;
+  clientId: string;
+  period: string;
+  locked: boolean;
+}) {
   const lines = d.final_lines ?? d.proposal_lines;
   const waitingForClient = d.flags.some((f) => f.client);
   return (
@@ -63,7 +99,10 @@ function Detail({ d, clientId, period, locked }: { d: ItemDetailResponse; client
         {!d.final_lines && d.source && (
           <p className={styles.small}>
             Grundlage: {SOURCE[d.source] ?? d.source}
-            {d.confidence > 0 && `, Sicherheit ${Math.round(d.confidence * 100)} %`}
+            {d.flags.length === 0 &&
+              d.confidence > 0 &&
+              `, Wahrscheinlichkeit richtig ${Math.round(d.confidence * 100)} %`}
+            {d.flags.length > 0 && ", von einer Regel angehalten"}
           </p>
         )}
         {d.decided_by && <p className={styles.small}>Entschieden von {d.decided_by}</p>}
@@ -82,7 +121,9 @@ function Detail({ d, clientId, period, locked }: { d: ItemDetailResponse; client
         </section>
       )}
 
-      {!locked && (d.state === "review" || d.state === "client") && <Actions d={d} clientId={clientId} period={period} waitingForClient={waitingForClient} />}
+      {!locked && (d.state === "review" || d.state === "client") && (
+        <Actions d={d} clientId={clientId} period={period} waitingForClient={waitingForClient} />
+      )}
 
       {d.questions.length > 0 && (
         <section aria-labelledby={`q-${d.id}`}>
@@ -92,7 +133,9 @@ function Detail({ d, clientId, period, locked }: { d: ItemDetailResponse; client
           {d.questions.map((q, i) => (
             <div key={i} className={styles.question}>
               <p>{q.question}</p>
-              <p className={styles.small}>{q.answer ? `Antwort: ${answerText(q.answer)}` : "Noch keine Antwort."}</p>
+              <p className={styles.small}>
+                {q.answer ? `Antwort: ${answerText(q.answer)}` : "Noch keine Antwort."}
+              </p>
             </div>
           ))}
         </section>
@@ -101,7 +144,9 @@ function Detail({ d, clientId, period, locked }: { d: ItemDetailResponse; client
       {d.documents.map((doc) => (
         <Document key={doc.id} doc={doc} />
       ))}
-      {d.documents.length === 0 && d.kind === "payment" && <p className={styles.small}>Kein Beleg zugeordnet.</p>}
+      {d.documents.length === 0 && d.kind === "payment" && (
+        <p className={styles.small}>Kein Beleg zugeordnet.</p>
+      )}
 
       {d.history.length > 0 && (
         <section aria-labelledby={`h-${d.id}`}>
@@ -131,6 +176,7 @@ const SOURCE: Record<string, string> = {
   classifier: "Text des Umsatzes und des Belegs",
   document: "Rechnung",
   rule: "Regel",
+  conflict: "Text dieses Umsatzes (widerspricht der Historie)",
   answer: "Antwort des Mandanten",
   llm: "Sprachmodell (geprüft)",
   none: "keine",
@@ -200,7 +246,8 @@ function Document({ doc }: { doc: DocView }) {
       <dl className={styles.docFacts}>
         <dt>Aussteller</dt>
         <dd>
-          {inv.seller || "–"} {inv.seller_vat_id && <span className={styles.small}>({inv.seller_vat_id})</span>}
+          {inv.seller || "–"}{" "}
+          {inv.seller_vat_id && <span className={styles.small}>({inv.seller_vat_id})</span>}
         </dd>
         <dt>Nummer, Datum</dt>
         <dd>
@@ -217,7 +264,7 @@ function Document({ doc }: { doc: DocView }) {
               <tr key={i}>
                 <td>{ln.description}</td>
                 <td>{ln.category === "S" ? `${ln.rate} %` : (ln.category ?? "")}</td>
-                <td className={styles.num}>{amount(ln.net_cents)}</td>
+                <td className={styles.num}>{ln.net_cents || ln.category ? amount(ln.net_cents) : ""}</td>
               </tr>
             ))}
           </tbody>
@@ -237,7 +284,17 @@ const FORMAT: Record<string, string> = {
   llm: "PDF, vom Sprachmodell gelesen",
 };
 
-function Actions({ d, clientId, period, waitingForClient }: { d: ItemDetailResponse; clientId: string; period: string; waitingForClient: boolean }) {
+function Actions({
+  d,
+  clientId,
+  period,
+  waitingForClient,
+}: {
+  d: ItemDetailResponse;
+  clientId: string;
+  period: string;
+  waitingForClient: boolean;
+}) {
   const decide = useDecide(clientId, period);
   const families = useFamilies();
   const [mode, setMode] = useState<"none" | "correct">("none");
@@ -246,22 +303,42 @@ function Actions({ d, clientId, period, waitingForClient }: { d: ItemDetailRespo
   const [reason, setReason] = useState("");
   return (
     <section className={styles.actions} aria-label="Entscheidung">
-      {waitingForClient && <p className={styles.small}>Wartet auf den Mandanten. Sie können trotzdem selbst entscheiden oder auf das Klärungskonto buchen.</p>}
+      {waitingForClient && (
+        <p className={styles.small}>
+          Wartet auf den Mandanten. Sie können trotzdem selbst entscheiden oder auf das Klärungskonto buchen.
+        </p>
+      )}
       <div className={styles.actionRow}>
         {d.state === "review" && !waitingForClient && (
-          <Button variant="primary" onClick={() => decide.mutate({ id: d.id, d: { kind: "accept" } })} busy={decide.isPending && decide.variables?.d.kind === "accept"}>
+          <Button
+            variant="primary"
+            onClick={() => decide.mutate({ id: d.id, d: { kind: "accept" } })}
+            busy={decide.isPending && decide.variables?.d.kind === "accept"}
+          >
             Übernehmen
           </Button>
         )}
-        <Button onClick={() => setMode(mode === "correct" ? "none" : "correct")} aria-expanded={mode === "correct"}>
+        <Button
+          onClick={() => setMode(mode === "correct" ? "none" : "correct")}
+          aria-expanded={mode === "correct"}
+        >
           Korrigieren
         </Button>
         {d.kind === "payment" ? (
-          <Button variant="ghost" onClick={() => decide.mutate({ id: d.id, d: { kind: "park", note: "Klärung" } })} busy={decide.isPending && decide.variables?.d.kind === "park"}>
+          <Button
+            variant="ghost"
+            onClick={() => decide.mutate({ id: d.id, d: { kind: "park", note: "Klärung" } })}
+            busy={decide.isPending && decide.variables?.d.kind === "park"}
+          >
             Auf Klärungskonto
           </Button>
         ) : (
-          <Button variant="ghost" onClick={() => decide.mutate({ id: d.id, d: { kind: "dismiss", note: "mit der Zahlung buchen" } })}>
+          <Button
+            variant="ghost"
+            onClick={() =>
+              decide.mutate({ id: d.id, d: { kind: "dismiss", note: "mit der Zahlung buchen" } })
+            }
+          >
             Nicht als Rechnung buchen
           </Button>
         )}
@@ -307,7 +384,12 @@ function Actions({ d, clientId, period, waitingForClient }: { d: ItemDetailRespo
               Hinweis für das Team (optional)
               <input value={reason} onChange={(e) => setReason(e.target.value)} maxLength={300} />
             </label>
-            <Button type="submit" variant="primary" busy={decide.isPending && decide.variables?.d.kind === "correct"} disabled={!family}>
+            <Button
+              type="submit"
+              variant="primary"
+              busy={decide.isPending && decide.variables?.d.kind === "correct"}
+              disabled={!family}
+            >
               Korrigiert buchen
             </Button>
           </motion.form>
