@@ -172,6 +172,10 @@ LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$
   ORDER BY f.name
 $$;
 
+CREATE FUNCTION rollout_periods() RETURNS SETOF text LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$
+  SELECT DISTINCT period FROM items WHERE app_system() OR app_role() IN ('gruppe', 'berater') ORDER BY 1 DESC
+$$;
+
 -- The application's role: subject to every policy above.
 DO $$ BEGIN
   IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'kanzlei_app') THEN

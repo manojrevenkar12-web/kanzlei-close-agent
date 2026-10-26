@@ -1,0 +1,35 @@
+.wrap {
+  overflow-x: auto;
+  background: var(--sheet);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--s-5);
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-sm);
+}
+.table th,
+.table td {
+  padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--ruling);
+  text-align: left;
+}
+.table thead th {
+  color: var(--ink-3);
+  font-size: var(--fs-xs);
+  border-bottom: var(--border-strong);
+}
+.table tbody th {
+  font-weight: var(--fw-regular);
+}
+.num {
+  text-align: right !important;
+  white-space: nowrap;
+}
+.note {
+  margin-top: var(--s-4);
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+}

@@ -1,0 +1,1033 @@
+firm: {id: kanzlei-ahrens, name: "Ahrens Thormählen Steuerberatungsgesellschaft mbH", city: "Kassel", chart: SKR04, berater_nr: 58214}
+staff:
+  - {login: c.ahrens, name: "Corinna Ahrens", role: berater}
+  - {login: o.brinkhaus, name: "Ole Brinkhaus", role: buchhaltung}
+  - {login: s.thormaehlen, name: "Svenja Thormählen", role: buchhaltung}
+
+clients:
+  # ------------------------------------------------------------------
+  # Physiotherapy practice, tax-free (§ 4 Nr. 14 UStG), direkt
+  # ------------------------------------------------------------------
+  - id: b-2001
+    mandant_nr: 2001
+    name: "Physiotherapie am Fuldaufer Katrin Sommerfeld"
+    legal_form: "Einzelunternehmen"
+    industry: "Physiotherapiepraxis"
+    booking_method: direkt
+    vat_regime: befreit
+    vat_period: quartal
+    iban: auto
+    vat_id: null
+    contact_name: "Katrin Sommerfeld"
+    contact_email: "praxis@physio-fuldaufer.example"
+    assigned: [s.thormaehlen]
+    parties:
+      - {key: miete, name: "Fuldaufer Immobilien GbR", role: supplier, iban: auto, vat_id: null, country: DE, street: "Uferweg 12", postcode: "34123", city: "Kassel"}
+      - {key: strom, name: "Nordhessen Energie GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Energieplatz 1", postcode: "34117", city: "Kassel"}
+      - {key: telecom, name: "Netzgold Telekommunikation GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Rheinallee 77", postcode: "40221", city: "Düsseldorf"}
+      - {key: software, name: "Therapiedesk GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Marktplatz 3", postcode: "35037", city: "Marburg"}
+      - {key: leasing, name: "Mobilleasing Kassel GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Leipziger Straße 140", postcode: "34123", city: "Kassel"}
+      - {key: kfzvers, name: "Hessenland Versicherung VaG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Ständeplatz 6", postcode: "34117", city: "Kassel"}
+      - {key: versicherung, name: "Rheinauen Versicherung AG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Rheinuferstraße 9", postcode: "50668", city: "Köln"}
+      - {key: verband, name: "Landesverband Physiotherapie Hessen e.V.", role: supplier, iban: auto, vat_id: null, country: DE, city: "Wiesbaden"}
+      - {key: medibedarf, name: "Medi-Bedarf Brückner GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Industriepark 8", postcode: "37079", city: "Göttingen"}
+      - {key: liegenwerk, name: "Liegenwerk Medizintechnik GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Am Werk 2", postcode: "33602", city: "Bielefeld"}
+      - {key: akademie, name: "Akademie für Manuelle Therapie Nordhessen GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, city: "Göttingen"}
+      - {key: werbung, name: "Nord-Holland Kurier Verlag GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, city: "Kassel"}
+      - {key: tanke, name: "Tankhof Wilhelmshöhe", role: supplier, iban: null, country: DE, city: "Kassel"}
+      - {key: bahn, name: "Schienenfern Reise GmbH", role: supplier, iban: null, vat_id: auto, country: DE, city: "Berlin"}
+      - {key: hotel, name: "Hotel Leineblick Göttingen", role: supplier, iban: null, vat_id: auto, country: DE, street: "Leinekanal 5", postcode: "37073", city: "Göttingen"}
+      - {key: brasserie, name: "Brasserie am Königstor", role: supplier, iban: null, country: DE, city: "Kassel"}
+      - {key: sanitaetshaus, name: "Sanitätshaus Lindenhof", role: supplier, iban: null, country: DE, city: "Kassel"}
+      - {key: spielwaren, name: "Spielwaren Kunterbunt", role: supplier, iban: null, country: DE, city: "Kassel"}
+      - {key: post, name: "Postfiliale Holländischer Platz", role: supplier, iban: null, country: DE, city: "Kassel"}
+      - {key: abrechnung, name: "Heilmittel-Abrechnungszentrum Mitte GmbH", role: customer, iban: auto, vat_id: auto, country: DE, city: "Erfurt"}
+      - {key: vollmann, name: "Herbert Vollmann", role: customer, iban: auto, vat_id: null, country: DE, city: "Kassel"}
+      - {key: brandauer, name: "Dr. Ursel Brandauer", role: customer, iban: auto, vat_id: null, country: DE, city: "Baunatal"}
+      - {key: ohlsen, name: "Gisela Ohlsen", role: customer, iban: auto, vat_id: null, country: DE, city: "Kassel"}
+      - {key: kuehnel, name: "Matthias Kühnel", role: customer, iban: auto, vat_id: null, country: DE, city: "Vellmar"}
+      - {key: hartwig, name: "L. Hartwig", role: customer, iban: auto, vat_id: null, country: DE}
+      - {key: bkk, name: "BKK Nordhessen Vital", role: other, iban: auto}
+      - {key: minijob, name: "Zentralstelle geringfügige Beschäftigung", role: other, iban: auto}
+      - {key: finanzamt, name: "Finanzamt Kassel-Fuldatal", role: other, iban: auto}
+      - {key: reinholz, name: "Jana Reinholz", role: other, iban: auto}
+      - {key: gaul, name: "Tobias Gaul", role: other, iban: auto}
+      - {key: aydin, name: "Melis Aydın", role: other, iban: auto}
+      - {key: laub, name: "Petra Laub", role: other, iban: auto}
+      - {key: inhaber, name: "Katrin Sommerfeld (privat)", role: other, iban: auto}
+      - {key: bank, name: "Bankhaus Wehlheiden AG", role: other, iban: null}
+    history:
+      - {party: miete, family: rent, tax: NONE, amount: -2150.00, months: 12}
+      - {party: strom, family: utilities, tax: NONE, amount: -184.00, months: 12}
+      - {party: telecom, family: telecom, tax: NONE, amount: -59.90, months: 12}
+      - {party: software, family: software, tax: NONE, amount: -89.25, months: 12}
+      - {party: leasing, family: vehicle_leasing, tax: NONE, amount: -392.70, months: 12}
+      - {party: kfzvers, family: vehicle_insurance, tax: NONE, amount: -61.30, months: 12}
+      - {party: versicherung, family: insurance, tax: NONE, amount: -48.60, months: 12}
+      - {party: verband, family: memberships, tax: NONE, amount: -45.00, months: 12}
+      - {party: medibedarf, family: goods, tax: NONE, amount: -210.00, months: 12, vary: 0.4}
+      - {party: tanke, family: fuel, tax: NONE, amount: -55.00, months: 12, per_month: 2, vary: 0.25}
+      - {party: abrechnung, family: revenue, tax: FREI, amount: 14800.00, months: 12, vary: 0.15}
+      - {party: vollmann, family: revenue, tax: FREI, amount: 312.00, months: 2}
+      - {party: bkk, family: social_security, tax: NONE, amount: -4912.66, months: 12, vary: 0.03}
+      - {party: minijob, family: social_security, tax: NONE, amount: -189.34, months: 12, vary: 0.05}
+      - {party: finanzamt, family: wage_tax, tax: NONE, amount: -1118.20, months: 12, vary: 0.04}
+      - {party: reinholz, family: payroll, tax: NONE, amount: -2180.00, months: 12}
+      - {party: gaul, family: payroll, tax: NONE, amount: -2240.00, months: 12}
+      - {party: aydin, family: payroll, tax: NONE, amount: -1960.00, months: 7}
+      - {party: laub, family: payroll, tax: NONE, amount: -603.00, months: 8}
+      - {party: inhaber, family: private_withdrawal, tax: NONE, amount: -3500.00, months: 12}
+      - {party: bank, family: bank_fees, tax: NONE, amount: -21.40, months: 12, vary: 0.1}
+    months:
+      "2026-09":
+        - id: p01
+          party: miete
+          on: 2026-09-01
+          method: ueberweisung
+          reference: "Miete Praxisräume Uferweg 12 September 2026"
+          amount: -2150.00
+          truth: {family: rent, tax: NONE}
+        - id: p02
+          party: leasing
+          on: 2026-09-01
+          method: lastschrift
+          reference: "Leasingrate 09/2026 Vertrag ML-30221"
+          amount: -392.70
+          truth: {family: vehicle_leasing, tax: NONE}
+        - id: p03
+          party: kfzvers
+          on: 2026-09-01
+          method: lastschrift
+          reference: "Kfz-Versicherung KS-KS 2207 Beitrag 09/2026"
+          amount: -61.30
+          truth: {family: vehicle_insurance, tax: NONE}
+        - id: p04
+          party: versicherung
+          on: 2026-09-01
+          method: lastschrift
+          reference: "Berufs- und Betriebshaftpflicht VS-Nr. 7720193 09/2026"
+          amount: -48.60
+          truth: {family: insurance, tax: NONE}
+        - id: p05
+          party: verband
+          on: 2026-09-01
+          method: lastschrift
+          reference: "Mitgliedsbeitrag 09/2026 Mitgl.-Nr. 4410"
+          amount: -45.00
+          truth: {family: memberships, tax: NONE}
+        - id: p06
+          party: inhaber
+          on: 2026-09-02
+          method: ueberweisung
+          reference: "Privatentnahme September"
+          amount: -3500.00
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: p17
+          party: akademie
+          on: 2026-09-02
+          method: ueberweisung
+          reference: "AMT-2026-215 Sommerfeld MT Modul 4"
+          document:
+            format: pdf
+            number: "AMT-2026-215"
+            issue_date: 2026-08-18
+            delivery_date: 2026-09-13
+            lines:
+              - {text: "Fortbildung Manuelle Therapie Modul 4, 11.–13.09.2026, Göttingen", net: 640.00, rate: 0, category: E}
+          truth: {family: training, tax: NONE}
+        - id: p07
+          party: software
+          on: 2026-09-03
+          method: lastschrift
+          reference: "TD-2026-09-3318 Therapiedesk"
+          document:
+            format: xrechnung-ubl
+            number: "TD-2026-09-3318"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Therapiedesk Praxis M, September 2026", net: 75.00, rate: 19, category: S}
+          truth: {family: software, tax: NONE}
+        - id: p08
+          party: tanke
+          on: 2026-09-04
+          method: karte
+          reference: "Tankhof Wilhelmshoehe Kartenzahlung"
+          document:
+            format: pdf
+            number: "TW-58812"
+            issue_date: 2026-09-04
+            delivery_date: 2026-09-04
+            lines:
+              - {text: "Super E10 32,6 l", net: 55.80, rate: 19, category: S}
+          truth: {family: fuel, tax: NONE}
+        - id: p09
+          party: abrechnung
+          on: 2026-09-08
+          method: gutschrift
+          reference: "Auszahlung Abrechnung August 2026 GKV IK 540612987"
+          amount: 15240.37
+          truth: {family: revenue, tax: FREI}
+        - id: p10
+          party: telecom
+          on: 2026-09-08
+          method: lastschrift
+          reference: "Kd 662019 Rechnung September"
+          document:
+            format: pdf
+            number: "NG-2026-09-662019"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Festnetz und Internet Praxis, September 2026", net: 50.34, rate: 19, category: S}
+          truth: {family: telecom, tax: NONE}
+        - id: p12
+          party: vollmann
+          on: 2026-09-09
+          method: gutschrift
+          reference: "Rechnung P-2026-0831"
+          document:
+            format: pdf
+            direction: out
+            number: "P-2026-0831"
+            issue_date: 2026-08-31
+            delivery_date: 2026-08-28
+            notes: "Umsatzsteuerfrei nach § 4 Nr. 14 a UStG"
+            lines:
+              - {text: "Krankengymnastik 6 x und Manuelle Therapie 6 x lt. Verordnung vom 22.07.2026", net: 312.00, rate: 0, category: E}
+          truth: {family: revenue, tax: FREI}
+        - id: p13
+          party: medibedarf
+          on: 2026-09-09
+          method: ueberweisung
+          reference: "MB-2026-44190"
+          document:
+            format: pdf
+            number: "MB-2026-44190"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-31
+            lines:
+              - {text: "Massageöl neutral 5 l, 4 Stück", net: 72.00, rate: 19, category: S}
+              - {text: "Kinesio-Tape 5 cm, 24 Rollen", net: 96.00, rate: 19, category: S}
+              - {text: "Einmal-Liegenauflagen, 10 Rollen", net: 58.00, rate: 19, category: S}
+          truth: {family: goods, tax: NONE}
+        - id: p11
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          reference: "LSt 08/2026 StNr 026/831/40217"
+          amount: -1118.20
+          truth: {family: wage_tax, tax: NONE}
+        - id: p14
+          party: hartwig
+          on: 2026-09-11
+          method: gutschrift
+          reference: "Physio"
+          amount: 85.00
+          says:
+            unknown_credit: {choice: customer, invoice_no: "P-2026-0812"}
+          truth: {family: revenue, tax: FREI}
+        - id: p18
+          party: bahn
+          on: 2026-09-11
+          method: karte
+          reference: "Schienenfern Online-Ticket"
+          document:
+            format: pdf
+            number: "SF-8813-0410"
+            issue_date: 2026-09-10
+            delivery_date: 2026-09-11
+            lines:
+              - {text: "Kassel-Wilhelmshöhe – Göttingen und zurück, 11.–13.09.2026", net: 37.38, rate: 7, category: S}
+          truth: {family: travel_transport, tax: NONE}
+        - id: p15
+          party: brandauer
+          on: 2026-09-14
+          method: gutschrift
+          reference: "RE P-2026-0839 Brandauer"
+          document:
+            format: pdf
+            direction: out
+            number: "P-2026-0839"
+            issue_date: 2026-09-04
+            delivery_date: 2026-09-03
+            notes: "Umsatzsteuerfrei nach § 4 Nr. 14 a UStG"
+            lines:
+              - {text: "Krankengymnastik am Gerät 10 x lt. Verordnung vom 30.06.2026", net: 380.00, rate: 0, category: E}
+          truth: {family: revenue, tax: FREI}
+        - id: p16
+          party: hotel
+          on: 2026-09-14
+          method: karte
+          reference: "Hotel Leineblick Goettingen"
+          document:
+            format: pdf
+            number: "HL-2026-7712"
+            issue_date: 2026-09-13
+            delivery_date: 2026-09-13
+            lines:
+              - {text: "Übernachtung Einzelzimmer 11.–13.09.2026, 2 Nächte", net: 186.92, rate: 7, category: S}
+              - {text: "Frühstück, 2 x", net: 25.21, rate: 19, category: S}
+          truth: {family: travel_lodging, tax: NONE}
+        - id: p19
+          party: liegenwerk
+          on: 2026-09-15
+          method: ueberweisung
+          reference: "LW-2026-1093 Therapieliege"
+          document:
+            format: zugferd
+            number: "LW-2026-1093"
+            issue_date: 2026-09-10
+            delivery_date: 2026-09-09
+            lines:
+              - {text: "Therapieliege elektrisch, 3-teilig, Bezug Anthrazit", net: 1890.00, rate: 19, category: S}
+              - {text: "Lieferung und Aufbau", net: 90.00, rate: 19, category: S}
+          truth: {family: equipment, tax: NONE}
+        - id: p36
+          party: strom
+          on: 2026-09-15
+          method: lastschrift
+          reference: "Abschlag September Vertragskonto 3301847"
+          amount: -184.00
+          truth: {family: utilities, tax: NONE}
+        - id: p20
+          party: brasserie
+          on: 2026-09-16
+          method: karte
+          reference: "Brasserie Koenigstor Kartenzahlung"
+          document:
+            format: pdf
+            number: "BK-0916-0087"
+            issue_date: 2026-09-16
+            delivery_date: 2026-09-16
+            lines:
+              - {text: "Speisen", net: 64.70, rate: 19, category: S}
+              - {text: "Getränke", net: 18.90, rate: 19, category: S}
+          says:
+            meals_details: {choice: details, occasion: "Kooperation Rückenschule mit Orthopädiepraxis", participants: "K. Sommerfeld; Dr. J. Wendt (Orthopädie am Königstor)"}
+          truth: {family: meals, tax: NONE}
+        - id: p21
+          party: sanitaetshaus
+          on: 2026-09-17
+          method: karte
+          reference: "Sanitaetshaus Lindenhof Kartenzahlung"
+          amount: -34.90
+          says:
+            missing_receipt: {choice: no_receipt, purpose: "Therabänder für die Praxis"}
+          truth: {family: goods, tax: NONE}
+        - id: p22
+          party: tanke
+          on: 2026-09-18
+          method: karte
+          reference: "Tankhof Wilhelmshoehe Kartenzahlung"
+          document:
+            format: pdf
+            number: "TW-59340"
+            issue_date: 2026-09-18
+            delivery_date: 2026-09-18
+            lines:
+              - {text: "Super E10 28,9 l", net: 49.50, rate: 19, category: S}
+          truth: {family: fuel, tax: NONE}
+        - id: p23
+          party: spielwaren
+          on: 2026-09-19
+          method: karte
+          reference: "Spielwaren Kunterbunt Kartenzahlung"
+          document:
+            format: pdf
+            number: "SK-1907-22"
+            issue_date: 2026-09-19
+            delivery_date: 2026-09-19
+            lines:
+              - {text: "Baukasten Ritterburg", net: 41.93, rate: 19, category: S}
+          says:
+            private_or_business: {choice: private}
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: p24
+          party: werbung
+          on: 2026-09-21
+          method: ueberweisung
+          reference: "Anzeige Rückenschule NHK-26-0391"
+          document:
+            format: pdf
+            number: "NHK-26-0391"
+            issue_date: 2026-09-12
+            delivery_date: 2026-09-12
+            lines:
+              - {text: "Anzeige Rückenschule, 1/8 Seite, Ausgabe 12.09.2026", net: 120.00, rate: 19, category: S}
+          truth: {family: advertising, tax: NONE}
+        - id: p35
+          party: inhaber
+          on: 2026-09-21
+          method: ueberweisung
+          reference: "Entnahme"
+          amount: -1000.00
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: p25
+          party: versicherung
+          on: 2026-09-22
+          method: gutschrift
+          reference: "Erstattung VS-Nr. 7720193"
+          amount: 97.20
+          says:
+            unknown_credit: {choice: refund}
+          truth: {family: insurance, tax: NONE}
+        - id: p26
+          party: ohlsen
+          on: 2026-09-23
+          method: gutschrift
+          reference: "P-2026-0845"
+          document:
+            format: pdf
+            direction: out
+            number: "P-2026-0845"
+            issue_date: 2026-09-11
+            delivery_date: 2026-09-10
+            notes: "Umsatzsteuerfrei nach § 4 Nr. 14 a UStG"
+            lines:
+              - {text: "Hausbesuch Krankengymnastik 8 x inkl. Wegegeld lt. Verordnung vom 04.08.2026", net: 296.00, rate: 0, category: E}
+          truth: {family: revenue, tax: FREI}
+        - id: p27
+          party: post
+          on: 2026-09-23
+          method: karte
+          reference: "Postfiliale Kartenzahlung"
+          document:
+            format: pdf
+            number: "0923-0148"
+            issue_date: 2026-09-23
+            delivery_date: 2026-09-23
+            lines:
+              - {text: "Briefmarken 30 x 0,95 €", net: 28.50, rate: 0, category: E}
+          truth: {family: postage, tax: NONE}
+        - id: p28
+          party: medibedarf
+          on: 2026-09-24
+          method: ueberweisung
+          reference: "MB-2026-44388"
+          document:
+            format: pdf
+            number: "MB-2026-44388"
+            issue_date: 2026-09-17
+            delivery_date: 2026-09-16
+            lines:
+              - {text: "Flächendesinfektion 5 l, 2 Kanister", net: 38.00, rate: 19, category: S}
+              - {text: "Händedesinfektion 1 l, 6 Flaschen", net: 33.00, rate: 19, category: S}
+          truth: {family: goods, tax: NONE}
+        - id: p29
+          party: bkk
+          on: 2026-09-28
+          method: lastschrift
+          reference: "Beitragsnachweis 09/2026 BN 61022045"
+          amount: -4912.66
+          truth: {family: social_security, tax: NONE}
+        - id: p30
+          party: minijob
+          on: 2026-09-28
+          method: lastschrift
+          reference: "Abgaben geringfügig Beschäftigte 09/2026 BN 61022045"
+          amount: -189.34
+          truth: {family: social_security, tax: NONE}
+        - id: p31
+          party: reinholz
+          on: 2026-09-29
+          method: ueberweisung
+          reference: "Gehalt 09/2026"
+          amount: -2180.00
+          truth: {family: payroll, tax: NONE}
+        - id: p32
+          party: gaul
+          on: 2026-09-29
+          method: ueberweisung
+          reference: "Gehalt 09/2026"
+          amount: -2240.00
+          truth: {family: payroll, tax: NONE}
+        - id: p33
+          party: aydin
+          on: 2026-09-29
+          method: ueberweisung
+          reference: "Gehalt 09/2026"
+          amount: -1960.00
+          truth: {family: payroll, tax: NONE}
+        - id: p34
+          party: laub
+          on: 2026-09-29
+          method: ueberweisung
+          reference: "Minijob 09/2026"
+          amount: -603.00
+          truth: {family: payroll, tax: NONE}
+        - id: p38
+          party: kuehnel
+          on: 2026-09-29
+          method: gutschrift
+          reference: "Rechnung P-2026-0851 Kühnel"
+          document:
+            format: pdf
+            direction: out
+            number: "P-2026-0851"
+            issue_date: 2026-09-18
+            delivery_date: 2026-09-17
+            notes: "Umsatzsteuerfrei nach § 4 Nr. 14 a UStG"
+            lines:
+              - {text: "Manuelle Therapie 6 x lt. Verordnung vom 12.08.2026", net: 204.00, rate: 0, category: E}
+          truth: {family: revenue, tax: FREI}
+        - id: p37
+          party: bank
+          on: 2026-09-30
+          method: lastschrift
+          reference: "Kontoführung 09/2026"
+          amount: -21.40
+          truth: {family: bank_fees, tax: NONE}
+
+  # ------------------------------------------------------------------
+  # Online tea shop GmbH, OPOS, Soll-Versteuerung, monthly VAT return
+  # ------------------------------------------------------------------
+  - id: b-2002
+    mandant_nr: 2002
+    name: "Blattwerk Teehandel GmbH"
+    legal_form: "GmbH"
+    industry: "Onlinehandel mit Tee und Teezubehör, auch an Wiederverkäufer"
+    booking_method: opos
+    vat_regime: soll
+    vat_period: monat
+    iban: auto
+    vat_id: auto
+    contact_name: "Fenja Dorlach"
+    contact_email: "f.dorlach@blattwerk-tee.example"
+    assigned: [o.brinkhaus]
+    parties:
+      - {key: miete, name: "Lagerpark Kassel-Waldau GmbH & Co. KG", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Otto-Hahn-Straße 21", postcode: "34123", city: "Kassel"}
+      - {key: strom, name: "Nordhessen Energie GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Energieplatz 1", postcode: "34117", city: "Kassel"}
+      - {key: telecom, name: "Netzgold Telekommunikation GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Rheinallee 77", postcode: "40221", city: "Düsseldorf"}
+      - {key: shopwerft, name: "Shopwerft GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Hafenkante 4", postcode: "24103", city: "Kiel"}
+      - {key: clicksphere, name: "Clicksphere Ads Ireland Ltd.", role: supplier, iban: null, vat_id: auto, country: IE, street: "3 Barrow Street", postcode: "D04 E5W5", city: "Dublin"}
+      - {key: labelcraft, name: "Labelcraft Inc.", role: supplier, iban: null, vat_id: null, country: US, street: "1200 Pine Street", postcode: "98101", city: "Seattle"}
+      - {key: zahlfix, name: "Zahlfix Payments B.V.", role: other, iban: auto}
+      - {key: teeimport, name: "Hanseatische Teeimport GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Sandtorkai 18", postcode: "20457", city: "Hamburg"}
+      - {key: vandoorn, name: "Keramiek Groothandel Van Doorn B.V.", role: supplier, iban: auto, vat_id: auto, country: NL, street: "Industrieweg 44", postcode: "5683 CG", city: "Best"}
+      - {key: kraeuter, name: "Kräuterhaus Lindgren GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Mühlenweg 9", postcode: "99084", city: "Erfurt"}
+      - {key: messe, name: "Genusswelt Messegesellschaft mbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Messeallee 2", postcode: "60327", city: "Frankfurt am Main"}
+      - {key: paketblitz, name: "Paketblitz Logistik GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Logistikring 7", postcode: "36251", city: "Bad Hersfeld"}
+      - {key: anwalt, name: "Kanzlei Marx & Ohlendorf Rechtsanwälte", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Friedrichsplatz 9", postcode: "34117", city: "Kassel"}
+      - {key: buerotechnik, name: "Bürotechnik Fulda GmbH", role: supplier, iban: null, vat_id: auto, country: DE, city: "Fulda"}
+      - {key: lagertechnik, name: "Lagertechnik Direkt GmbH", role: supplier, iban: null, vat_id: auto, country: DE, city: "Paderborn"}
+      - {key: bahn, name: "Schienenfern Reise GmbH", role: supplier, iban: null, vat_id: auto, country: DE, city: "Berlin"}
+      - {key: hotel, name: "Hotel am Mainkai Garni", role: supplier, iban: null, vat_id: auto, country: DE, street: "Mainkai 30", postcode: "60311", city: "Frankfurt am Main"}
+      - {key: apfelwein, name: "Apfelweinstube Zur Eisernen Kanne", role: supplier, iban: null, country: DE, city: "Frankfurt am Main"}
+      - {key: taxi, name: "Taxi Mainmetropole", role: supplier, iban: null, country: DE, city: "Frankfurt am Main"}
+      - {key: weitblick, name: "Café Weitblick GmbH", role: customer, iban: auto, vat_id: auto, country: DE, street: "Weender Straße 70", postcode: "37073", city: "Göttingen"}
+      - {key: wendeltreppe, name: "Naturkost Wendeltreppe GmbH", role: customer, iban: auto, vat_id: auto, country: DE, street: "Wilhelmsstraße 3", postcode: "34117", city: "Kassel"}
+      - {key: lefevre, name: "Salon de Thé Lefèvre SARL", role: customer, iban: auto, vat_id: auto, country: FR, street: "12 Rue Mercière", postcode: "69002", city: "Lyon"}
+      - {key: bkk, name: "BKK Nordhessen Vital", role: other, iban: auto}
+      - {key: finanzamt, name: "Finanzamt Kassel-Fuldatal", role: other, iban: auto}
+      - {key: dorlach, name: "Fenja Dorlach", role: other, iban: auto}
+      - {key: kowalczyk, name: "Arne Kowalczyk", role: other, iban: auto}
+      - {key: lindemann, name: "Sophie Lindemann", role: other, iban: auto}
+      - {key: bank, name: "Bankhaus Wehlheiden AG", role: other, iban: null}
+    history:
+      - {party: miete, family: rent, tax: V19, amount: -1428.00, months: 12}
+      - {party: strom, family: utilities, tax: V19, amount: -154.70, months: 12}
+      - {party: telecom, family: telecom, tax: V19, amount: -47.48, months: 12}
+      - {party: shopwerft, family: software, tax: V19, amount: -142.80, months: 12}
+      - {party: clicksphere, family: advertising, tax: RC_EU19, amount: -650.00, months: 12, vary: 0.3}
+      - {party: labelcraft, family: software, tax: RC_DRITT19, amount: -35.00, months: 12}
+      - {party: zahlfix, family: bank_fees, tax: NONE, amount: -180.00, months: 12, vary: 0.2}
+      - {party: teeimport, family: goods, tax: V7, amount: -3600.00, months: 12, vary: 0.4}
+      - {party: vandoorn, family: goods, tax: IGE19, amount: -1900.00, months: 6, vary: 0.4}
+      - {party: kraeuter, family: goods, tax: V7, amount: -520.00, months: 9, vary: 0.4}
+      - {party: paketblitz, family: postage, tax: V19, amount: -1450.00, months: 12, vary: 0.2}
+      - {party: weitblick, family: revenue, tax: U7, amount: 1150.00, months: 12, vary: 0.4}
+      - {party: wendeltreppe, family: revenue, tax: U7, amount: 1300.00, months: 8, vary: 0.3}
+      - {party: lefevre, family: revenue, tax: IGL, amount: 2100.00, months: 5, vary: 0.4}
+      - {party: finanzamt, family: vat_payment, tax: NONE, amount: -2100.00, months: 12, vary: 0.5}
+      - {party: finanzamt, family: wage_tax, tax: NONE, amount: -1406.80, months: 12, vary: 0.03}
+      - {party: bkk, family: social_security, tax: NONE, amount: -2648.90, months: 12, vary: 0.02}
+      - {party: dorlach, family: payroll, tax: NONE, amount: -3450.00, months: 12}
+      - {party: kowalczyk, family: payroll, tax: NONE, amount: -2050.00, months: 12}
+      - {party: lindemann, family: payroll, tax: NONE, amount: -1380.00, months: 12}
+      - {party: bank, family: bank_fees, tax: NONE, amount: -24.90, months: 12}
+    months:
+      "2026-09":
+        - id: s01
+          party: miete
+          on: 2026-09-01
+          method: ueberweisung
+          reference: "Miete Lagerhalle 4 September 2026"
+          amount: -1428.00
+          truth: {family: rent, tax: V19}
+        - id: s02
+          party: shopwerft
+          on: 2026-09-01
+          method: lastschrift
+          reference: "SW-2026-09-7781 Shopwerft Business"
+          document:
+            format: xrechnung-ubl
+            number: "SW-2026-09-7781"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Shopwerft Business, September 2026", net: 120.00, rate: 19, category: S}
+          truth: {family: software, tax: V19}
+        - id: r01
+          kind: invoice
+          party: teeimport
+          document:
+            format: zugferd
+            number: "HTI-2026-11902"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-31
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 10 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Darjeeling First Flush FTGFOP1, 20 kg", net: 1180.00, rate: 7, category: S}
+              - {text: "Sencha Japan Bio, 25 kg", net: 1375.00, rate: 7, category: S}
+              - {text: "Rooibos natur Bio, 30 kg", net: 465.00, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: r06
+          kind: invoice
+          party: messe
+          document:
+            format: pdf
+            number: "GW-2026-0388"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-19
+            missing: [seller_tax_id]
+            lines:
+              - {text: "Standfläche 12 m², Genusswelt Frankfurt 19.–20.09.2026", net: 840.00, rate: 19, category: S}
+              - {text: "Standbau-Paket Basic", net: 360.00, rate: 19, category: S}
+          says:
+            invoice_incomplete: {choice: upload}
+          truth: {family: advertising, tax: V19}
+        - id: s03
+          party: strom
+          on: 2026-09-02
+          method: lastschrift
+          reference: "Abschlag September Vertragskonto 3308120"
+          document:
+            format: zugferd
+            number: "NHE-2026-09-3308120"
+            issue_date: 2026-08-25
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Abschlag Strom Lager, September 2026", net: 130.00, rate: 19, category: S}
+          truth: {family: utilities, tax: V19}
+        - id: r08
+          kind: invoice
+          party: paketblitz
+          document:
+            format: zugferd
+            number: "PB-2026-08-55312"
+            issue_date: 2026-09-02
+            delivery_date: 2026-08-31
+            lines:
+              - {text: "Paketversand August 2026, 412 Sendungen", net: 1236.00, rate: 19, category: S}
+              - {text: "Energiezuschlag August 2026", net: 41.20, rate: 19, category: S}
+          truth: {family: postage, tax: V19}
+        - id: a01
+          kind: invoice
+          party: weitblick
+          document:
+            format: xrechnung-cii
+            direction: out
+            number: "BW-2026-0412"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-02
+            payment_terms: "14 Tage netto"
+            lines:
+              - {text: "Tee Hausmischungen lose, 12 kg", net: 840.00, rate: 7, category: S}
+              - {text: "Glasteekannen 1 l, 6 Stück", net: 120.00, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: r03
+          kind: invoice
+          party: vandoorn
+          document:
+            format: pdf
+            number: "VD-26-04417"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-02
+            notes: "Intra-Community supply, exempt (Art. 138 VAT Directive)"
+            lines:
+              - {text: "Teekannen Steinzeug 1,2 l, 60 Stück", net: 1140.00, rate: 0, category: K}
+              - {text: "Teeschalen Steinzeug, 240 Stück", net: 696.00, rate: 0, category: K}
+          truth: {family: goods, tax: IGE19}
+        - id: r04
+          kind: invoice
+          party: kraeuter
+          document:
+            format: pdf
+            number: "KHL-2026-0871"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-02
+            lines:
+              - {text: "Pfefferminze Bio geschnitten, 15 kg", net: 247.50, rate: 7, category: S}
+              - {text: "Kamillenblüten Bio, 10 kg", net: 198.00, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: s04
+          party: clicksphere
+          on: 2026-09-03
+          method: karte
+          reference: "CLICKSPHERE ADS DUBLIN"
+          document:
+            format: pdf
+            number: "CS-DE-2026-08-77120"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-31
+            notes: "Reverse charge: VAT to be accounted for by the recipient"
+            lines:
+              - {text: "Advertising services August 2026", net: 712.40, rate: 0, category: AE}
+          truth: {family: advertising, tax: RC_EU19}
+        - id: s05
+          party: telecom
+          on: 2026-09-05
+          method: lastschrift
+          reference: "Kd 771302 Rechnung September"
+          document:
+            format: pdf
+            number: "NG-2026-09-771302"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Internet und Telefon Büro, September 2026", net: 39.90, rate: 19, category: S}
+          truth: {family: telecom, tax: V19}
+        - id: a02
+          kind: invoice
+          party: lefevre
+          document:
+            format: pdf
+            direction: out
+            number: "BW-2026-0413"
+            issue_date: 2026-09-07
+            delivery_date: 2026-09-04
+            notes: "Steuerfreie innergemeinschaftliche Lieferung (§ 4 Nr. 1 b UStG)"
+            lines:
+              - {text: "Thé vert Sencha Bio, 30 kg", net: 1620.00, rate: 0, category: K}
+              - {text: "Rooibos Bio, 20 kg", net: 730.00, rate: 0, category: K}
+          truth: {family: revenue, tax: IGL}
+        - id: s06
+          party: zahlfix
+          on: 2026-09-07
+          method: gutschrift
+          reference: "Auszahlung ZF-AB-2026-36"
+          document:
+            format: pdf
+            direction: out
+            number: "ZF-AB-2026-36"
+            issue_date: 2026-09-07
+            delivery_date: 2026-09-06
+            lines:
+              - {text: "Shopverkäufe 31.08.–06.09.2026, Tee (7 %)", net: 2410.28, rate: 7, category: S}
+              - {text: "Shopverkäufe 31.08.–06.09.2026, Zubehör (19 %)", net: 638.66, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: z06
+          party: messe
+          on: 2026-09-08
+          method: ueberweisung
+          settles: [r06]
+          reference: "GW-2026-0388 Standmiete Genusswelt"
+          truth: {family: clearing}
+        - id: z01
+          party: teeimport
+          on: 2026-09-09
+          method: ueberweisung
+          settles: [r01]
+          skonto: true
+          reference: "RE HTI-2026-11902 abzgl. 2 % Skonto"
+          truth: {family: clearing}
+        - id: z08
+          party: paketblitz
+          on: 2026-09-10
+          method: lastschrift
+          settles: [r08]
+          reference: "PB-2026-08-55312 Kd 20417"
+          truth: {family: clearing}
+        - id: s07
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          reference: "USt-VA 08/2026 StNr 026/240/77815"
+          amount: -2284.15
+          truth: {family: vat_payment, tax: NONE}
+        - id: s08
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          reference: "LSt 08/2026 StNr 026/240/77815"
+          amount: -1406.80
+          truth: {family: wage_tax, tax: NONE}
+        - id: a03
+          kind: invoice
+          party: wendeltreppe
+          document:
+            format: xrechnung-ubl
+            direction: out
+            number: "BW-2026-0414"
+            issue_date: 2026-09-10
+            delivery_date: 2026-09-09
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 10 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Lose Tees Bio-Sortiment, 20 kg", net: 1180.00, rate: 7, category: S}
+          truth: {family: revenue, tax: U7}
+        - id: s09
+          party: labelcraft
+          on: 2026-09-11
+          method: karte
+          reference: "LABELCRAFT INC SEATTLE"
+          document:
+            format: pdf
+            number: "LC-2026-0911-4471"
+            issue_date: 2026-09-11
+            delivery_date: 2026-09-11
+            lines:
+              - {text: "Labelcraft Growth plan, September 2026", net: 35.00, rate: 0, category: O}
+          truth: {family: software, tax: RC_DRITT19}
+        - id: s10
+          party: zahlfix
+          on: 2026-09-14
+          method: gutschrift
+          reference: "Auszahlung ZF-AB-2026-37"
+          document:
+            format: pdf
+            direction: out
+            number: "ZF-AB-2026-37"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-13
+            lines:
+              - {text: "Shopverkäufe 07.–13.09.2026, Tee (7 %)", net: 2187.85, rate: 7, category: S}
+              - {text: "Shopverkäufe 07.–13.09.2026, Zubehör (19 %)", net: 712.61, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: r05
+          kind: invoice
+          party: kraeuter
+          document:
+            format: pdf
+            number: "KHL-2026-0918"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-12
+            lines:
+              - {text: "Ingwer-Zitrone Kräutermischung Bio, 12 kg", net: 286.80, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: r02
+          kind: invoice
+          party: teeimport
+          document:
+            format: zugferd
+            number: "HTI-2026-12117"
+            issue_date: 2026-09-15
+            delivery_date: 2026-09-14
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 10 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Assam TGFOP, 25 kg", net: 912.50, rate: 7, category: S}
+              - {text: "Earl Grey Blend, 20 kg", net: 704.00, rate: 7, category: S}
+          truth: {family: goods, tax: V7}
+        - id: s11
+          party: buerotechnik
+          on: 2026-09-15
+          method: karte
+          reference: "BUEROTECHNIK FULDA ONLINE"
+          document:
+            format: pdf
+            number: "BTF-2026-5521"
+            issue_date: 2026-09-15
+            delivery_date: 2026-09-16
+            lines:
+              - {text: "Thermo-Etikettendrucker 4 Zoll", net: 289.00, rate: 19, category: S}
+              - {text: "Paketwaage bis 60 kg", net: 69.00, rate: 19, category: S}
+          truth: {family: equipment, tax: V19}
+        - id: z11
+          party: weitblick
+          on: 2026-09-17
+          method: gutschrift
+          settles: [a01]
+          reference: "RE BW-2026-0412"
+          truth: {family: clearing}
+        - id: z03
+          party: vandoorn
+          on: 2026-09-18
+          method: ueberweisung
+          settles: [r03]
+          reference: "Invoice VD-26-04417"
+          truth: {family: clearing}
+        - id: z13
+          party: wendeltreppe
+          on: 2026-09-18
+          method: gutschrift
+          settles: [a03]
+          skonto: true
+          reference: "RE BW-2026-0414 abzgl. 2 % Skonto"
+          truth: {family: clearing}
+        - id: s12
+          party: bahn
+          on: 2026-09-18
+          method: karte
+          reference: "Schienenfern Online-Ticket"
+          document:
+            format: pdf
+            number: "SF-9920-1180"
+            issue_date: 2026-09-16
+            delivery_date: 2026-09-18
+            lines:
+              - {text: "Kassel-Wilhelmshöhe – Frankfurt (Main) Hbf und zurück, 18.–20.09.2026", net: 121.50, rate: 7, category: S}
+          truth: {family: travel_transport, tax: V7}
+        - id: s14
+          party: apfelwein
+          on: 2026-09-19
+          method: karte
+          reference: "Zur Eisernen Kanne Kartenzahlung"
+          document:
+            format: pdf
+            number: "EK-0919-0231"
+            issue_date: 2026-09-19
+            delivery_date: 2026-09-19
+            notes: "Anlass: Messegespräch Sortiment 2027; Teilnehmer: F. Dorlach, A. Kowalczyk, C. Lefèvre (Salon de Thé Lefèvre SARL)"
+            lines:
+              - {text: "Speisen", net: 118.40, rate: 19, category: S}
+              - {text: "Getränke", net: 46.60, rate: 19, category: S}
+          truth: {family: meals, tax: V19}
+        - id: s15
+          party: taxi
+          on: 2026-09-20
+          method: karte
+          reference: "TAXI MAINMETROPOLE"
+          amount: -18.60
+          says:
+            missing_receipt: {choice: no_receipt, purpose: "Taxi Messegelände zum Hotel nach Standabbau"}
+          truth: {family: travel_transport, tax: NONE}
+        - id: s13
+          party: hotel
+          on: 2026-09-21
+          method: karte
+          reference: "Hotel am Mainkai Frankfurt"
+          document:
+            format: pdf
+            number: "HMK-26-08812"
+            issue_date: 2026-09-20
+            delivery_date: 2026-09-20
+            lines:
+              - {text: "Übernachtung Einzelzimmer 18.–20.09.2026, 2 Nächte", net: 252.34, rate: 7, category: S}
+              - {text: "Frühstück, 2 x", net: 31.94, rate: 19, category: S}
+          truth: {family: travel_lodging}
+        - id: s17
+          party: zahlfix
+          on: 2026-09-21
+          method: gutschrift
+          reference: "Auszahlung ZF-AB-2026-38"
+          document:
+            format: pdf
+            direction: out
+            number: "ZF-AB-2026-38"
+            issue_date: 2026-09-21
+            delivery_date: 2026-09-20
+            lines:
+              - {text: "Shopverkäufe 14.–20.09.2026, Tee (7 %)", net: 2544.10, rate: 7, category: S}
+              - {text: "Shopverkäufe 14.–20.09.2026, Zubehör (19 %)", net: 590.34, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: s16
+          party: lagertechnik
+          on: 2026-09-22
+          method: karte
+          reference: "LAGERTECHNIK DIREKT ONLINE"
+          document:
+            format: pdf
+            number: "LT-2026-77104"
+            issue_date: 2026-09-22
+            delivery_date: 2026-09-24
+            arrives: on_request
+            lines:
+              - {text: "Fachbodenregal verzinkt 200 x 100 x 50 cm, 3 Stück", net: 350.00, rate: 19, category: S}
+          says:
+            missing_receipt: {choice: upload}
+          truth: {family: equipment, tax: V19}
+        - id: r07
+          kind: invoice
+          party: anwalt
+          document:
+            format: pdf
+            number: "MO-2026-1187"
+            issue_date: 2026-09-22
+            delivery_date: 2026-09-21
+            lines:
+              - {text: "Beratung und Erwiderung auf Abmahnung wegen Produktbezeichnung, Gegenstandswert 10.000 €", net: 650.00, rate: 19, category: S}
+          truth: {family: advice, tax: V19}
+        - id: z04
+          party: kraeuter
+          on: 2026-09-24
+          method: ueberweisung
+          settles: [r04, r05]
+          reference: "RE KHL-2026-0871 und KHL-2026-0918"
+          truth: {family: clearing}
+        - id: a04
+          kind: invoice
+          party: weitblick
+          document:
+            format: xrechnung-cii
+            direction: out
+            number: "BW-2026-0415"
+            issue_date: 2026-09-24
+            delivery_date: 2026-09-23
+            payment_terms: "14 Tage netto"
+            lines:
+              - {text: "Tee Hausmischungen lose, 15 kg", net: 1050.00, rate: 7, category: S}
+          truth: {family: revenue, tax: U7}
+        - id: z12
+          party: lefevre
+          on: 2026-09-25
+          method: gutschrift
+          settles: [a02]
+          reference: "FACTURE BW-2026-0413"
+          truth: {family: clearing}
+        - id: s18
+          party: bkk
+          on: 2026-09-28
+          method: lastschrift
+          reference: "Beitragsnachweis 09/2026 BN 72004415"
+          amount: -2648.90
+          truth: {family: social_security, tax: NONE}
+        - id: s19
+          party: zahlfix
+          on: 2026-09-28
+          method: gutschrift
+          reference: "Auszahlung ZF-AB-2026-39"
+          document:
+            format: pdf
+            direction: out
+            number: "ZF-AB-2026-39"
+            issue_date: 2026-09-28
+            delivery_date: 2026-09-27
+            lines:
+              - {text: "Shopverkäufe 21.–27.09.2026, Tee (7 %)", net: 2301.40, rate: 7, category: S}
+              - {text: "Shopverkäufe 21.–27.09.2026, Zubehör (19 %)", net: 655.12, rate: 19, category: S}
+          truth: {family: revenue}
+        - id: s20
+          party: dorlach
+          on: 2026-09-29
+          method: ueberweisung
+          reference: "Gehalt 09/2026"
+          amount: -3450.00
+          truth: {family: payroll, tax: NONE}
+        - id: s21
+          party: kowalczyk
+          on: 2026-09-29
+          method: ueberweisung
+          reference: "Gehalt 09/2026"
+          amount: -2050.00
+          truth: {family: payroll, tax: NONE}
+        - id: s22
+          party: lindemann
+          on: 2026-09-29
+          method: ueberweisung
+          reference: "Gehalt 09/2026"
+          amount: -1380.00
+          truth: {family: payroll, tax: NONE}
+        - id: s23
+          party: zahlfix
+          on: 2026-09-30
+          method: lastschrift
+          reference: "Transaktionsgebühren 09/2026"
+          amount: -186.40
+          truth: {family: bank_fees, tax: NONE}
+        - id: s24
+          party: bank
+          on: 2026-09-30
+          method: lastschrift
+          reference: "Kontoführung 09/2026"
+          amount: -24.90
+          truth: {family: bank_fees, tax: NONE}

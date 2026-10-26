@@ -647,6 +647,13 @@ def build_app(deps: Deps) -> FastAPI:
 
     # --- the group: rollout across firms ------------------------------------------------------------------
 
+    @app.get("/api/rollout/periods")
+    def rollout_periods(p: Me) -> list[str]:
+        if p.role not in ("gruppe", "berater"):
+            raise HTTPException(403, "Nur für Steuerberater und das Gruppen-Team")
+        with as_user(deps.pool, p) as conn:
+            return [r["rollout_periods"] for r in conn.execute("SELECT rollout_periods()").fetchall()]
+
     @app.get("/api/rollout")
     def rollout(p: Me, period: Annotated[str, Query()]) -> dict[str, Any]:
         if p.role not in ("gruppe", "berater"):

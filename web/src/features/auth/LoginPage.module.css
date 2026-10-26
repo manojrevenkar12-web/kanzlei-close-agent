@@ -1,0 +1,79 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: start center;
+  padding: var(--s-12) var(--gutter);
+  background:
+    repeating-linear-gradient(180deg, transparent 0 calc(var(--s-8) - 1px), var(--ruling) calc(var(--s-8) - 1px) var(--s-8)),
+    var(--paper);
+}
+.sheet {
+  width: min(100%, 44rem);
+  padding: var(--s-10) var(--s-8);
+  background: var(--sheet);
+  border: var(--border);
+  border-left: 3px solid var(--haben);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+  display: grid;
+  gap: var(--s-6);
+}
+.title {
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--track-tight);
+}
+.lede {
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+.groups {
+  display: grid;
+  gap: var(--s-6);
+}
+.firm {
+  font-size: var(--fs-sm);
+  color: var(--ink-3);
+  font-weight: var(--fw-semibold);
+  margin-bottom: var(--s-2);
+}
+.people {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-2);
+}
+.person {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border: var(--border);
+  border-radius: var(--radius);
+  background: var(--sheet);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.person:hover:not(:disabled) {
+  border-color: var(--action);
+  background: var(--action-tint);
+}
+.person[aria-busy="true"] {
+  border-color: var(--action);
+}
+.name {
+  font-weight: var(--fw-semibold);
+}
+.role {
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+}
+@media (max-width: 720px) {
+  .sheet {
+    padding: var(--s-6) var(--s-4);
+  }
+}

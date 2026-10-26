@@ -1,0 +1,92 @@
+.page {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: var(--s-10) var(--gutter) var(--s-16);
+}
+.head {
+  margin-bottom: var(--s-6);
+  display: grid;
+  gap: var(--s-2);
+}
+.firm {
+  color: var(--ink-3);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+.title {
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--track-tight);
+  line-height: var(--lh-tight);
+}
+.lede {
+  color: var(--ink-2);
+}
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-4);
+}
+.card,
+.done {
+  display: grid;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  background: var(--sheet);
+  border: var(--border);
+  border-radius: var(--radius-lg);
+}
+.card fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-3);
+}
+.question {
+  font-weight: var(--fw-semibold);
+  padding: 0;
+  margin-bottom: var(--s-2);
+}
+.options {
+  display: grid;
+  gap: var(--s-2);
+}
+.option,
+.optionOn {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: 2.75rem;
+  padding: var(--s-2) var(--s-3);
+  border: var(--border-strong);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.optionOn {
+  border-color: var(--action);
+  background: var(--action-tint);
+}
+.field {
+  display: grid;
+  gap: var(--s-1);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+.field input {
+  min-height: 2.5rem;
+  padding: 0 var(--s-3);
+  border: var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--sheet);
+}
+.done {
+  background: var(--st-auto-tint);
+  border-color: transparent;
+}
+.ok {
+  color: var(--st-auto);
+  font-weight: var(--fw-semibold);
+}
