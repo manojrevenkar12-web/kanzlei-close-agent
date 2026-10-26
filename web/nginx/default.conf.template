@@ -1,0 +1,41 @@
+# The web app and a reverse proxy to the API on one origin. ${API_UPSTREAM} is filled in at start.
+# nginx drops server-level add_header in any location that sets its own, so every location
+# includes the same security headers.
+server {
+  listen 8080;
+  server_name _;
+  root /usr/share/nginx/html;
+  server_tokens off;
+
+  gzip on;
+  gzip_types text/css application/javascript application/json image/svg+xml;
+
+  include /etc/nginx/conf.d/security-headers.inc;
+
+  location /assets/ {
+    include /etc/nginx/conf.d/security-headers.inc;
+    add_header Cache-Control "public, max-age=31536000, immutable" always;
+    try_files $uri =404;
+  }
+
+  # Metrics are scraped inside the network, never through the public entry.
+  location = /api/metrics { return 404; }
+
+  location /api/ {
+    proxy_pass ${API_UPSTREAM};
+    proxy_http_version 1.1;
+    proxy_ssl_server_name on;
+    proxy_set_header Host $proxy_host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_read_timeout 120s;
+    # Bank statements and invoices: a CAMT.053 for a busy month or a scanned PDF.
+    client_max_body_size 20m;
+  }
+
+  location / {
+    include /etc/nginx/conf.d/security-headers.inc;
+    add_header Cache-Control "no-cache" always;
+    try_files $uri /index.html;
+  }
+}

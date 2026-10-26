@@ -1,0 +1,5 @@
+bucket       = "kanzlei-terraform-state"
+key          = "kanzlei-close-agent/prod.tfstate"
+region       = "eu-central-1"
+encrypt      = true
+use_lockfile = true

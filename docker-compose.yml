@@ -1,0 +1,67 @@
+# Local stack: Postgres, the API, the outbox worker, the web app, and a one-off seed of the demo.
+#   docker compose up -d --build
+#   docker compose --profile demo run --rm seed
+# then open http://localhost:8080 (the seed prints the client portal links).
+name: kanzlei-close-agent
+
+x-env: &env
+  KANZLEI_DATABASE_URL: postgresql://kanzlei_app:${APP_DB_PASSWORD:-kanzlei_app}@postgres:5432/kanzlei
+  KANZLEI_ADMIN_DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:-postgres}@postgres:5432/kanzlei
+  KANZLEI_APP_DB_PASSWORD: ${APP_DB_PASSWORD:-kanzlei_app}
+  KANZLEI_TOKEN_SECRET: ${TOKEN_SECRET:-compose-only-secret-at-least-32-characters}
+  KANZLEI_DEMO_MODE: ${DEMO_MODE:-true}
+  KANZLEI_STORAGE_URL: file:///var/kanzlei/documents
+  KANZLEI_PUBLIC_URL: http://localhost:8080
+  KANZLEI_CORS_ORIGIN: http://localhost:8080
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: kanzlei
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d kanzlei"]
+      interval: 2s
+      retries: 30
+
+  migrate:
+    build: { context: ., dockerfile: backend/Dockerfile, target: api }
+    environment: *env
+    command: ["kanzlei", "migrate"]
+    depends_on: { postgres: { condition: service_healthy } }
+
+  api:
+    build: { context: ., dockerfile: backend/Dockerfile, target: api }
+    environment: *env
+    ports: ["8000:8000"]
+    volumes: [documents:/var/kanzlei/documents]
+    depends_on: { migrate: { condition: service_completed_successfully } }
+
+  worker:
+    build: { context: ., dockerfile: backend/Dockerfile, target: api }
+    environment: *env
+    command: ["kanzlei", "worker"]
+    depends_on: { migrate: { condition: service_completed_successfully } }
+
+  web:
+    build: { context: ., dockerfile: web/Dockerfile }
+    environment:
+      API_UPSTREAM: http://api:8000
+    ports: ["8080:8080"]
+    depends_on: [api]
+
+  seed:
+    profiles: [demo]
+    build: { context: ., dockerfile: backend/Dockerfile, target: tools }
+    environment: *env
+    command: ["seed", "--reset"]
+    volumes: [documents:/var/kanzlei/documents]
+    depends_on: { migrate: { condition: service_completed_successfully } }
+
+volumes:
+  pgdata:
+  documents:

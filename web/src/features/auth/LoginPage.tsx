@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { ErrorState, QueryState, SkeletonRows } from "../../shared/ui";
+import { Button, ErrorState, QueryState, SkeletonRows } from "../../shared/ui";
 import { motion as m } from "../../shared/theme/tokens";
 import type { DemoUser } from "../../shared/api/types";
-import { useDemoUsers, useSignIn } from "./api";
+import { useDemoUsers, useSignIn, useSignInMode } from "./api";
 import styles from "./LoginPage.module.css";
 
 const ROLE: Record<string, string> = {
@@ -14,12 +14,13 @@ const ROLE: Record<string, string> = {
 };
 
 export default function LoginPage() {
-  const users = useDemoUsers();
+  const mode = useSignInMode();
+  const users = useDemoUsers(mode.data?.mode === "demo");
   const signIn = useSignIn();
   const nav = useNavigate();
   const from = (useLocation().state as { from?: string } | null)?.from;
 
-  const go = (login: string) =>
+  const go = (login: string | null) =>
     signIn.mutate(login, {
       onSuccess: (u) =>
         nav(from && from !== "/anmelden" ? from : u.role === "gruppe" ? "/gruppe" : "/abschluss", {
@@ -36,20 +37,51 @@ export default function LoginPage() {
         transition={{ duration: m.slow, ease: m.ease }}
       >
         <h1 className={styles.title}>Monatsabschluss</h1>
-        <p className={styles.lede}>
-          Bankumsätze und E-Rechnungen rein, geprüfte Buchungen, Umsatzsteuer-Voranmeldung und DATEV-Export
-          raus. Demo-Zugang: wählen Sie eine Person.
-        </p>
         {signIn.isError && <ErrorState error={signIn.error} title="Anmeldung fehlgeschlagen" />}
-        <QueryState
-          query={users}
-          skeleton={<SkeletonRows rows={5} label="Personen werden geladen" />}
-          isEmpty={(d) => d.length === 0}
-          empty={<p>Keine Demo-Personen angelegt. Bitte erst `python -m kanzlei_sim seed` ausführen.</p>}
-        >
-          {(list) => (
-            <People list={list} onPick={go} busy={signIn.isPending ? signIn.variables : undefined} />
-          )}
+        <QueryState query={mode} skeleton={<SkeletonRows rows={3} label="Anmeldung wird vorbereitet" />}>
+          {({ mode: kind }) =>
+            kind === "sso" ? (
+              <>
+                <p className={styles.lede}>
+                  Bankumsätze und E-Rechnungen rein, geprüfte Buchungen, Umsatzsteuer-Voranmeldung und
+                  DATEV-Export raus. Sie sind mit dem Konto Ihrer Kanzlei angemeldet.
+                </p>
+                <div>
+                  <Button variant="primary" onClick={() => go(null)} busy={signIn.isPending}>
+                    Weiter zum Monatsabschluss
+                  </Button>
+                </div>
+              </>
+            ) : kind === "demo" ? (
+              <>
+                <p className={styles.lede}>
+                  Bankumsätze und E-Rechnungen rein, geprüfte Buchungen, Umsatzsteuer-Voranmeldung und
+                  DATEV-Export raus. Demo-Zugang: wählen Sie eine Person.
+                </p>
+                <QueryState
+                  query={users}
+                  skeleton={<SkeletonRows rows={5} label="Personen werden geladen" />}
+                  isEmpty={(d) => d.length === 0}
+                  empty={
+                    <p>Keine Demo-Personen angelegt. Bitte erst `python -m kanzlei_sim seed` ausführen.</p>
+                  }
+                >
+                  {(list) => (
+                    <People
+                      list={list}
+                      onPick={go}
+                      busy={signIn.isPending ? (signIn.variables ?? "") : undefined}
+                    />
+                  )}
+                </QueryState>
+              </>
+            ) : (
+              <p className={styles.lede}>
+                Für diese Installation ist keine Anmeldung eingerichtet. Der Betrieb verbindet sie mit dem
+                Identity Provider der Gruppe (KANZLEI_ALB_ARN).
+              </p>
+            )
+          }
         </QueryState>
       </motion.section>
     </main>

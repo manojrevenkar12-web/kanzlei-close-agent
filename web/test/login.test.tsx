@@ -7,7 +7,7 @@ import { json, renderAt, stubApi } from "./harness";
 
 describe("signing in", () => {
   it("sends a person without a session to the sign-in page", async () => {
-    stubApi({ "GET /api/demo-users": demoUsers });
+    stubApi({ "GET /api/sign-in": { mode: "demo" }, "GET /api/demo-users": demoUsers });
     renderAt("/abschluss");
     expect(await screen.findByRole("heading", { name: "Monatsabschluss" })).toBeInTheDocument();
     expect(await screen.findByRole("button", { name: /Claudia Hartmann/ })).toBeInTheDocument();
@@ -15,6 +15,7 @@ describe("signing in", () => {
 
   it("an advisor lands on the board of her firm", async () => {
     const calls = stubApi({
+      "GET /api/sign-in": { mode: "demo" },
       "GET /api/demo-users": demoUsers,
       "POST /api/session": { token: "t1" },
       "GET /api/me": berater,
@@ -30,6 +31,7 @@ describe("signing in", () => {
 
   it("the group engineer lands on the rollout, which has no client data", async () => {
     stubApi({
+      "GET /api/sign-in": { mode: "demo" },
       "GET /api/demo-users": demoUsers,
       "POST /api/session": { token: "t2" },
       "GET /api/me": gruppe,
@@ -44,11 +46,33 @@ describe("signing in", () => {
 
   it("shows why sign-in failed", async () => {
     stubApi({
+      "GET /api/sign-in": { mode: "demo" },
       "GET /api/demo-users": demoUsers,
       "POST /api/session": json({ detail: "Unbekannte Person" }, 401),
     });
     renderAt("/anmelden");
     await userEvent.click(await screen.findByRole("button", { name: /Selin/ }));
     expect(await screen.findByRole("alert")).toHaveTextContent("Unbekannte Person");
+  });
+
+  it("with the group's identity provider, continues without picking anyone", async () => {
+    const calls = stubApi({
+      "GET /api/sign-in": { mode: "sso" },
+      "POST /api/session": { token: "t3" },
+      "GET /api/me": berater,
+      "GET /api/periods": periods,
+      "GET /api/closes": board,
+    });
+    renderAt("/anmelden");
+    await userEvent.click(await screen.findByRole("button", { name: "Weiter zum Monatsabschluss" }));
+    expect(await screen.findByRole("link", { name: /Elektro Baumann GmbH öffnen/ })).toBeInTheDocument();
+    expect(calls.find((c) => c.path === "/api/session")?.body).toEqual({});
+    expect(calls.some((c) => c.path === "/api/demo-users")).toBe(false);
+  });
+
+  it("says so when no sign-in is configured", async () => {
+    stubApi({ "GET /api/sign-in": { mode: "none" } });
+    renderAt("/anmelden");
+    expect(await screen.findByText(/keine Anmeldung eingerichtet/)).toBeInTheDocument();
   });
 });

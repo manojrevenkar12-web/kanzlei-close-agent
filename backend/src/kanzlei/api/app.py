@@ -16,6 +16,7 @@ from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_
 from psycopg.types.json import Jsonb
 from pydantic import BaseModel, Field
 
+from kanzlei.api.alb_oidc import HEADER, AlbIdentity
 from kanzlei.api.auth import issue, verify
 from kanzlei.config import Settings, families, settings, tax_config
 from kanzlei.db import SYSTEM, Conn, Pool, Principal, as_system, as_user, create_pool, event, principal
@@ -42,10 +43,11 @@ class Deps:
     settings: Settings
     engine: Engine
     store: Store
+    identity: AlbIdentity | None = None
 
 
 class SessionIn(BaseModel):
-    login: str
+    login: str | None = None
 
 
 class CorrectIn(BaseModel):
@@ -172,13 +174,25 @@ def build_app(deps: Deps) -> FastAPI:
             ).fetchall()
         return [dict(r) for r in rows]
 
+    @app.get("/api/sign-in")
+    def sign_in_mode() -> dict[str, str]:
+        """How this installation signs people in: the demo picker or the group's identity provider."""
+        return {"mode": "demo" if deps.settings.demo_mode else "sso" if deps.identity else "none"}
+
     @app.post("/api/session")
-    def session(body: SessionIn) -> dict[str, Any]:
-        if not deps.settings.demo_mode:
+    def session(body: SessionIn, request: Request) -> dict[str, Any]:
+        login: str | None = None
+        if deps.settings.demo_mode and body.login:
+            login = body.login
+        elif deps.identity is not None:
+            login = deps.identity.login(request.headers.get(HEADER))
+        if login is None and deps.identity is not None:
+            raise HTTPException(401, "Nicht über den Identity Provider der Gruppe angemeldet")
+        if login is None:
             raise HTTPException(404, "Anmeldung über den Identity Provider der Gruppe")
-        p = principal(deps.pool, body.login)
+        p = principal(deps.pool, login)
         if p is None:
-            raise HTTPException(404, "Unbekannte Person")
+            raise HTTPException(403 if deps.identity and not deps.settings.demo_mode else 404, "Unbekannte Person")
         return {"token": issue(p.login, deps.settings.token_secret)}
 
     @app.get("/api/me")
@@ -774,4 +788,5 @@ def create_app() -> FastAPI:
     engine = Engine(
         store, Classifier.load(), DecisionModel.load(config_dir() / close_config().decision_model_file), reader_for
     )
-    return build_app(Deps(pool=pool, settings=s, engine=engine, store=store))
+    identity = AlbIdentity(s.aws_region, s.alb_arn) if s.alb_arn else None
+    return build_app(Deps(pool=pool, settings=s, engine=engine, store=store, identity=identity))

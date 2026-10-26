@@ -28,6 +28,9 @@ class Settings(BaseSettings):
     cors_origin: str = "http://localhost:5173"
     demo_mode: bool = False
     metrics_token: str | None = None
+    # Production sign-in through the load balancer's OIDC authentication (see api/alb_oidc.py).
+    alb_arn: str | None = None
+    aws_region: str = "eu-central-1"
 
 
 def _yaml(path: Path) -> Any:
