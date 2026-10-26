@@ -245,3 +245,20 @@ def test_memory_by_iban_and_name_and_direction() -> None:
         or not mem.lookup(None, "Trattoria Da Paolo", money_in=False).uses
     )  # type: ignore[union-attr]
     assert mem.lookup(None, "TRATTORIA DA PAOLO", money_in=True).family == "revenue"  # type: ignore[union-attr]
+
+
+def test_an_answer_settles_only_the_question_asked() -> None:
+    """A receipt from the client does not make an unsure guess about what the payment is safe."""
+    from types import SimpleNamespace
+
+    from kanzlei.engine.propose import _route
+
+    ctx = SimpleNamespace(close=close_config(), decision=SimpleNamespace(threshold=0.3))
+    unsure = {"conf": 0.05, "new_counterparty": True, "classifier_p": 0.4, "source": "classifier"}
+    assert _route(ctx, [], answered=True, **unsure) == "review"  # type: ignore[arg-type]
+    # The answer named the payment ("privat"): the rules book it.
+    assert _route(ctx, [], 0.05, new_counterparty=True, answered=True, source="answer") == "auto"  # type: ignore[arg-type]
+    # A known counterparty above the threshold is booked, answered or not.
+    assert _route(ctx, [], 0.8, new_counterparty=False, answered=True, source="memory") == "auto"  # type: ignore[arg-type]
+    # A question still open keeps it with the client.
+    assert _route(ctx, ["missing_receipt"], 0.99, new_counterparty=False, answered=False) == "client"  # type: ignore[arg-type]

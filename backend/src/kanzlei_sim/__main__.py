@@ -193,6 +193,8 @@ def cmd_gate() -> int:
             problems.append(
                 f"dev: wrong automatic bookings {dev['automatic_wrong_share']:.2%} > {g['dev_max_automatic_wrong_share']:.2%}"
             )
+        if dev.get("no_staff_wrong_share", 0.0) > g["dev_max_automatic_wrong_share"]:
+            problems.append(f"dev: wrong bookings nobody looked at {dev['no_staff_wrong_share']:.2%}")
         if dev["final_right"] < 1.0:
             problems.append(f"dev: reviewed months not fully right ({dev['final_right']:.2%})")
         if dev["vat_return_exact_months"] < dev["client_months"]:
@@ -212,6 +214,12 @@ def cmd_gate() -> int:
         ):
             problems.append(
                 f"{name}: wrong automatic bookings {m['automatic_wrong_share']:.2%} worse than the first run and the limit"
+            )
+        if "no_staff_wrong_share" in first and m["no_staff_wrong_share"] > max(
+            first["no_staff_wrong_share"], g["blind_max_automatic_wrong_share"]
+        ):
+            problems.append(
+                f"{name}: wrong bookings nobody looked at {m['no_staff_wrong_share']:.2%}, worse than allowed"
             )
         if m["vat_return_exact_months"] < m["client_months"] and m["final_right"] < 1.0:
             problems.append(f"{name}: reviewed months not right")

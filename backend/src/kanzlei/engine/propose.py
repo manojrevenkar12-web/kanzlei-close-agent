@@ -213,7 +213,9 @@ def _route(
         return "client"
     if flags:
         return "review"
-    if answered:
+    # An answer settles the question that was asked. It decides the booking only when it said what
+    # the payment is ("privat"); a receipt or meal details leave "what is it?" to the usual checks.
+    if answered and source == "answer":
         return "auto"
     if new_counterparty and (
         ctx.close.never_auto_new_counterparty

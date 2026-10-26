@@ -111,6 +111,7 @@ def metrics(results: list[MonthResult]) -> dict[str, Any]:
         fam[r.truth_family][1] += 1
     months = len(results)
     final_known = [r for r in recs if r.final_correct is not None]
+    no_staff_wrong = [r for r in recs if r.path in ("auto", "client") and r.final_correct is False]
     return {
         "items": n,
         "client_months": months,
@@ -119,6 +120,11 @@ def metrics(results: list[MonthResult]) -> dict[str, Any]:
         "automatic_wrong": len(auto_wrong),
         "automatic_wrong_share": round(len(auto_wrong) / len(autos), 4) if autos else 0.0,
         "resolved_by_client_answer": len(by_client_answer),
+        # Everything no person looked at: booked alone, or booked by the rules after a client's answer.
+        "no_staff_wrong": len(no_staff_wrong),
+        "no_staff_wrong_share": round(len(no_staff_wrong) / (len(autos) + len(by_client_answer)), 4)
+        if autos or by_client_answer
+        else 0.0,
         "no_staff_touch_share": round((len(autos) + len(by_client_answer)) / n, 4),
         "reviewed": len(reviewed),
         "review_proposal_right": round(len([r for r in reviewed if r.path == "accepted"]) / len(reviewed), 4)
