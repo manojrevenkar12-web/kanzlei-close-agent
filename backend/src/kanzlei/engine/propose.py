@@ -180,14 +180,26 @@ def _features(
     ]
 
 
-def _route(ctx: Context, flags: list[str], conf: float, *, new_counterparty: bool, answered: bool) -> str:
+def _route(
+    ctx: Context,
+    flags: list[str],
+    conf: float,
+    *,
+    new_counterparty: bool,
+    answered: bool,
+    classifier_p: float = 1.0,
+    source: str = "",
+) -> str:
     if any(f in CLIENT_FLAGS for f in flags):
         return "client"
     if flags:
         return "review"
     if answered:
         return "auto"
-    if ctx.close.never_auto_new_counterparty and new_counterparty:
+    if new_counterparty and (
+        ctx.close.never_auto_new_counterparty
+        or (source in ("classifier", "llm") and classifier_p < ctx.close.new_counterparty_min_classifier_p)
+    ):
         return "review"
     return "auto" if conf >= ctx.decision.threshold else "review"
 
@@ -238,7 +250,7 @@ def propose_payment(
         answers["family"] = force_family
     money_in = tx.amount_cents > 0
     amount = abs(tx.amount_cents)
-    hit = ctx.memory.lookup(tx.iban, tx.name)
+    hit = ctx.memory.lookup(tx.iban, tx.name, money_in=money_in)
     doc_text = " ".join(d.invoice.text for d in docs)
     probs = _probs(ctx, tx.name, tx.remittance, doc_text, money_in, amount)
     issued = bool(docs) and all(d.direction == "out" for d in docs) and not any(d.invoice.is_credit_note for d in docs)
@@ -369,7 +381,16 @@ def propose_payment(
     )
     conf = ctx.decision.probability(x)
     flags = _sort_flags(flags)
-    route = _route(ctx, flags, conf, new_counterparty=hit is None, answered=source == "answer" or bool(answers))
+    known = hit is not None and hit.dominant
+    route = _route(
+        ctx,
+        flags,
+        conf,
+        new_counterparty=not known,
+        answered=source == "answer" or bool(answers),
+        classifier_p=probs.get(family, 0.0),
+        source=source,
+    )
     main_tax = max(portions, key=lambda p: p.gross_cents).tax if portions else None
     return Proposal(family, main_tax, lines, conf, route, reasons, flags, source, x, cp_info)
 
@@ -509,7 +530,7 @@ def propose_invoice(
     else:
         reasons.append(Reason("counterparty", f"{'Kreditor' if incoming else 'Debitor'} {cp.account}: {cp.name}"))
     amount = inv.gross_cents or 0
-    hit = ctx.memory.lookup(cp.iban, cp.name)
+    hit = ctx.memory.lookup(cp.iban, cp.name, money_in=not incoming)
     probs = _probs(ctx, party.name, "", inv.text, not incoming, amount)
     family, source, why = _choose_family(
         ctx,
@@ -585,7 +606,16 @@ def propose_invoice(
     )
     conf = ctx.decision.probability(x)
     flags = _sort_flags(flags)
-    route = _route(ctx, flags, conf, new_counterparty=cp.new, answered=source == "answer" or bool(answers))
+    known = not cp.new and hit is not None and hit.dominant
+    route = _route(
+        ctx,
+        flags,
+        conf,
+        new_counterparty=not known,
+        answered=source == "answer" or bool(answers),
+        classifier_p=probs.get(family, 0.0),
+        source=source,
+    )
     main_tax = max(portions, key=lambda p: p.gross_cents).tax if portions else None
     return Proposal(family, main_tax, lines, conf, route, reasons, flags, source, x, cp_info)
 

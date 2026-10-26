@@ -90,6 +90,8 @@ def _from_invoice(
             return [(code, inv.gross_cents)], problems
         problems.append("unsupported_tax")
         return [(fam.tax, inv.gross_cents)], problems
+    if revenue and any(t.category == "AE" for t in taxes) and not (inv.buyer.country or inv.buyer.vat_id):
+        problems.append("unsupported_tax")  # § 14a: a reverse-charge invoice names the customer's VAT id
     for t in taxes:
         found = _code_for(
             t.category,

@@ -1,0 +1,11 @@
+# Release conditions (python -m kanzlei_sim gate) and the bar the decision model is trained to.
+
+decision:
+  # The lowest threshold at which, in cross-validation by client, at most this share of what the
+  # agent books on its own is wrong. Everything above the threshold is still in the tax advisor's
+  # monthly sign-off; this bounds how much of it a person did not look at.
+  max_wrong_share_of_automatic: 0.01
+
+gate:
+  dev_max_automatic_wrong_share: 0.015
+  blind_max_automatic_wrong_share: 0.03   # a blind set may not be worse than its first run or this

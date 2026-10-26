@@ -107,6 +107,7 @@ def common(
     client_key: str,
     city: str,
     *,
+    firm_name: str = "Steuerberatung",
     rent_tax: str = "NONE",
     owner: str | None = None,
     employees: int = 0,
@@ -115,7 +116,15 @@ def common(
     v = [
         V(
             "tel",
-            "Fernmeldewerk Mitte GmbH",
+            _rng(client_key, "tel-name").choice(
+                [
+                    "Fernmeldewerk Mitte GmbH",
+                    "Netzwelt Kommunikation GmbH",
+                    "Funkhaus Telekommunikation AG",
+                    "Glasfaser Nord GmbH",
+                    "Mobilnetz Plus GmbH",
+                ]
+            ),
             "telecom",
             "V19",
             _rng(client_key, "tel").choice([39.90, 49.95, 64.90, 89.90]),
@@ -128,7 +137,9 @@ def common(
         ),
         V(
             "strom",
-            f"Stadtwerke {city}",
+            _rng(client_key, "strom-name").choice(
+                [f"Stadtwerke {city}", f"Energieversorgung {city} AG", "Ökostrom Mitte GmbH", "Netzenergie Ost GmbH"]
+            ),
             "utilities",
             "V19",
             _rng(client_key, "strom").choice([95.0, 140.0, 210.0, 320.0]),
@@ -141,7 +152,15 @@ def common(
         ),
         V(
             "miete",
-            f"Hausverwaltung {_rng(client_key, 'hv').choice(['Krämer', 'Albrecht', 'Neumann', 'Vogel'])} GmbH",
+            _rng(client_key, "hv").choice(
+                [
+                    "Hausverwaltung Krämer GmbH",
+                    "Albrecht Immobilien GbR",
+                    "Grundbesitz Neumann KG",
+                    "Vogel Hausverwaltung GmbH",
+                    "Wohn- und Gewerbebau Seidel GmbH",
+                ]
+            ),
             "rent",
             rent_tax,
             _rng(client_key, "miete").choice([850.0, 1250.0, 1680.0, 2400.0]),
@@ -154,7 +173,9 @@ def common(
         ),
         V(
             "vers",
-            "Versicherungskammer Nordost VVaG",
+            _rng(client_key, "vers-name").choice(
+                ["Versicherungskammer Nordost VVaG", "Hanse Assekuranz AG", "Mitteldeutsche Versicherung a.G."]
+            ),
             "insurance",
             "NONE",
             _rng(client_key, "vers").choice([180.0, 245.5, 410.0]),
@@ -167,7 +188,9 @@ def common(
         ),
         V(
             "bank",
-            "Entgelte Kontoführung",
+            _rng(client_key, "bank-name").choice(
+                ["Entgelte Kontoführung", "Abschluss Kontoentgelt", "Kontoführungsentgelt"]
+            ),
             "bank_fees",
             "NONE",
             (8.5, 24.9),
@@ -192,7 +215,9 @@ def common(
         ),
         V(
             "post",
-            "Kurier24 Paketdienst GmbH",
+            _rng(client_key, "post-name").choice(
+                ["Kurier24 Paketdienst GmbH", "Paketblitz Versand GmbH", "Briefzentrum Post AG"]
+            ),
             "postage",
             "V19",
             (14.0, 95.0),
@@ -234,7 +259,9 @@ def common(
         ),
         V(
             "bahn",
-            "Fernzug Reisen AG",
+            _rng(client_key, "bahn-name").choice(
+                ["Fernzug Reisen AG", "Regiobahn Mitteldeutschland GmbH", "InterCity Reisezentrum"]
+            ),
             "travel_transport",
             "V7",
             (29.0, 139.0),
@@ -260,7 +287,7 @@ def common(
         ),
         V(
             "kanzlei",
-            "Steuerberatung (eigene Kanzlei)",
+            firm_name,
             "advice",
             "V19",
             _rng(client_key, "stb").choice([240.0, 380.0, 520.0]),
@@ -1083,7 +1110,7 @@ CLIENTS: list[dict[str, Any]] = [
             ),
             V(
                 "leasing",
-                "Autoleasing Nord GmbH",
+                "Fahrzeugleasing Hansa GmbH",
                 "vehicle_leasing",
                 "V19",
                 329.0,
@@ -1228,6 +1255,11 @@ def _prev(period: str) -> str:
 
 
 def _party_for(client_key: str, v: V, idx: int, rng: random.Random) -> Party:
+    if v.key == "lohn":
+        # Salaries go to the employees by name; only the reference says what it is.
+        staff = _rng(client_key, "staff").sample(PEOPLE, 8)
+        name = staff[idx % len(staff)]
+        return Party(key=f"lohn:{name}", name=name, role="other", iban=iban("DE", client_key + name), country="DE")
     if v.new_each_time:
         if v.family == "fuel":
             base = rng.choice(STATIONS)
@@ -1301,6 +1333,7 @@ def _client(spec: dict[str, Any], firm: Firm) -> Client:
         common(
             key,
             spec["city"],
+            firm_name=firm.name,
             rent_tax=spec.get("rent", "NONE"),
             owner=spec.get("owner"),
             employees=spec.get("employees", 0),
@@ -1536,6 +1569,13 @@ def _make_events(
     says: dict[str, Any] = {}
     answers = rng.random() > 0.08
 
+    opos_invoice = (
+        client.booking_method == "opos"
+        and doc is not None
+        and v.method != "karte"
+        and v.role in ("supplier", "customer")
+        and v.family not in ("rent", "vehicle_leasing", "telecom", "utilities", "advice", "software", "postage")
+    )
     # Defects (development months and, more rarely, history - which the firm then resolved).
     if (
         doc
@@ -1553,7 +1593,14 @@ def _make_events(
                 truth = Truth(family=family, tax="NONE")
         else:
             doc.missing = []
-    if doc and not customer and v.family not in ("rent",) and rng.random() < (0.10 if dev else 0.0) and not doc.missing:
+    if (
+        doc
+        and not customer
+        and not opos_invoice
+        and v.family not in ("rent",)
+        and rng.random() < (0.10 if dev else 0.0)
+        and not doc.missing
+    ):
         r = rng.random()
         if r < 0.65:
             doc.arrives = "on_request"
@@ -1579,13 +1626,8 @@ def _make_events(
         says["unknown_credit"] = {"choice": "customer", "invoice_no": doc.number}
 
     sign = 1 if customer else -1
-    if (
-        client.booking_method == "opos"
-        and doc is not None
-        and v.method != "karte"
-        and v.role in ("supplier", "customer")
-        and v.family not in ("rent", "vehicle_leasing", "telecom", "utilities", "advice", "software", "postage")
-    ):
+    if opos_invoice:
+        assert doc is not None
         inv = Event(
             id=eid + "-R",
             kind="invoice",

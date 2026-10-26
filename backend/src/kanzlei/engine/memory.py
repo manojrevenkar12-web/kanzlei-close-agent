@@ -21,6 +21,8 @@ class Use:
     tax: str
     amount_cents: int
     on: date
+    personal: bool = False  # booked via a Kreditor/Debitor (OPOS) rather than straight from the bank
+    money_in: bool = False
 
 
 @dataclass
@@ -35,6 +37,7 @@ class MemoryHit:
     median_cents: int
     dominant: bool
     by: str  # iban | name | fuzzy
+    personal_share: float = 0.0
 
     def amount_deviation(self, amount_cents: int) -> float:
         if self.median_cents <= 0:
@@ -58,8 +61,8 @@ class ClientMemory:
         for k in keys:
             self.uses.setdefault(k, []).append(use)
 
-    def _hit(self, key: str, by: str) -> MemoryHit | None:
-        uses = self.uses.get(key)
+    def _hit(self, key: str, by: str, uses: list[Use] | None = None) -> MemoryHit | None:
+        uses = uses if uses is not None else self.uses.get(key)
         if not uses:
             return None
         fam_tax = Counter((u.family, u.tax) for u in uses)
@@ -73,24 +76,36 @@ class ClientMemory:
         stable = sum(1 for a in amounts if med and abs(a - med) / med <= tol)
         recurring = len(months) >= self.cfg.recurring_min_months and stable >= 0.8 * len(amounts)
         dominant = len(uses) >= self.cfg.memory_min_uses and share >= self.cfg.memory_dominant_share
-        return MemoryHit(key, family, tax, share, len(uses), len(months), recurring, med, dominant, by)
+        personal = sum(1 for u in uses if u.personal) / len(uses)
+        return MemoryHit(key, family, tax, share, len(uses), len(months), recurring, med, dominant, by, personal)
 
-    def lookup(self, iban: str | None, name: str) -> MemoryHit | None:
+    def lookup(self, iban: str | None, name: str, money_in: bool | None = None) -> MemoryHit | None:
+        """What was booked for this counterparty: by IBAN and by name together (history from DATEV
+        has names only, later bookings have both), in the same direction of payment."""
+        keys: list[tuple[str, str]] = []
         ib = normalize_iban(iban)
-        if ib and (hit := self._hit("iban:" + ib, "iban")):
-            return hit
+        if ib and ("iban:" + ib) in self.uses:
+            keys.append(("iban:" + ib, "iban"))
         nn = normalize_name(name)
-        if not nn:
+        if nn and ("name:" + nn) in self.uses:
+            keys.append(("name:" + nn, "name"))
+        elif nn:
+            best, score = None, 0.0
+            for k in self.uses:
+                if not k.startswith("name:"):
+                    continue
+                s = name_similarity(nn, k[5:])
+                if s > score:
+                    best, score = k, s
+            if best and score >= 0.86:
+                keys.append((best, "fuzzy"))
+        if not keys:
             return None
-        if hit := self._hit("name:" + nn, "name"):
-            return hit
-        best, score = None, 0.0
-        for k in self.uses:
-            if not k.startswith("name:"):
-                continue
-            s = name_similarity(nn, k[5:])
-            if s > score:
-                best, score = k, s
-        if best and score >= 0.86:
-            return self._hit(best, "fuzzy")
-        return None
+        seen: dict[int, Use] = {}
+        for k, _ in keys:
+            for u in self.uses[k]:
+                seen[id(u)] = u
+        uses = list(seen.values())
+        if money_in is not None:
+            uses = [u for u in uses if u.money_in == money_in]
+        return self._hit(keys[0][0], keys[0][1], uses)

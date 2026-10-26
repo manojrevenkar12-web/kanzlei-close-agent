@@ -28,7 +28,7 @@ equipment: [laptop, notebook, computer, monitor, drucker, smartphone, iphone, ta
 payroll: [gehalt, lohn, lohnzahlung, gehaltszahlung, nettolohn, arbeitslohn]
 social_security: [krankenkasse, aok, tk techniker, barmer, dak, ikk, knappschaft, sozialversicherung, minijob-zentrale, beitragsnachweis]
 wage_tax: [lohnsteuer, lohnst, lst-anmeldung, kirchensteuer]
-vat_payment: [umsatzsteuer, ust-vz, ustva, finanzamt ust, voranmeldung]
+vat_payment: [umsatzsteuer, ust-vz, ustva, ust-va, finanzamt ust, voranmeldung]
 private_withdrawal: [privat, privatentnahme, rewe, edeka, aldi, lidl, kaufland, dm drogerie, rossmann, netflix, spotify, zalando, amazon privat, kita]
 private_deposit: [privateinlage, einlage, eigenkapital, übertrag privat]
 transfer: [umbuchung, übertrag, eigenes konto, tagesgeld, geldtransit, kreditkartenabrechnung]

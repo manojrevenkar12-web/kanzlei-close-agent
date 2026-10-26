@@ -16,6 +16,9 @@ recurring:
 decision:
   model_file: decision.json     # trained by `python -m kanzlei_sim train`; see docs/adr/0004
   never_auto_new_counterparty: false
+  # A counterparty this client has not paid before is booked on its own only when the text
+  # classifier is this sure of the family (set before the first blind run, not tuned on it).
+  new_counterparty_min_classifier_p: 0.9
 
 queries:
   answer_days: 7                # clients get a week to answer

@@ -45,17 +45,22 @@ _NET = re.compile(
 _TAX = re.compile(
     r"(?:zzgl\.\s*)?(?:USt\.?|MwSt\.?|Umsatzsteuer|Mehrwertsteuer)\s*(\d{1,2})\s*%\s*(?:auf\s*"
     + AMOUNT
-    + r")?\s*:?\s*(?:EUR|€)?\s*"
+    + r"\s*(?:€|EUR)?)?\s*:?\s*(?:EUR|€)?\s*"
     + AMOUNT,
     re.I,
 )
 _TAX_ALT = re.compile(
-    r"(\d{1,2})\s*%\s*(?:USt\.?|MwSt\.?|Umsatzsteuer)\s*(?:auf\s*" + AMOUNT + r")?\s*:?\s*(?:EUR|€)?\s*" + AMOUNT, re.I
+    r"(\d{1,2})\s*%\s*(?:USt\.?|MwSt\.?|Umsatzsteuer)\s*(?:auf\s*"
+    + AMOUNT
+    + r"\s*(?:€|EUR)?)?\s*:?\s*(?:EUR|€)?\s*"
+    + AMOUNT,
+    re.I,
 )
 _VAT_ID = re.compile(
     r"(?:USt-?Id(?:Nr)?\.?|USt\.?-?IdNr\.?|Umsatzsteuer-Identifikationsnummer|VAT(?: ID)?)\s*:?\s*([A-Z]{2}\s?[0-9A-Z]{8,12})",
     re.I,
 )
+_BUYER_VAT = re.compile(r"(?:Leistungsempfänger|Kunde|Customer)\S*\s*:?\s*([A-Z]{2}\s?[0-9A-Z]{8,12})\b")
 _TAX_NO = re.compile(r"(?:Steuernummer|St\.?-?Nr\.?)\s*:?\s*(\d{2,3}/\d{3}/\d{4,5})", re.I)
 _IBAN = re.compile(r"IBAN\s*:?\s*([A-Z]{2}\d{2}(?:\s?[A-Z0-9]{4}){3,7}(?:\s?[A-Z0-9]{1,3})?)")
 _POSTCODE = re.compile(r"\b(\d{5})\s+([A-ZÄÖÜ][\wäöüßÄÖÜ .\-]+)$")
@@ -102,7 +107,8 @@ def read_invoice_text(raw: str) -> Invoice:
             seller.postcode, seller.city = m.group(1), m.group(2).strip()
             seller.street = lines[i - 1] if i - 1 > 0 else ""
             break
-    if (m2 := _VAT_ID.search(body)) is not None:
+    seller_lines = "\n".join(ln for ln in lines if not re.search(r"Leistungsempfänger|Kunde\b|Customer", ln))
+    if (m2 := _VAT_ID.search(seller_lines)) is not None:
         seller.vat_id = m2.group(1).replace(" ", "").upper()
         seller.country = country_of_vat_id(seller.vat_id) or "DE"
     if (m3 := _TAX_NO.search(body)) is not None:
@@ -120,6 +126,12 @@ def read_invoice_text(raw: str) -> Invoice:
                 inv.buyer.postcode, inv.buyer.city = pc.group(1), pc.group(2).strip()
             break
 
+    for ln in lines:
+        if "USt" in ln or "VAT" in ln:
+            bm = _BUYER_VAT.search(ln)
+            if bm:
+                inv.buyer.vat_id = bm.group(1).replace(" ", "").upper()
+                inv.buyer.country = country_of_vat_id(inv.buyer.vat_id) or ""
     if (m := _NO.search(body)) is not None:
         inv.invoice_no = m.group(1).rstrip(".")
     if (m := _ISSUE.search(body)) is not None:

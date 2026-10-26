@@ -1,0 +1,26 @@
+{
+  "classifier": {
+    "rows": 2194,
+    "families": 31,
+    "cv_unseen_counterparty_accuracy": 0.938
+  },
+  "decision": {
+    "threshold": 0.3,
+    "trained_on": {
+      "proposals": 554,
+      "wrong": 12,
+      "eligible": 511,
+      "client_months": 27
+    },
+    "cross_validation": {
+      "threshold": 0.3,
+      "auto": 489,
+      "wrong": 0,
+      "wrong_share": 0.0,
+      "wrong_share_upper95": 0.0078,
+      "auto_share_of_eligible": 0.9569,
+      "max_wrong_share": 0.01
+    },
+    "version": "c1e8e663b1"
+  }
+}

@@ -1,0 +1,184 @@
+[
+  {
+    "client": "hp-10102",
+    "period": "2026-07",
+    "event": "hp-10102-00245",
+    "truth": "fuel",
+    "proposed": "fuel",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "classifier",
+    "confidence": 0.297
+  },
+  {
+    "client": "bs-20201",
+    "period": "2026-07",
+    "event": "bs-20201-00287",
+    "truth": "subcontractor",
+    "proposed": "subcontractor",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "memory",
+    "confidence": 0.086
+  },
+  {
+    "client": "bs-20202",
+    "period": "2026-07",
+    "event": "bs-20202-00301",
+    "truth": "travel_transport",
+    "proposed": "travel_transport",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "memory",
+    "confidence": 0.025
+  },
+  {
+    "client": "bs-20202",
+    "period": "2026-07",
+    "event": "bs-20202-00314",
+    "truth": "advertising",
+    "proposed": "clearing",
+    "route": "review",
+    "flags": [],
+    "source": "rule",
+    "confidence": 0.75
+  },
+  {
+    "client": "ys-30301",
+    "period": "2026-07",
+    "event": "ys-30301-00307-R",
+    "truth": "subcontractor",
+    "proposed": "subcontractor",
+    "route": "client",
+    "flags": [
+      "invoice_incomplete",
+      "unsupported_tax"
+    ],
+    "source": "memory",
+    "confidence": 0.189
+  },
+  {
+    "client": "hp-10102",
+    "period": "2026-08",
+    "event": "hp-10102-00262",
+    "truth": "fuel",
+    "proposed": "fuel",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "classifier",
+    "confidence": 0.011
+  },
+  {
+    "client": "hp-10103",
+    "period": "2026-08",
+    "event": "hp-10103-00242",
+    "truth": "private_withdrawal",
+    "proposed": "meals",
+    "route": "client",
+    "flags": [
+      "meals_details"
+    ],
+    "source": "memory",
+    "confidence": 0.137
+  },
+  {
+    "client": "bs-20202",
+    "period": "2026-08",
+    "event": "bs-20202-00327",
+    "truth": "private_withdrawal",
+    "proposed": "private_withdrawal",
+    "route": "client",
+    "flags": [
+      "private_or_business",
+      "no_account"
+    ],
+    "source": "classifier",
+    "confidence": 0.002
+  },
+  {
+    "client": "bs-20202",
+    "period": "2026-08",
+    "event": "bs-20202-00342",
+    "truth": "advertising",
+    "proposed": "clearing",
+    "route": "review",
+    "flags": [],
+    "source": "rule",
+    "confidence": 0.75
+  },
+  {
+    "client": "ys-30301",
+    "period": "2026-08",
+    "event": "ys-30301-00330-R",
+    "truth": "subcontractor",
+    "proposed": "subcontractor",
+    "route": "client",
+    "flags": [
+      "invoice_incomplete",
+      "unsupported_tax"
+    ],
+    "source": "memory",
+    "confidence": 0.191
+  },
+  {
+    "client": "ys-30302",
+    "period": "2026-08",
+    "event": "ys-30302-00281",
+    "truth": "meals",
+    "proposed": "private_withdrawal",
+    "route": "client",
+    "flags": [
+      "private_or_business",
+      "no_account"
+    ],
+    "source": "classifier",
+    "confidence": 0.002
+  },
+  {
+    "client": "hp-10101",
+    "period": "2026-09",
+    "event": "hp-10101-00341",
+    "truth": "private_withdrawal",
+    "proposed": "meals",
+    "route": "client",
+    "flags": [
+      "meals_details"
+    ],
+    "source": "classifier",
+    "confidence": 0.062
+  },
+  {
+    "client": "bs-20201",
+    "period": "2026-09",
+    "event": "bs-20201-00321",
+    "truth": "fuel",
+    "proposed": "fuel",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "classifier",
+    "confidence": 0.471
+  },
+  {
+    "client": "bs-20201",
+    "period": "2026-09",
+    "event": "bs-20201-00332",
+    "truth": "goods",
+    "proposed": "goods",
+    "route": "client",
+    "flags": [
+      "invoice_incomplete"
+    ],
+    "source": "memory",
+    "confidence": 0.633
+  }
+]

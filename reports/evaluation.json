@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-10-26T11:50:36+00:00",
+  "sets": {
+    "dev": {
+      "items": 604,
+      "client_months": 27,
+      "booked_automatically": 530,
+      "booked_automatically_share": 0.8775,
+      "automatic_wrong": 0,
+      "automatic_wrong_share": 0.0,
+      "resolved_by_client_answer": 27,
+      "no_staff_touch_share": 0.9222,
+      "reviewed": 39,
+      "review_proposal_right": 0.8718,
+      "first_proposal_right": 0.9768,
+      "corrected": 5,
+      "booked_by_hand": 0,
+      "client_questions": 48,
+      "items_with_questions": 40,
+      "questions_needed_share": 0.9167,
+      "parked": 8,
+      "final_right": 1.0,
+      "vat_return_exact_months": 27,
+      "signed_off_months": 27,
+      "sign_off_errors": [],
+      "staff_minutes_estimate": 90.1,
+      "manual_minutes_estimate": 1510.0,
+      "first_proposal_right_by_family": {
+        "payroll": "78/78",
+        "revenue": "64/64",
+        "fuel": "49/52",
+        "clearing": "48/48",
+        "goods": "31/32",
+        "rent": "27/27",
+        "telecom": "27/27",
+        "utilities": "27/27",
+        "bank_fees": "27/27",
+        "private_withdrawal": "24/27",
+        "advice": "27/27",
+        "wage_tax": "24/24",
+        "social_security": "24/24",
+        "vat_payment": "21/21",
+        "software": "18/18",
+        "office_supplies": "17/17",
+        "postage": "13/13",
+        "insurance": "10/10",
+        "travel_transport": "8/9",
+        "meals": "6/7",
+        "vehicle_leasing": "6/6",
+        "subcontractor": "2/5",
+        "travel_lodging": "5/5",
+        "equipment": "4/4",
+        "advertising": "2/4",
+        "vehicle_repair": "1/1"
+      },
+      "auto_wrong_examples": [],
+      "sources": {
+        "memory": 371,
+        "document": 60,
+        "rule": 50,
+        "classifier": 123
+      }
+    }
+  },
+  "first_runs": {},
+  "versions": {
+    "decision_model": "c1e8e663b1",
+    "threshold": 0.3
+  }
+}

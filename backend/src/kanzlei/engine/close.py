@@ -159,7 +159,10 @@ class Engine:
                 continue
             main = max(fam_lines, key=lambda x: x["amount_cents"])
             total = sum(x["amount_cents"] for x in lines if x["family"] in fams)
-            use = Use(main["family"], main["tax"], total, main["booking_date"])
+            personal_side = any(ch.is_personal(x["debit"]) or ch.is_personal(x["credit"]) for x in lines)
+            bank = ch.system["bank"]
+            money_in = any(x["debit"] == bank for x in lines) or any(ch.is_debtor(x["debit"]) for x in lines)
+            use = Use(main["family"], main["tax"], total, main["booking_date"], personal_side, money_in)
             if key[0] == "i":
                 cp = main["cp"] or {}
                 mem.add(iban=cp.get("iban"), name=cp.get("name") or main["text"], use=use)
@@ -382,7 +385,8 @@ class Engine:
         dups = self._duplicate_doc_ids(conn, client_id)
         created = {"payment": 0, "invoice": 0}
 
-        # 1. OPOS: invoices of the month are booked on receipt.
+        # 1. OPOS: invoices of the month are booked on receipt - the way this firm does it for this
+        #    partner. Partners the firm books straight from the bank, and till receipts, are not.
         if ctx.client.booking_method == "opos":
             for d in self._docs(
                 conn,
@@ -390,6 +394,8 @@ class Engine:
                 "d.period = %s AND NOT EXISTS (SELECT 1 FROM items i WHERE i.kind = 'invoice' AND i.document_ids[1] = d.id)",
                 (period,),
             ):
+                if not self._books_on_receipt(ctx, d):
+                    continue
                 p = propose_invoice(ctx, d)
                 if d.id in dups:
                     p.flags.append("duplicate_invoice")
@@ -462,6 +468,21 @@ class Engine:
         )
         return summary
 
+    def _books_on_receipt(self, ctx: Context, d: Doc) -> bool:
+        inv = d.invoice
+        incoming = d.direction == "in"
+        party = inv.seller if incoming else inv.buyer
+        kind = "kreditor" if incoming else "debitor"
+        if ctx.find_counterparty(
+            kind, iban=inv.seller_iban if incoming else None, vat_id=party.vat_id, name=party.name
+        ):
+            return True
+        hit = ctx.memory.lookup(inv.seller_iban if incoming else None, party.name, money_in=not incoming)
+        if hit is not None and hit.uses >= ctx.close.memory_min_uses:
+            return hit.personal_share >= 0.5
+        small = (inv.gross_cents or 0) <= ctx.tax.kleinbetrag_gross_cents
+        return not (incoming and small)
+
     def open_items(self, conn: Conn, ctx: Context) -> list[OpenItem]:
         """Unsettled invoices on personal accounts, from the booked journal (history included)."""
         ch = ctx.chart
@@ -504,7 +525,7 @@ class Engine:
 
     def _cleared(self, conn: Conn, client_id: str) -> dict[int, int]:
         rows = conn.execute(
-            "SELECT document_ids[1] AS doc, coalesce(final, proposal) AS p FROM items WHERE client_id = %s AND kind = 'invoice'",
+            "SELECT document_ids[1] AS doc, proposal AS p FROM items WHERE client_id = %s AND kind = 'invoice' AND coalesce(decision, '') <> 'dismissed'",
             (client_id,),
         ).fetchall()
         out: dict[int, int] = {}
@@ -974,6 +995,26 @@ class Engine:
             "item.manual",
             {"item": item_id, "lines": len(lines)},
             firm=ctx.client.firm_id,
+            client=it["client_id"],
+        )
+
+    def dismiss(self, conn: Conn, item_id: int, actor: Principal, note: str) -> None:
+        """An incoming document that is not an invoice to book on receipt (paid at once, a copy):
+        it stays archived and is booked with its payment."""
+        it = self._item(conn, item_id)
+        if it["kind"] != "invoice" or it["state"] not in ("review", "client"):
+            raise CloseError("Nur offene Rechnungseingänge können verworfen werden")
+        conn.execute(
+            "UPDATE items SET state = 'done', decision = 'dismissed', decided_by = %s, decided_at = now(), updated_at = now() WHERE id = %s",
+            (actor.login, item_id),
+        )
+        client = self.profile(conn, it["client_id"])
+        event(
+            conn,
+            actor.login,
+            "item.dismiss",
+            {"item": item_id, "note": note[:200]},
+            firm=client.firm_id,
             client=it["client_id"],
         )
 

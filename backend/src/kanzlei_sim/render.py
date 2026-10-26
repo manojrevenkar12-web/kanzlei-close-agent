@@ -358,6 +358,8 @@ def pdf_invoice(client: Client, party: Party, doc: DocSpec) -> bytes:
     out += list(doc.notes)
     if doc.payment_terms:
         out.append(doc.payment_terms)
+    if any(ln.category in ("AE", "K") for ln in doc.lines) and buyer.get("vat_id") and "buyer_vat_id" not in miss:
+        out.append(f"USt-IdNr. Leistungsempfänger: {buyer['vat_id']}")
     if "seller_tax_id" not in miss:
         if seller.get("vat_id"):
             out.append(f"{L['vat_id']}: {seller['vat_id']}")

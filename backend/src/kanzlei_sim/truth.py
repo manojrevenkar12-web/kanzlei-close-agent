@@ -24,6 +24,7 @@ class TLine:
     credit: int
     tax: str
     amount: int
+    ref: str = ""  # Belegfeld 1 (invoice number), not part of the comparison
 
     def key(self) -> tuple[Any, ...]:
         return (self.debit, self.credit, self.tax, self.amount)
@@ -186,10 +187,12 @@ def event_lines(
         for tax, g, role in parts:
             acct = account(ch, t.family, tax, role)
             supplier = doc.direction == "in"
-            if supplier != doc.credit_note:
-                out.append(TLine(acct, pa, tax, g) if supplier else TLine(pa, acct, tax, g))
+            normal = not doc.credit_note
+            # Supplier invoice: expense to Kreditor; customer invoice: Debitor to revenue; credit notes reverse.
+            if supplier == normal:
+                out.append(TLine(acct, pa, tax, g, doc.number))
             else:
-                out.append(TLine(pa, acct, tax, g) if supplier else TLine(acct, pa, tax, g))
+                out.append(TLine(pa, acct, tax, g, doc.number))
         return out
     amount = cents(abs(ev.amount))
     money_in = ev.amount > 0
@@ -204,15 +207,16 @@ def event_lines(
             paid = amount - run if k == len(ev.settles) - 1 else round(g * amount / total_gross)
             run += paid
             pa = personal[inv.party]
-            out.append(TLine(bank, pa, "NONE", paid) if money_in else TLine(pa, bank, "NONE", paid))
+            ref = inv.document.number
+            out.append(TLine(bank, pa, "NONE", paid, ref) if money_in else TLine(pa, bank, "NONE", paid, ref))
             disc = g - paid
             if disc > 0:
                 main = max(_groups(inv.document.lines), key=lambda x: x[2])
                 rate = main[0] if main[1] == "S" else 19
                 if inv.document.direction == "out":
-                    out.append(TLine(account(ch, "skonto_granted", f"U{rate}"), pa, f"U{rate}", disc))
+                    out.append(TLine(account(ch, "skonto_granted", f"U{rate}"), pa, f"U{rate}", disc, ref))
                 else:
-                    out.append(TLine(pa, account(ch, "skonto_received", f"V{rate}"), f"V{rate}", disc))
+                    out.append(TLine(pa, account(ch, "skonto_received", f"V{rate}"), f"V{rate}", disc, ref))
         return out
     parts = portions(ev, client, firm, amount)
     if t.family == "meals":

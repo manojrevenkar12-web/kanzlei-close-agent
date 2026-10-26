@@ -115,8 +115,8 @@ def import_history(conn: Conn, firm_id: str, client_id: str, data: bytes, filena
         tax_acct = side if side is not None else b.gegenkonto
         tax = ch.tax_of(tax_acct, b.bu) or "NONE"
         volume_all += b.amount_cents
-        if family in fams or family in ("skonto_received", "skonto_granted"):
-            volume_known += b.amount_cents
+        if side is None or family in fams or family in ("skonto_received", "skonto_granted", "suspense"):
+            volume_known += b.amount_cents  # bank <-> personal account lines need no mapping
         conn.execute(
             """INSERT INTO bookings (client_id, period, booking_date, amount_cents, debit, credit, tax, text, doc_ref, family, role, origin, locked)
                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'import',true)""",

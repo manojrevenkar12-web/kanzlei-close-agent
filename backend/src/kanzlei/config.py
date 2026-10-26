@@ -116,6 +116,7 @@ class CloseConfig:
     recurring_amount_tolerance: float
     decision_model_file: str
     never_auto_new_counterparty: bool
+    new_counterparty_min_classifier_p: float
     answer_days: int
     plaus_months: int
     plaus_min_months: int
@@ -138,6 +139,7 @@ def close_config() -> CloseConfig:
         recurring_amount_tolerance=float(d["recurring"]["amount_tolerance"]),
         decision_model_file=str(d["decision"]["model_file"]),
         never_auto_new_counterparty=bool(d["decision"]["never_auto_new_counterparty"]),
+        new_counterparty_min_classifier_p=float(d["decision"]["new_counterparty_min_classifier_p"]),
         answer_days=int(d["queries"]["answer_days"]),
         plaus_months=int(d["plausibility"]["months"]),
         plaus_min_months=int(d["plausibility"]["min_months"]),

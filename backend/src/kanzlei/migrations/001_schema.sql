@@ -287,19 +287,33 @@ BEGIN
 END $$;
 CREATE TRIGGER bookings_locked BEFORE UPDATE OR DELETE ON bookings FOR EACH ROW EXECUTE FUNCTION forbid_locked_booking();
 
-CREATE FUNCTION forbid_closed_period() RETURNS trigger LANGUAGE plpgsql AS $$
-DECLARE st text; cid text; per text;
+CREATE FUNCTION period_signed(cid text, per text) RETURNS boolean LANGUAGE sql STABLE AS
+$$ SELECT EXISTS (SELECT 1 FROM closes WHERE client_id = cid AND period = per AND status = 'festgeschrieben') $$;
+
+CREATE FUNCTION forbid_closed_item() RETURNS trigger LANGUAGE plpgsql AS $$
 BEGIN
-  IF TG_OP = 'DELETE' THEN cid := OLD.client_id; per := OLD.period; ELSE cid := NEW.client_id; per := NEW.period; END IF;
-  SELECT status INTO st FROM closes WHERE client_id = cid AND period = per;
-  IF st = 'festgeschrieben' AND NOT (TG_TABLE_NAME = 'bookings' AND TG_OP = 'UPDATE' AND NEW.locked AND NOT OLD.locked) THEN
-    RAISE EXCEPTION 'Monat % für % ist festgeschrieben', per, cid USING ERRCODE = 'check_violation';
+  IF TG_OP = 'DELETE' THEN
+    IF period_signed(OLD.client_id, OLD.period) THEN RAISE EXCEPTION 'Monat % ist festgeschrieben', OLD.period USING ERRCODE = 'check_violation'; END IF;
+    RETURN OLD;
   END IF;
-  IF TG_OP = 'DELETE' THEN RETURN OLD; END IF;
+  IF period_signed(NEW.client_id, NEW.period) THEN RAISE EXCEPTION 'Monat % ist festgeschrieben', NEW.period USING ERRCODE = 'check_violation'; END IF;
   RETURN NEW;
 END $$;
-CREATE TRIGGER bookings_closed BEFORE INSERT OR UPDATE OR DELETE ON bookings FOR EACH ROW EXECUTE FUNCTION forbid_closed_period();
-CREATE TRIGGER items_closed BEFORE INSERT OR UPDATE OR DELETE ON items FOR EACH ROW EXECUTE FUNCTION forbid_closed_period();
+
+CREATE FUNCTION forbid_closed_booking() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF TG_OP = 'DELETE' THEN
+    IF period_signed(OLD.client_id, OLD.period) THEN RAISE EXCEPTION 'Monat % ist festgeschrieben', OLD.period USING ERRCODE = 'check_violation'; END IF;
+    RETURN OLD;
+  END IF;
+  IF TG_OP = 'UPDATE' THEN
+    IF NEW.locked AND NOT OLD.locked THEN RETURN NEW; END IF;  -- the sign-off itself
+  END IF;
+  IF period_signed(NEW.client_id, NEW.period) THEN RAISE EXCEPTION 'Monat % ist festgeschrieben', NEW.period USING ERRCODE = 'check_violation'; END IF;
+  RETURN NEW;
+END $$;
+CREATE TRIGGER bookings_closed BEFORE INSERT OR UPDATE OR DELETE ON bookings FOR EACH ROW EXECUTE FUNCTION forbid_closed_booking();
+CREATE TRIGGER items_closed BEFORE INSERT OR UPDATE OR DELETE ON items FOR EACH ROW EXECUTE FUNCTION forbid_closed_item();
 
 CREATE FUNCTION forbid_change() RETURNS trigger LANGUAGE plpgsql AS $$
 BEGIN RAISE EXCEPTION '% is append-only', TG_TABLE_NAME USING ERRCODE = 'check_violation'; END $$;
