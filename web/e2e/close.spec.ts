@@ -38,9 +38,16 @@ test("an advisor reviews a proposal and the month moves towards sign-off", async
   const before = Number((await review.textContent())?.match(/\d+/)?.[0]);
   expect(before).toBeGreaterThan(0);
   await review.click();
+  const name = await page.getByRole("article").getByRole("heading", { level: 2 }).textContent();
   await page.getByRole("button", { name: "Übernehmen" }).click();
-  await expect(page.getByText(/Entschieden von Claudia Hartmann/)).toBeVisible();
+  // The decided item leaves the review queue; it is now among the checked bookings, signed by her.
   await expect(review).toContainText(String(before - 1));
+  await filters.getByRole("tab", { name: /Geprüft gebucht/ }).click();
+  await page
+    .getByRole("button", { name: name ?? "" })
+    .first()
+    .click();
+  await expect(page.getByText(/Entschieden von Claudia Hartmann/)).toBeVisible();
 
   await page.getByRole("link", { name: "Umsatzsteuer und Freigabe" }).click();
   await expect(page.getByRole("heading", { name: "Umsatzsteuer-Voranmeldung" })).toBeVisible();

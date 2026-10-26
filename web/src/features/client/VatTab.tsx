@@ -39,20 +39,24 @@ function Vat({ u, clientId, period }: { u: Ustva; clientId: string; period: stri
   return (
     <div className={styles.vat}>
       <section className={styles.vatSheet} aria-label="Umsatzsteuer-Voranmeldung">
-        <Stamp
-          show={signed}
-          label="Festgeschrieben"
-          sub={u.close.signed_at ? `${date(u.close.signed_at)}, ${u.close.signed_by ?? ""}` : undefined}
-        />
-        <h2 className={styles.h2}>Umsatzsteuer-Voranmeldung</h2>
-        <p className={styles.small}>
-          {u.kleinunternehmer
-            ? "Kleinunternehmer (§ 19 UStG): keine Voranmeldung."
-            : u.files_this_month
-              ? `Abgabe bis ${date(u.due_on)}.`
-              : "Quartalsmelder: diese Zahlen fließen in die Quartalsanmeldung."}{" "}
-          Bemessungsgrundlagen in vollen Euro, Steuer in Euro und Cent.
-        </p>
+        <header className={styles.vatHead}>
+          <div>
+            <h2 className={styles.h2}>Umsatzsteuer-Voranmeldung</h2>
+            <p className={styles.small}>
+              {u.kleinunternehmer
+                ? "Kleinunternehmer (§ 19 UStG): keine Voranmeldung."
+                : u.files_this_month
+                  ? `Abgabe bis ${date(u.due_on)}.`
+                  : "Quartalsmelder: diese Zahlen fließen in die Quartalsanmeldung."}{" "}
+              Bemessungsgrundlagen in vollen Euro, Steuer in Euro und Cent.
+            </p>
+          </div>
+          <Stamp
+            show={signed}
+            label="Festgeschrieben"
+            sub={u.close.signed_at ? `${date(u.close.signed_at)}, ${u.close.signed_by ?? ""}` : undefined}
+          />
+        </header>
         <table className={styles.vatTable}>
           <thead>
             <tr>

@@ -5,6 +5,7 @@ cannot hide in the answer key.
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from decimal import ROUND_HALF_UP, Decimal
 from functools import lru_cache
@@ -15,7 +16,7 @@ import yaml
 
 from kanzlei_sim.scenario import Client, DocLine, Event, Firm, cents
 
-CONFIG = Path(__file__).resolve().parents[3] / "config"
+CONFIG = Path(os.environ.get("KANZLEI_CONFIG_DIR", str(Path(__file__).resolve().parents[3] / "config")))
 
 
 @dataclass(frozen=True)

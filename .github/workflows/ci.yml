@@ -142,7 +142,8 @@ jobs:
         with: { context: ., file: web/Dockerfile, tags: "kanzlei-web:ci", load: true, cache-from: type=gha }
       - name: Smoke test the images
         run: |
-          set -e
+          set -ex
+          exec > >(tee smoke.log) 2>&1
           docker network create kca
           docker volume create docs
           docker run -d --name postgres --network kca -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=kanzlei postgres:16-alpine
@@ -159,3 +160,12 @@ jobs:
           curl -fsSI localhost:8080/ | grep -qi '^content-security-policy:'
           test "$(curl -s -o /dev/null -w '%{http_code}' localhost:8080/api/metrics)" = 404
           docker run --rm --network kca $env kanzlei-api:ci kanzlei verify-audit
+      - name: Report failures as annotations
+        if: failure()
+        run: |
+          for c in api web postgres; do docker logs "$c" > "$c.log" 2>&1 || true; done
+          for f in smoke.log api.log web.log; do
+            [ -s "$f" ] || continue
+            body=$(tail -60 "$f" | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+            echo "::error title=$f::$body"
+          done

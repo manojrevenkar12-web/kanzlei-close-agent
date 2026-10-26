@@ -317,7 +317,7 @@ resource "aws_lb_listener" "https" {
         token_endpoint             = default_action.value.token_endpoint
         user_info_endpoint         = default_action.value.user_info_endpoint
         client_id                  = default_action.value.client_id
-        client_secret              = default_action.value.client_secret
+        client_secret              = var.oidc_client_secret
         scope                      = "openid email profile"
         session_timeout            = 28800
         on_unauthenticated_request = "authenticate"

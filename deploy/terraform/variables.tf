@@ -70,10 +70,15 @@ variable "oidc" {
     token_endpoint         = string
     user_info_endpoint     = string
     client_id              = string
-    client_secret          = string
   })
-  default   = null
-  sensitive = true
+  default = null
+}
+
+variable "oidc_client_secret" {
+  description = "Client secret of the OIDC app registration (kept out of the oidc object so the listener can be built from it)."
+  type        = string
+  default     = ""
+  sensitive   = true
 }
 
 variable "demo_mode" {

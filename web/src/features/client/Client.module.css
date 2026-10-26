@@ -370,6 +370,13 @@
 .vatTable {
   margin-top: var(--s-4);
 }
+.vatHead {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--s-3) var(--s-5);
+}
 .vatTable tfoot td {
   border-top: var(--border-strong);
   border-bottom: none;

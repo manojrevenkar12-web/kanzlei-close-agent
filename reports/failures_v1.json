@@ -102,19 +102,6 @@
   {
     "client": "a-1002",
     "period": "2026-09",
-    "event": "f11",
-    "truth": "private_withdrawal",
-    "proposed": "meals",
-    "route": "client",
-    "flags": [
-      "meals_details"
-    ],
-    "source": "classifier",
-    "confidence": 0.002
-  },
-  {
-    "client": "a-1002",
-    "period": "2026-09",
     "event": "f16",
     "truth": "travel_transport",
     "proposed": "travel_transport",
@@ -128,6 +115,19 @@
   {
     "client": "a-1002",
     "period": "2026-09",
+    "event": "f11",
+    "truth": "private_withdrawal",
+    "proposed": "meals",
+    "route": "client",
+    "flags": [
+      "meals_details"
+    ],
+    "source": "classifier",
+    "confidence": 0.002
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
     "event": "f23",
     "truth": "subcontractor",
     "proposed": "goods",
@@ -135,6 +135,17 @@
     "flags": [
       "invoice_incomplete"
     ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f12",
+    "truth": "private_withdrawal",
+    "proposed": "vat_payment",
+    "route": "review",
+    "flags": [],
     "source": "classifier",
     "confidence": 0.0
   },
@@ -163,19 +174,8 @@
   {
     "client": "a-1002",
     "period": "2026-09",
-    "event": "f12",
+    "event": "f22",
     "truth": "private_withdrawal",
-    "proposed": "vat_payment",
-    "route": "review",
-    "flags": [],
-    "source": "classifier",
-    "confidence": 0.0
-  },
-  {
-    "client": "a-1002",
-    "period": "2026-09",
-    "event": "f25",
-    "truth": "office_supplies",
     "proposed": "goods",
     "route": "review",
     "flags": [
@@ -187,8 +187,8 @@
   {
     "client": "a-1002",
     "period": "2026-09",
-    "event": "f22",
-    "truth": "private_withdrawal",
+    "event": "f25",
+    "truth": "office_supplies",
     "proposed": "goods",
     "route": "review",
     "flags": [
