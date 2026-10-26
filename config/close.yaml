@@ -1,0 +1,37 @@
+# How the monthly close runs. Thresholds live here, never in code.
+
+matching:
+  window_days_before: 75        # an invoice may be paid up to this long after it was issued
+  window_days_after: 10         # or shortly before (prepayment, card payment before the receipt)
+  max_combination: 3            # one payment may settle up to this many invoices of one supplier
+  min_score: 0.55               # below this a pairing is not proposed
+
+memory:
+  min_uses: 2                   # a counterparty seen fewer times is treated as new
+  dominant_share: 0.8           # share of past bookings that must agree for the memory to speak
+recurring:
+  min_months: 3                 # paid in at least this many months ...
+  amount_tolerance: 0.03        # ... with amounts within this relative band: a standing contract
+
+decision:
+  model_file: decision.json     # trained by `python -m kanzlei_sim train`; see docs/adr/0004
+  never_auto_new_counterparty: false
+
+queries:
+  answer_days: 7                # clients get a week to answer
+  bundle: true                  # one message per client and month, not one per item
+
+plausibility:
+  months: 12                    # history the VAT return is compared against
+  min_months: 4
+  mad_k: 4.0                    # robust z-score that raises a flag
+  min_abs_cents: 50000          # differences below 500 € never raise a flag
+
+# Estimated staff minutes, used only for the effort estimate in reports (labelled as an
+# estimate everywhere it appears). Manual baseline: the same item booked by hand.
+effort_minutes:
+  manual_item: 2.5
+  accept: 0.4
+  correct: 3.0
+  query_item: 1.0
+  answer_review: 0.5

@@ -1,0 +1,19 @@
+# The language model is optional. Without a key the agent runs on rules, client memory and the
+# text classifier, and that mode is what reports/ measures.
+#
+# A tax firm may hand client data to a service provider only under § 62a StBerG: a confidentiality
+# agreement in text form, need-to-know, and a comparable level of protection abroad. So a model
+# call is allowed only for firms whose agreement date is recorded (firms.llm_agreement_on), only
+# for the uses listed here, and only with the fields below removed first.
+
+provider: anthropic
+model: claude-sonnet-5-5
+enabled_if_env: ANTHROPIC_API_KEY
+base_url_env: KANZLEI_ANTHROPIC_BASE_URL
+uses:
+  read_invoice: true        # a PDF without e-invoice data that the layout reader could not read
+  suggest_family: true      # a counterparty nobody has booked before, when the classifier is unsure
+min_classifier_confidence: 0.55   # below this the model is asked (if allowed)
+redact: [iban, email, phone, tax_id]
+max_tokens: 500
+timeout_seconds: 20

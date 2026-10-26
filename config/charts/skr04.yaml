@@ -1,0 +1,68 @@
+# DATEV SKR04, the excerpt the agent proposes into (see skr03.yaml for the field meanings).
+# Check the numbers against the Kontenrahmen version the firm runs before going live.
+
+chart: SKR04
+account_length: 4
+debtors: [10000, 69999]
+creditors: [70000, 99999]
+system:
+  bank: 1800
+  cash: 1600
+  transit: 1460
+  receivables: 1200
+  payables: 3300
+  suspense: 1370
+bu_keys: {U7: "2", U19: "3", V7: "8", V19: "9"}
+
+accounts:
+  - {account: 5400, name: "Wareneingang 19 % Vorsteuer",                          family: goods,           tax: V19,  auto: true}
+  - {account: 5300, name: "Wareneingang 7 % Vorsteuer",                           family: goods,           tax: V7,   auto: true}
+  - {account: 5425, name: "Innergemeinschaftlicher Erwerb 19 % VSt und 19 % USt", family: goods,           tax: IGE19, auto: true}
+  - {account: 5200, name: "Wareneingang",                                         family: goods,           tax: NONE}
+  - {account: 5900, name: "Fremdleistungen",                                      family: subcontractor,   tax: "*"}
+  - {account: 5920, name: "Bauleistungen § 13b UStG 19 % VSt und 19 % USt",        family: "*",            tax: RC_BAU19, auto: true}
+  - {account: 5923, name: "Sonstige Leistungen EU-Unternehmer 19 % VSt und 19 % USt", family: "*",          tax: RC_EU19, auto: true}
+  - {account: 5925, name: "Leistungen ausländischer Unternehmer 19 % VSt und 19 % USt", family: "*",        tax: RC_DRITT19, auto: true}
+  - {account: 6310, name: "Miete (unbewegliche Wirtschaftsgüter)",                family: rent,            tax: "*"}
+  - {account: 6325, name: "Gas, Strom, Wasser",                                   family: utilities,       tax: "*"}
+  - {account: 6805, name: "Telefon",                                              family: telecom,         tax: "*"}
+  - {account: 6815, name: "Bürobedarf",                                           family: office_supplies, tax: "*"}
+  - {account: 6495, name: "Wartungskosten für Hard- und Software",                family: software,        tax: "*"}
+  - {account: 6640, name: "Bewirtungskosten",                                     family: meals,           tax: "*"}
+  - {account: 6644, name: "Nicht abzugsfähige Bewirtungskosten",                  family: meals,           tax: "*", role: nondeductible}
+  - {account: 6680, name: "Übernachtungsaufwand Unternehmer",                     family: travel_lodging,  tax: "*"}
+  - {account: 6673, name: "Fahrtkosten Unternehmer",                              family: travel_transport, tax: "*"}
+  - {account: 6530, name: "Laufende Kfz-Betriebskosten",                          family: fuel,            tax: "*"}
+  - {account: 6540, name: "Kfz-Reparaturen",                                      family: vehicle_repair,  tax: "*"}
+  - {account: 6560, name: "Mietleasing Kfz",                                      family: vehicle_leasing, tax: "*"}
+  - {account: 6520, name: "Kfz-Versicherungen",                                   family: vehicle_insurance, tax: "*"}
+  - {account: 6400, name: "Versicherungen",                                       family: insurance,       tax: "*"}
+  - {account: 6420, name: "Beiträge",                                             family: memberships,     tax: "*"}
+  - {account: 6600, name: "Werbekosten",                                          family: advertising,     tax: "*"}
+  - {account: 6825, name: "Rechts- und Beratungskosten",                          family: advice,          tax: "*"}
+  - {account: 6855, name: "Nebenkosten des Geldverkehrs",                         family: bank_fees,       tax: "*"}
+  - {account: 6800, name: "Porto",                                                family: postage,         tax: "*"}
+  - {account: 6821, name: "Fortbildungskosten",                                   family: training,        tax: "*"}
+  - {account: 6470, name: "Reparaturen und Instandhaltung von Betriebs- und Geschäftsausstattung", family: repairs, tax: "*"}
+  - {account: 6845, name: "Werkzeuge und Kleingeräte",                            family: equipment,       tax: "*", role: small}
+  - {account: "0670", name: "Geringwertige Wirtschaftsgüter",                       family: equipment,       tax: "*", role: gwg}
+  - {account: "0690", name: "Sonstige Betriebs- und Geschäftsausstattung",          family: equipment,       tax: "*", role: asset}
+  - {account: 3790, name: "Lohn- und Gehaltsverrechnung",                         family: payroll,         tax: NONE}
+  - {account: 3740, name: "Verbindlichkeiten im Rahmen der sozialen Sicherheit",  family: social_security, tax: NONE}
+  - {account: 3730, name: "Verbindlichkeiten aus Lohn- und Kirchensteuer",        family: wage_tax,        tax: NONE}
+  - {account: 3820, name: "Umsatzsteuer-Vorauszahlungen",                         family: vat_payment,     tax: NONE}
+  - {account: 2100, name: "Privatentnahmen allgemein",                            family: private_withdrawal, tax: NONE}
+  - {account: 2180, name: "Privateinlagen",                                       family: private_deposit, tax: NONE}
+  - {account: 1460, name: "Geldtransit",                                          family: transfer,        tax: NONE}
+  - {account: 4400, name: "Erlöse 19 % USt",                                      family: revenue,         tax: U19,  auto: true}
+  - {account: 4300, name: "Erlöse 7 % USt",                                       family: revenue,         tax: U7,   auto: true}
+  - {account: 4125, name: "Steuerfreie innergemeinschaftliche Lieferungen § 4 Nr. 1b UStG", family: revenue, tax: IGL, auto: true}
+  - {account: 4338, name: "Erlöse aus im anderen EU-Land steuerpflichtigen sonstigen Leistungen", family: revenue, tax: EU_SVC, auto: true}
+  - {account: 4337, name: "Erlöse aus Leistungen, für die der Leistungsempfänger die Steuer schuldet", family: revenue, tax: RC_OUT, auto: true}
+  - {account: 4100, name: "Steuerfreie Umsätze § 4 Nr. 8 ff. UStG",              family: revenue,         tax: FREI, auto: true}
+  - {account: 4185, name: "Erlöse als Kleinunternehmer i. S. d. § 19 Abs. 1 UStG", family: revenue,     tax: NONE}
+  - {account: 1370, name: "Durchlaufende Posten (Klärungskonto)",                 family: suspense,        tax: NONE}
+  - {account: 5736, name: "Erhaltene Skonti 19 % Vorsteuer", family: skonto_received, tax: V19, auto: true}
+  - {account: 5731, name: "Erhaltene Skonti 7 % Vorsteuer", family: skonto_received, tax: V7, auto: true}
+  - {account: 4736, name: "Gewährte Skonti 19 % USt", family: skonto_granted, tax: U19, auto: true}
+  - {account: 4731, name: "Gewährte Skonti 7 % USt", family: skonto_granted, tax: U7, auto: true}

@@ -1,0 +1,63 @@
+# Tax rules the agent applies. Rules decide anything with a tax consequence; models only read.
+# Sources are named next to each value. Amounts are in cents.
+
+rates:            # percent per internal tax code
+  V19: 19
+  V7: 7
+  U19: 19
+  U7: 7
+  RC_EU19: 19
+  RC_BAU19: 19
+  RC_DRITT19: 19
+  IGE19: 19
+
+kleinbetrag_gross_cents: 25000        # § 33 UStDV: invoices up to 250 € gross need fewer details
+equipment:
+  small_net_cents: 25000              # expensed directly (Werkzeuge und Kleingeräte)
+  gwg_net_cents: 80000                # § 6 Abs. 2 EStG: immediate write-off up to 800 € net
+meals_deductible_share: 0.70          # § 4 Abs. 5 Nr. 2 EStG; input VAT stays fully deductible (§ 15 Abs. 1a UStG)
+skonto_percent: [2, 3]                # cash discounts the matcher accepts as an explained difference
+
+eu_countries: [AT, BE, BG, CY, CZ, DK, EE, ES, FI, FR, GR, HR, HU, IE, IT, LT, LU, LV, MT, NL, PL, PT, RO, SE, SI, SK]
+
+ustva:
+  due_day: 10                         # § 18 Abs. 1 UStG: 10th day after the period
+  dauerfrist_extra_months: 1          # § 46 UStDV
+  quarterly_threshold_cents: 900000   # § 18 Abs. 2 UStG (since 2025): up to 9,000 € VAT a year, quarterly
+
+# Where each tax code lands in the return (Vordruck USt 1 A). base: net amount; tax: the tax
+# owed on it; input: deductible input tax.
+kennzahlen:
+  U19: {base: "81", rate: 19}
+  U7: {base: "86", rate: 7}
+  IGL: {base: "41"}
+  EU_SVC: {base: "21"}
+  RC_OUT: {base: "60"}
+  FREI: {base: "48"}
+  V19: {input: "66"}
+  V7: {input: "66"}
+  RC_EU19: {base: "46", tax: "47", input: "67", rate: 19}
+  RC_BAU19: {base: "84", tax: "85", input: "67", rate: 19}
+  RC_DRITT19: {base: "84", tax: "85", input: "67", rate: 19}
+  IGE19: {base: "89", tax: "89", input: "61", rate: 19}
+
+kennzahl_labels:
+  "81": "Steuerpflichtige Umsätze 19 %"
+  "86": "Steuerpflichtige Umsätze 7 %"
+  "41": "Innergemeinschaftliche Lieferungen an Abnehmer mit USt-IdNr."
+  "21": "Nicht steuerbare sonstige Leistungen (§ 18b UStG)"
+  "60": "Umsätze, für die der Leistungsempfänger die Steuer schuldet"
+  "48": "Steuerfreie Umsätze ohne Vorsteuerabzug"
+  "46": "Sonstige Leistungen von EU-Unternehmern (§ 13b Abs. 1 UStG)"
+  "84": "Andere Leistungen (§ 13b Abs. 2 UStG)"
+  "89": "Innergemeinschaftliche Erwerbe 19 %"
+  "66": "Vorsteuer aus Rechnungen anderer Unternehmer"
+  "61": "Vorsteuer aus innergemeinschaftlichem Erwerb"
+  "67": "Vorsteuer aus Leistungen nach § 13b UStG"
+  "83": "Verbleibende Umsatzsteuer-Vorauszahlung / Überschuss"
+
+# § 14 Abs. 4 UStG: what a full invoice must state; § 33 UStDV for small amounts.
+pflichtangaben:
+  full: [seller_name, seller_address, buyer_name, seller_tax_id, issue_date, invoice_no, description, delivery_date, net_by_rate, tax_by_rate]
+  kleinbetrag: [seller_name, seller_address, issue_date, description, gross, rate]
+  reverse_charge_note: "Steuerschuldnerschaft des Leistungsempfängers"

@@ -1,0 +1,44 @@
+# Booking families: what a payment or invoice is for, independent of the chart of accounts.
+# The agent proposes a family; the firm's chart (charts/skr03.yaml, charts/skr04.yaml) turns
+# family + tax code into an account. Learning across firms happens in this space, so a firm on
+# SKR04 benefits from what a firm on SKR03 has booked.
+#
+#   label            shown to staff and in client questions
+#   side             expense | revenue | balance (balance: no profit effect)
+#   receipt          true: input VAT needs an invoice; a payment without one gets a client question
+#   tax              tax code when no document says otherwise (V19, V7, NONE, ...)
+#   risk             0..2, how costly a wrong booking is (feeds the decision model)
+#   recurring_ok     a long-running contract (lease, telecom) may stand in for the monthly invoice
+
+families:
+  goods:              {label: "Wareneinkauf",                     side: expense, receipt: true,  tax: V19,  risk: 1}
+  subcontractor:      {label: "Fremdleistungen",                  side: expense, receipt: true,  tax: V19,  risk: 1}
+  rent:               {label: "Miete und Pacht",                  side: expense, receipt: true,  tax: NONE, risk: 1, recurring_ok: true}
+  utilities:          {label: "Strom, Gas, Wasser",               side: expense, receipt: true,  tax: V19,  risk: 0, recurring_ok: true}
+  telecom:            {label: "Telefon und Internet",             side: expense, receipt: true,  tax: V19,  risk: 0, recurring_ok: true}
+  office_supplies:    {label: "Bürobedarf",                       side: expense, receipt: true,  tax: V19,  risk: 0}
+  software:           {label: "Software und IT-Dienste",          side: expense, receipt: true,  tax: V19,  risk: 0, recurring_ok: true}
+  meals:              {label: "Bewirtung",                        side: expense, receipt: true,  tax: V19,  risk: 2}
+  travel_lodging:     {label: "Übernachtung (Reise)",             side: expense, receipt: true,  tax: V7,   risk: 1}
+  travel_transport:   {label: "Fahrtkosten (Reise)",              side: expense, receipt: true,  tax: V7,   risk: 1}
+  fuel:               {label: "Kraftstoff",                       side: expense, receipt: true,  tax: V19,  risk: 0}
+  vehicle_repair:     {label: "Kfz-Reparaturen",                  side: expense, receipt: true,  tax: V19,  risk: 0}
+  vehicle_leasing:    {label: "Kfz-Leasing",                      side: expense, receipt: true,  tax: V19,  risk: 1, recurring_ok: true}
+  vehicle_insurance:  {label: "Kfz-Versicherung",                 side: expense, receipt: false, tax: NONE, risk: 0}
+  insurance:          {label: "Versicherungen",                   side: expense, receipt: false, tax: NONE, risk: 0}
+  memberships:        {label: "Beiträge (Kammer, Verbände)",      side: expense, receipt: false, tax: NONE, risk: 0}
+  advertising:        {label: "Werbung",                          side: expense, receipt: true,  tax: V19,  risk: 0}
+  advice:             {label: "Rechts- und Beratungskosten",      side: expense, receipt: true,  tax: V19,  risk: 0}
+  bank_fees:          {label: "Kontoführung und Zahlungsverkehr", side: expense, receipt: false, tax: NONE, risk: 0}
+  postage:            {label: "Porto und Versand",                side: expense, receipt: true,  tax: V19,  risk: 0}
+  training:           {label: "Fortbildung",                      side: expense, receipt: true,  tax: V19,  risk: 0}
+  repairs:            {label: "Reparaturen und Instandhaltung",   side: expense, receipt: true,  tax: V19,  risk: 0}
+  equipment:          {label: "Anschaffung Ausstattung",          side: expense, receipt: true,  tax: V19,  risk: 2}
+  payroll:            {label: "Lohn- und Gehaltszahlung",         side: balance, receipt: false, tax: NONE, risk: 1}
+  social_security:    {label: "Sozialversicherungsbeiträge",      side: balance, receipt: false, tax: NONE, risk: 1}
+  wage_tax:           {label: "Lohnsteuer an das Finanzamt",      side: balance, receipt: false, tax: NONE, risk: 1}
+  vat_payment:        {label: "Umsatzsteuer-Vorauszahlung",       side: balance, receipt: false, tax: NONE, risk: 1}
+  private_withdrawal: {label: "Privatentnahme",                   side: balance, receipt: false, tax: NONE, risk: 2}
+  private_deposit:    {label: "Privateinlage",                    side: balance, receipt: false, tax: NONE, risk: 2}
+  transfer:           {label: "Umbuchung zwischen eigenen Konten", side: balance, receipt: false, tax: NONE, risk: 1}
+  revenue:            {label: "Umsatzerlöse",                     side: revenue, receipt: true,  tax: U19,  risk: 2, recurring_ok: true}
