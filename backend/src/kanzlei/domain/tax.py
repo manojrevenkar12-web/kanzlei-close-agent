@@ -54,6 +54,10 @@ def _code_for(
         return "IGL" if revenue else "IGE19"
     if category == "E":
         return "FREI" if revenue else "NONE"
+    if category == "O" and not revenue and seller_country and seller_country != "DE" and not goods:
+        # A foreign seller outside the scope of its own VAT: the German recipient owes the tax
+        # on the service (§ 3a Abs. 2, § 13b Abs. 1 / Abs. 2 Nr. 1 UStG).
+        return "RC_EU19" if seller_country in eu else "RC_DRITT19"
     if category in ("Z", "O", "G"):
         return "NONE" if not revenue else None
     return None

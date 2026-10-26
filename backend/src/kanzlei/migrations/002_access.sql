@@ -42,7 +42,6 @@ ALTER TABLE query_items ENABLE ROW LEVEL SECURITY;     ALTER TABLE query_items F
 ALTER TABLE corrections ENABLE ROW LEVEL SECURITY;     ALTER TABLE corrections FORCE ROW LEVEL SECURITY;
 ALTER TABLE imports ENABLE ROW LEVEL SECURITY;         ALTER TABLE imports FORCE ROW LEVEL SECURITY;
 ALTER TABLE events ENABLE ROW LEVEL SECURITY;          ALTER TABLE events FORCE ROW LEVEL SECURITY;
-ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;            ALTER TABLE jobs FORCE ROW LEVEL SECURITY;
 ALTER TABLE outbox ENABLE ROW LEVEL SECURITY;          ALTER TABLE outbox FORCE ROW LEVEL SECURITY;
 
 CREATE POLICY firms_read ON firms FOR SELECT USING (app_system() OR id = app_firm() OR app_role() = 'gruppe');
@@ -75,7 +74,6 @@ CREATE POLICY queries_all ON queries FOR ALL USING (app_client_visible(client_id
 CREATE POLICY query_items_all ON query_items FOR ALL USING (app_client_visible(client_id)) WITH CHECK (app_client_visible(client_id));
 CREATE POLICY imports_all ON imports FOR ALL USING (app_system() OR (client_id IS NOT NULL AND app_client_visible(client_id))) WITH CHECK (app_system());
 CREATE POLICY outbox_system ON outbox FOR ALL USING (app_system() OR app_client_visible(client_id)) WITH CHECK (app_system() OR app_client_visible(client_id));
-CREATE POLICY jobs_system ON jobs FOR ALL USING (app_system() OR created_by = app_login()) WITH CHECK (app_system() OR created_by = app_login());
 
 -- Corrections: written by whoever corrects; read by the firm and the group (they carry families,
 -- tax codes and pseudonymous ids, no names or amounts).
@@ -127,6 +125,25 @@ BEGIN
   PERFORM append_event('portal', (SELECT firm_id FROM clients WHERE id = cid), cid, 'portal.answer',
                        jsonb_build_object('item', p_item, 'keys', (SELECT jsonb_agg(k) FROM jsonb_object_keys(p_answer) k)));
   RETURN true;
+END $$;
+
+-- The protocol can be checked by anyone allowed to read part of it; the answer is only a count
+-- and the first broken link.
+CREATE FUNCTION verify_events() RETURNS TABLE (checked bigint, first_broken bigint)
+LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = public AS $$
+DECLARE r record; prev text := repeat('0', 64); h text; n bigint := 0;
+BEGIN
+  IF NOT (app_system() OR app_role() IN ('berater', 'gruppe')) THEN RAISE EXCEPTION 'not allowed'; END IF;
+  FOR r IN SELECT * FROM events ORDER BY id LOOP
+    n := n + 1;
+    h := encode(sha256(convert_to(prev || '|' || r.actor || '|' || coalesce(r.firm_id, '') || '|' || coalesce(r.client_id, '') || '|' ||
+          r.kind || '|' || r.payload::text || '|' || to_char(r.at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US'), 'UTF8')), 'hex');
+    IF r.prev_hash <> prev OR r.hash <> h THEN
+      checked := n; first_broken := r.id; RETURN NEXT; RETURN;
+    END IF;
+    prev := r.hash;
+  END LOOP;
+  checked := n; first_broken := NULL; RETURN NEXT;
 END $$;
 
 -- Per-firm aggregates for the group's engineers and each firm's tax advisors.

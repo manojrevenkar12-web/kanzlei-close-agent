@@ -250,21 +250,6 @@ CREATE TABLE events (
   hash      text NOT NULL
 );
 
-CREATE TABLE jobs (
-  id         bigserial PRIMARY KEY,
-  kind       text NOT NULL,
-  payload    jsonb NOT NULL,
-  status     text NOT NULL DEFAULT 'queued' CHECK (status IN ('queued', 'running', 'done', 'failed')),
-  attempts   int NOT NULL DEFAULT 0,
-  run_after  timestamptz NOT NULL DEFAULT now(),
-  locked_at  timestamptz,
-  error      text,
-  result     jsonb,
-  created_by text NOT NULL,
-  created_at timestamptz NOT NULL DEFAULT now()
-);
-CREATE INDEX jobs_ready ON jobs (status, run_after);
-
 CREATE TABLE outbox (
   id         bigserial PRIMARY KEY,
   client_id  text NOT NULL REFERENCES clients,

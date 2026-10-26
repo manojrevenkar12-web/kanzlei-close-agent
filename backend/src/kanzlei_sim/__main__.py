@@ -277,7 +277,31 @@ def main(argv: list[str] | None = None) -> int:
     v = sub.add_parser("evaluate")
     v.add_argument("--sets", default="dev,blind")
     sub.add_parser("gate")
+    va = sub.add_parser("validate")
+    va.add_argument("files", nargs="+", type=Path)
     a = ap.parse_args(argv)
+    if a.cmd == "validate":
+        from collections import Counter
+
+        from kanzlei_sim.scenario import validate
+
+        bad = 0
+        for f in a.files:
+            try:
+                firm = load(f)
+            except Exception as e:
+                print(f"{f}: cannot load: {e}")
+                bad += 1
+                continue
+            problems = validate(firm)
+            for p in problems:
+                print(f"{f}: {p}")
+            bad += len(problems)
+            for c in firm.clients:
+                evs = [e for evs in c.months.values() for e in evs]
+                fams = Counter(e.truth.family for e in evs if e.truth)
+                print(f"{f.name} {c.id}: {len(evs)} events, {len(c.history)} history lines, families {dict(fams)}")
+        return 1 if bad else 0
     if a.cmd == "export":
         cmd_export(a.dir)
     elif a.cmd == "seed":

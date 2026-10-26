@@ -92,6 +92,7 @@ class Event:
     truth: Truth | None = None
     says: dict[str, Any] = field(default_factory=dict)  # what the client answers, per question
     answers: bool = True  # does the client answer questions at all
+    skonto: bool = False  # a payment settling invoices less 2 % cash discount
 
 
 @dataclass
@@ -198,8 +199,8 @@ def load(path: Path) -> Firm:
                         id=str(e["id"]),
                         kind=e.get("kind", "payment"),
                         party=e["party"],
-                        amount=float(e.get("amount", 0)),
-                        on=_d(e.get("on")),
+                        amount=float(e["amount"]) if isinstance(e.get("amount"), (int, float)) else 0.0,
+                        on=_d(e.get("on", e.get(True))),  # YAML 1.1 reads a bare `on` key as true
                         reference=e.get("reference", ""),
                         method=e.get("method", "ueberweisung"),
                         document=doc,
@@ -207,12 +208,170 @@ def load(path: Path) -> Firm:
                         truth=tr,
                         says=dict(e.get("says") or {}),
                         answers=bool(e.get("answers", True)),
+                        skonto=bool(e.get("skonto", False)),
                     )
                 )
             client.months[str(period)] = evs
+        _complete(client)
         firm.clients.append(client)
     return firm
 
 
+def _complete(client: Client) -> None:
+    """Fills in what a scenario writer may leave to the machine: IBANs and VAT ids marked
+    `auto`, and payment amounts that follow from the documents (`amount` left out)."""
+    from kanzlei_sim.ids import iban, vat_id
+    from kanzlei_sim.truth import gross_cents
+
+    if client.iban in ("", "auto"):
+        client.iban = iban("DE", client.id + ":own")
+    if client.vat_id == "auto":
+        client.vat_id = vat_id("DE", client.id)
+    for p in client.parties:
+        if p.iban == "auto":
+            p.iban = iban(p.country if p.role != "other" else "DE", client.id + p.key)
+        if p.vat_id == "auto":
+            p.vat_id = vat_id(p.country, client.id + p.key)
+    invoices = {e.id: e for evs in client.months.values() for e in evs if e.kind == "invoice"}
+    for evs in client.months.values():
+        for e in evs:
+            if e.kind != "payment" or e.amount:
+                continue
+            if e.settles:
+                total = 0
+                sign = -1
+                for i in e.settles:
+                    d = invoices[i].document
+                    assert d is not None, f"{e.id}: settles {i} without a document"
+                    g = gross_cents(d.lines)
+                    sign = 1 if d.direction == "out" else -1
+                    if d.credit_note:
+                        sign = -sign
+                    total += g
+                paid = round(total * 0.98) if e.skonto else total
+                e.amount = sign * paid / 100
+            elif e.document is not None and e.document.lines:
+                g = gross_cents(e.document.lines)
+                sign = 1 if e.document.direction == "out" else -1
+                if e.document.credit_note:
+                    sign = -sign
+                e.amount = sign * g / 100
+            else:
+                raise ValueError(f"{client.id} {e.id}: payment without amount and without a document")
+
+
 def cents(x: float) -> int:
     return round(x * 100)
+
+
+TAX_CODES = {
+    "V19",
+    "V7",
+    "U19",
+    "U7",
+    "RC_EU19",
+    "RC_BAU19",
+    "RC_DRITT19",
+    "IGE19",
+    "IGL",
+    "EU_SVC",
+    "RC_OUT",
+    "FREI",
+    "NONE",
+}
+FORMATS = {"xrechnung-ubl", "xrechnung-cii", "zugferd", "pdf", "none"}
+CATEGORIES = {"S", "AE", "K", "E", "Z", "O"}
+MISSING = {
+    "seller_name",
+    "seller_address",
+    "buyer_name",
+    "seller_tax_id",
+    "invoice_no",
+    "delivery_date",
+    "buyer_vat_id",
+}
+
+
+def validate(firm: Firm) -> list[str]:
+    """Problems in a hand-written scenario (empty: fine). Checks form, not judgment."""
+    from kanzlei.config import families
+    from kanzlei.engine.queries import OPTIONS
+
+    fams = set(families()) | {"clearing"}
+    out: list[str] = []
+    if firm.chart not in ("SKR03", "SKR04"):
+        out.append(f"firm {firm.id}: chart must be SKR03 or SKR04")
+    logins = {s["login"] for s in firm.staff}
+    if not any(s["role"] == "berater" for s in firm.staff):
+        out.append(f"firm {firm.id}: needs a staff member with role berater")
+    for c in firm.clients:
+        where = f"{firm.id}/{c.id}"
+        if c.booking_method not in ("direkt", "opos"):
+            out.append(f"{where}: booking_method must be direkt or opos")
+        if c.vat_regime not in ("soll", "ist", "klein", "befreit"):
+            out.append(f"{where}: vat_regime must be soll, ist, klein or befreit")
+        if not c.assigned or any(a not in logins for a in c.assigned):
+            out.append(f"{where}: assigned must name staff logins of the firm")
+        keys = {p.key for p in c.parties}
+        if len(keys) != len(c.parties):
+            out.append(f"{where}: party keys must be unique")
+        for h in c.history:
+            if h.party not in keys:
+                out.append(f"{where}: history for unknown party {h.party}")
+            if h.family not in fams or h.family == "clearing":
+                out.append(f"{where}: history family {h.family} unknown")
+            if h.tax not in TAX_CODES:
+                out.append(f"{where}: history tax {h.tax} unknown")
+        ids: set[str] = set()
+        invoices = {e.id for evs in c.months.values() for e in evs if e.kind == "invoice"}
+        for period, evs in c.months.items():
+            for e in evs:
+                w = f"{where} {e.id}"
+                if e.id in ids:
+                    out.append(f"{w}: duplicate event id")
+                ids.add(e.id)
+                if e.party not in keys:
+                    out.append(f"{w}: unknown party {e.party}")
+                if e.kind not in ("payment", "invoice"):
+                    out.append(f"{w}: kind must be payment or invoice")
+                if e.kind == "payment" and (e.on is None or e.on.strftime("%Y-%m") != period):
+                    out.append(f"{w}: payment date must lie in {period}")
+                if e.kind == "invoice" and (e.document is None or c.booking_method != "opos"):
+                    out.append(f"{w}: invoice events need a document and an OPOS client")
+                for s in e.settles:
+                    if s not in invoices:
+                        out.append(f"{w}: settles unknown invoice {s}")
+                if e.truth is None:
+                    out.append(f"{w}: truth missing")
+                else:
+                    if e.truth.family not in fams:
+                        out.append(f"{w}: truth family {e.truth.family} unknown")
+                    if e.truth.tax is not None and e.truth.tax not in TAX_CODES:
+                        out.append(f"{w}: truth tax {e.truth.tax} unknown")
+                    if e.truth.family == "clearing" and not e.settles:
+                        out.append(f"{w}: clearing only for payments that settle invoices")
+                d = e.document
+                if d is not None:
+                    if d.format not in FORMATS:
+                        out.append(f"{w}: document format {d.format} unknown")
+                    if d.arrives not in ("with_statement", "on_request", "never"):
+                        out.append(f"{w}: arrives must be with_statement, on_request or never")
+                    if d.direction not in ("in", "out"):
+                        out.append(f"{w}: direction must be in or out")
+                    if not d.lines:
+                        out.append(f"{w}: document without lines")
+                    for ln in d.lines:
+                        if ln.category not in CATEGORIES:
+                            out.append(f"{w}: line category {ln.category} unknown")
+                        if ln.category == "S" and ln.rate not in (7, 19):
+                            out.append(f"{w}: S lines have rate 7 or 19")
+                    for m in d.missing:
+                        if m not in MISSING:
+                            out.append(f"{w}: missing field {m} unknown (one of {sorted(MISSING)})")
+                for reason, ans in e.says.items():
+                    if reason not in OPTIONS:
+                        out.append(f"{w}: says.{reason} is not a question the firm asks ({sorted(OPTIONS)})")
+                        continue
+                    if ans.get("choice") not in {o["value"] for o in OPTIONS[reason]}:
+                        out.append(f"{w}: says.{reason}.choice must be one of {[o['value'] for o in OPTIONS[reason]]}")
+    return out

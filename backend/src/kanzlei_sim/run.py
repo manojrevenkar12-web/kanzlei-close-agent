@@ -107,8 +107,12 @@ def spec_rows(firm: Firm, c: Client, h: HistorySpec) -> list[tuple[date, TLine, 
     p = c.party(h.party)
     rng = seeded("hist", c.id, h.party, h.family)
     out = []
+    first = min(c.months) if c.months else "2026-07"
+    end_y, end_m = int(first[:4]), int(first[5:7]) - 1  # history ends the month before the scenario
+    if end_m == 0:
+        end_y, end_m = end_y - 1, 12
     for k in range(h.months):
-        y, m = 2026, 6 - k
+        y, m = end_y, end_m - k
         while m <= 0:
             y, m = y - 1, m + 12
         for j in range(h.per_month):
