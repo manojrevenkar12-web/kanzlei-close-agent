@@ -388,13 +388,16 @@ class Engine:
         # 1. OPOS: invoices of the month are booked on receipt - the way this firm does it for this
         #    partner. Partners the firm books straight from the bank, and till receipts, are not.
         if ctx.client.booking_method == "opos":
-            for d in self._docs(
+            fresh = self._docs(
                 conn,
                 client_id,
-                "d.period = %s AND NOT EXISTS (SELECT 1 FROM items i WHERE i.kind = 'invoice' AND i.document_ids[1] = d.id)",
+                """d.period = %s AND NOT EXISTS (SELECT 1 FROM items i WHERE i.kind = 'invoice' AND i.document_ids[1] = d.id)
+                   AND NOT EXISTS (SELECT 1 FROM items i WHERE i.kind = 'payment' AND d.id = ANY(i.document_ids))""",
                 (period,),
-            ):
-                if not self._books_on_receipt(ctx, d):
+            )
+            paid = self._paid_at_once(conn, ctx, period, fresh)
+            for d in fresh:
+                if d.id in paid or not self._books_on_receipt(ctx, d):
                     continue
                 p = propose_invoice(ctx, d)
                 if d.id in dups:
@@ -467,6 +470,46 @@ class Engine:
             client=client_id,
         )
         return summary
+
+    def _paid_at_once(self, conn: Conn, ctx: Context, period: str, docs: list[Doc]) -> set[int]:
+        """Invoices of partners without a personal account that this month's bank shows paid
+        within a few days of their date (card, immediate transfer): booked with the payment."""
+        if not docs:
+            return set()
+        txs = [
+            Tx(
+                r["id"],
+                r["booking_date"],
+                r["amount_cents"],
+                r["counterparty_name"],
+                r["counterparty_iban"],
+                r["remittance"],
+            )
+            for r in conn.execute(
+                """SELECT * FROM transactions t WHERE t.client_id = %s AND t.period = %s
+                   AND NOT EXISTS (SELECT 1 FROM items i WHERE i.transaction_id = t.id)""",
+                (ctx.client.id, period),
+            ).fetchall()
+        ]
+        by_id = {d.id: d for d in docs}
+        out: set[int] = set()
+        for tx_id, m in match(txs, docs, ctx.close, ctx.tax).items():
+            tx = next(t for t in txs if t.id == tx_id)
+            for doc_id in m.doc_ids:
+                d = by_id[doc_id]
+                inv = d.invoice
+                incoming = d.direction == "in"
+                party = inv.seller if incoming else inv.buyer
+                known = ctx.find_counterparty(
+                    "kreditor" if incoming else "debitor",
+                    iban=inv.seller_iban if incoming else None,
+                    vat_id=party.vat_id,
+                    name=party.name,
+                )
+                issued = inv.issue_date or tx.on
+                if known is None and (tx.on - issued).days <= ctx.close.opos_paid_within_days:
+                    out.add(doc_id)
+        return out
 
     def _books_on_receipt(self, ctx: Context, d: Doc) -> bool:
         inv = d.invoice
@@ -795,12 +838,25 @@ class Engine:
             return 0
         ctx = self.context(conn, client_id, period)
         cleared = self._cleared(conn, client_id) if ctx.client.booking_method == "opos" else {}
+        # One decision per item: all its answers together, the later ones winning.
+        by_item: dict[int, list[dict[str, Any]]] = defaultdict(list)
+        for r in sorted(rows, key=lambda x: x["qi"]):
+            by_item[r["item_id"]].append(dict(r))
         n = 0
-        for r in rows:
-            ans = q.answers_for(r["reason"], r["answer"])
-            doc_ids = list(r["document_ids"])
-            if r["answer"].get("document_id"):
-                new_id = int(r["answer"]["document_id"])
+        for item_id, group in by_item.items():
+            state = conn.execute(
+                "SELECT state, document_ids FROM items WHERE id = %s FOR UPDATE", (item_id,)
+            ).fetchone()
+            if state is None or state["state"] != "client":
+                continue
+            r = group[-1]
+            ans: dict[str, Any] = {}
+            for g in group:
+                ans.update(q.answers_for(g["reason"], g["answer"]))
+            doc_ids = list(state["document_ids"])
+            uploaded = [int(g["answer"]["document_id"]) for g in group if g["answer"].get("document_id")]
+            if uploaded:
+                new_id = uploaded[-1]
                 if doc_ids and new_id not in doc_ids:
                     # A corrected invoice replaces the incomplete one (both stay archived).
                     conn.execute(
@@ -829,13 +885,14 @@ class Engine:
                 p = propose_payment(ctx, tx, docs, m, answers=ans, cleared=cleared)
             if p is None:
                 continue
-            p.reasons.insert(
-                0, Reason("client_answer", "Antwort des Mandanten: " + _answer_text(r["reason"], r["answer"]))
-            )
+            for g in reversed(group):
+                p.reasons.insert(
+                    0, Reason("client_answer", "Antwort des Mandanten: " + _answer_text(g["reason"], g["answer"]))
+                )
             if ans.get("needs_review") and p.route == "auto":
                 p.flags.append("client_answer")
                 p.route = "review"
-            self._update_item(conn, ctx, r["item_id"], doc_ids, p, actor, decision_if_booked="client")
+            self._update_item(conn, ctx, item_id, doc_ids, p, actor, decision_if_booked="client")
             n += 1
         conn.execute(
             """UPDATE queries SET status = 'geschlossen' WHERE client_id = %s AND period = %s AND status <> 'geschlossen'

@@ -6,6 +6,11 @@ matching:
   max_combination: 3            # one payment may settle up to this many invoices of one supplier
   min_score: 0.55               # below this a pairing is not proposed
 
+opos:
+  # An invoice from a partner the firm has no personal account for, paid within this many days
+  # of its date (card, immediate transfer), is booked with its payment, not on receipt.
+  paid_within_days: 10
+
 memory:
   min_uses: 2                   # a counterparty seen fewer times is treated as new
   dominant_share: 0.8           # share of past bookings that must agree for the memory to speak
@@ -19,6 +24,12 @@ decision:
   # A counterparty this client has not paid before is booked on its own only when the text
   # classifier is this sure of the family (set before the first blind run, not tuned on it).
   new_counterparty_min_classifier_p: 0.9
+  # The client's history speaks for a counterparty unless the text of this payment clearly says
+  # otherwise (one tax office: VAT one month, wage tax the next).
+  memory_overruled_by_classifier_p: 0.9
+  memory_overruled_if_memory_family_p_below: 0.05
+  # "Private or business?" goes to the client only when the classifier leans private this much.
+  ask_private_min_p: 0.5
 
 queries:
   answer_days: 7                # clients get a week to answer

@@ -72,7 +72,71 @@ def _exemption(cat: str) -> str | None:
     }.get(cat)
 
 
+COUNTRY_NAMES = {
+    "AT": "Österreich",
+    "BE": "Belgien",
+    "CH": "Schweiz",
+    "CZ": "Tschechien",
+    "DK": "Dänemark",
+    "ES": "Spanien",
+    "FR": "Frankreich",
+    "GB": "Vereinigtes Königreich",
+    "IE": "Irland",
+    "IT": "Italien",
+    "LU": "Luxemburg",
+    "NL": "Niederlande",
+    "PL": "Polen",
+    "SE": "Schweden",
+    "US": "USA",
+    "PT": "Portugal",
+    "FI": "Finnland",
+}
+_CITIES = {
+    "DE": ["Kassel", "Leipzig", "Hannover", "Köln", "Erfurt", "Bremen"],
+    "AT": ["Wien", "Graz"],
+    "NL": ["Utrecht", "Rotterdam"],
+    "IE": ["Dublin", "Cork"],
+    "FR": ["Lyon", "Paris"],
+    "US": ["Seattle", "Austin"],
+    "PL": ["Łódź", "Poznań"],
+    "ES": ["Valencia"],
+    "SE": ["Malmö"],
+    "IT": ["Mailand"],
+    "BE": ["Gent"],
+    "DK": ["Aarhus"],
+}
+
+
+def address(party: Party) -> tuple[str, str, str]:
+    """A real invoice always names the issuer's address; partners written without one get a
+    stable invented one (like IBANs marked auto)."""
+    if party.street and (party.postcode or party.city):
+        return party.street, party.postcode, party.city
+    h = zlib.crc32(party.key.encode())
+    cities = _CITIES.get(party.country, ["Hauptstadt"])
+    street = party.street or f"{['Hauptstraße', 'Marktplatz', 'Bahnhofstraße', 'Industriestraße'][h % 4]} {h % 90 + 1}"
+    postcode = party.postcode or (f"{10000 + h % 89999}" if party.country in ("DE", "") else f"{1000 + h % 8999}")
+    return street, postcode, party.city or cities[h % len(cities)]
+
+
+def category_notes(doc: DocSpec) -> list[str]:
+    """What an invoicing program prints for the tax categories on an invoice (§ 14a UStG)."""
+    have = " ".join(doc.notes).lower()
+    out = []
+    cats = {ln.category for ln in doc.lines}
+    if "AE" in cats and "steuerschuldnerschaft" not in have and "reverse charge" not in have:
+        out.append("Steuerschuldnerschaft des Leistungsempfängers")
+    if "K" in cats and "innergemeinschaftliche" not in have:
+        out.append("Steuerfreie innergemeinschaftliche Lieferung")
+    if "O" in cats and "steuerbar" not in have:
+        out.append("Nicht im Inland steuerbare Leistung")
+    if "E" in cats and "steuerfrei" not in have and "steuerbefreit" not in have and "§ 19" not in have:
+        out.append("Steuerfreie Leistung")
+    return out
+
+
 def seller_buyer(client: Client, party: Party, doc: DocSpec) -> tuple[dict[str, Any], dict[str, Any]]:
+    street, postcode, city = address(party)
     me = {
         "name": client.name,
         "street": client.street,
@@ -85,9 +149,9 @@ def seller_buyer(client: Client, party: Party, doc: DocSpec) -> tuple[dict[str, 
     }
     them = {
         "name": party.name,
-        "street": party.street,
-        "postcode": party.postcode,
-        "city": party.city,
+        "street": street,
+        "postcode": postcode,
+        "city": city,
         "country": party.country,
         "vat_id": party.vat_id,
         "tax_no": party.tax_no,
@@ -331,9 +395,13 @@ def pdf_invoice(client: Client, party: Party, doc: DocSpec) -> bytes:
     out = [seller["name"]]
     if "seller_address" not in miss:
         out += [seller["street"], f"{seller['postcode']} {seller['city']}"]
+        if seller["country"] not in ("DE", ""):
+            out.append(COUNTRY_NAMES.get(seller["country"], seller["country"]))
     out.append("")
     if "buyer_name" not in miss:
         out += [L["to"], buyer["name"], buyer["street"], f"{buyer['postcode']} {buyer['city']}"]
+        if buyer["country"] not in ("DE", ""):
+            out.append(COUNTRY_NAMES.get(buyer["country"], buyer["country"]))
     out.append("")
     out.append("Gutschrift" if doc.credit_note else "Rechnung")
     if "invoice_no" not in miss:
@@ -355,7 +423,7 @@ def pdf_invoice(client: Client, party: Party, doc: DocSpec) -> bytes:
             out.append(f"{L['vat'].format(rate=g['rate'])} auf {_de(g['base'])} €: {_de(g['tax'])} €")
     out.append(f"{L['gross']}: {_de(gross)} €")
     out.append("")
-    out += list(doc.notes)
+    out += list(doc.notes) + category_notes(doc)
     if doc.payment_terms:
         out.append(doc.payment_terms)
     if any(ln.category in ("AE", "K") for ln in doc.lines) and buyer.get("vat_id") and "buyer_vat_id" not in miss:
@@ -373,7 +441,11 @@ def pdf_invoice(client: Client, party: Party, doc: DocSpec) -> bytes:
 def pdf_receipt(client: Client, party: Party, doc: DocSpec) -> bytes:
     """A till receipt (Kleinbetragsrechnung): no buyer, total and rate."""
     _net, _tax, gross = totals(doc)
-    out = [party.name, party.street, f"{party.postcode} {party.city}", ""]
+    street, postcode, city = address(party)
+    out = [party.name, street, f"{postcode} {city}"]
+    if party.country not in ("DE", ""):
+        out.append(COUNTRY_NAMES.get(party.country, party.country))
+    out.append("")
     out.append(f"Datum: {(doc.issue_date or date.today()).strftime('%d.%m.%Y')} Beleg-Nr. {doc.number}")
     for ln in doc.lines:
         out.append(f"{ln.text} {_de(_half_up(Decimal(cents(ln.net)) * (100 + ln.rate) / 100))}")
@@ -381,7 +453,7 @@ def pdf_receipt(client: Client, party: Party, doc: DocSpec) -> bytes:
     for g in tax_groups(doc):
         if g["category"] == "S":
             out.append(f"MwSt. {g['rate']} % auf {_de(g['base'])}: {_de(g['tax'])}")
-    out += list(doc.notes)
+    out += list(doc.notes) + category_notes(doc)
     if party.vat_id:
         out.append(f"USt-IdNr.: {party.vat_id}")
     if party.tax_no:

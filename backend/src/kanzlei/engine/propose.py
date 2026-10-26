@@ -115,6 +115,25 @@ def _choose_family(
         return "transfer", "rule", [Reason("own_account", "Überweisung zwischen eigenen Konten")]
     if issued_by_client:
         return "revenue", "document", [Reason("own_invoice", "Ausgangsrechnung des Mandanten")]
+    best, p, _ = top2(probs)
+    if (
+        hit
+        and hit.dominant
+        and best
+        and best != hit.family
+        and p >= ctx.close.memory_overruled_by_classifier_p
+        and probs.get(hit.family, 0.0) < ctx.close.memory_overruled_if_memory_family_p_below
+    ):
+        return (
+            best,
+            "conflict",
+            [
+                Reason(
+                    "memory_conflict",
+                    f"Bisher als {fams[hit.family].label} gebucht, dieser Umsatz lautet aber eindeutig auf {fams[best].label}",
+                )
+            ],
+        )
     if hit and hit.dominant and hit.family in fams:
         acct = ctx.chart.account_for(hit.family, hit.tax)
         where = f" (Konto {ctx.chart.fmt(acct)})" if acct else ""
@@ -319,6 +338,19 @@ def propose_payment(
         ]
         return Proposal(None, None, lines, 0.0, "review", reasons, _sort_flags(flags), source, [], cp_info)
 
+    if (
+        family == "private_withdrawal"
+        and source == "classifier"
+        and not money_in
+        and probs.get("private_withdrawal", 0.0) < ctx.close.ask_private_min_p
+    ):
+        business = [(f, v) for f, v in probs.items() if f in families() and families()[f].side == "expense"]
+        if business:
+            family = max(business, key=lambda fv: fv[1])[0]
+            reasons.append(
+                Reason("weak_private", "Privat nur schwach angedeutet: betrieblicher Vorschlag, bitte prüfen")
+            )
+            flags.append("low_confidence")
     fam = families()[family]
     portions: list[Portion] = []
     if docs:
@@ -361,6 +393,8 @@ def propose_payment(
         portions = [Portion(force_tax, p.gross_cents, p.role, p.note) for p in portions]
     flags += td.flags
     reasons += td.reasons
+    if source == "conflict":
+        flags.append("memory_conflict")
     if family == "private_withdrawal" and source not in ("memory", "answer") and not money_in:
         flags.append("private_or_business")
     if fam.side == "revenue" and not money_in and source == "classifier":

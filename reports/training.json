@@ -7,20 +7,20 @@
   "decision": {
     "threshold": 0.3,
     "trained_on": {
-      "proposals": 554,
-      "wrong": 12,
-      "eligible": 511,
+      "proposals": 556,
+      "wrong": 11,
+      "eligible": 505,
       "client_months": 27
     },
     "cross_validation": {
       "threshold": 0.3,
-      "auto": 489,
+      "auto": 490,
       "wrong": 0,
       "wrong_share": 0.0,
       "wrong_share_upper95": 0.0078,
-      "auto_share_of_eligible": 0.9569,
+      "auto_share_of_eligible": 0.9703,
       "max_wrong_share": 0.01
     },
-    "version": "c1e8e663b1"
+    "version": "b6a793d4f0"
   }
 }

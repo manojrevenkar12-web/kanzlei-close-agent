@@ -1,0 +1,385 @@
+[
+  {
+    "client": "a-1001",
+    "period": "2026-09",
+    "event": "r15",
+    "truth": "advice",
+    "proposed": "telecom",
+    "route": "client",
+    "flags": [
+      "invoice_incomplete"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1001",
+    "period": "2026-09",
+    "event": "e10",
+    "truth": "goods",
+    "proposed": "utilities",
+    "route": "client",
+    "flags": [
+      "invoice_incomplete"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1001",
+    "period": "2026-09",
+    "event": "e12",
+    "truth": "equipment",
+    "proposed": "goods",
+    "route": "client",
+    "flags": [
+      "invoice_incomplete",
+      "low_confidence"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1001",
+    "period": "2026-09",
+    "event": "e18",
+    "truth": "private_withdrawal",
+    "proposed": "goods",
+    "route": "client",
+    "flags": [
+      "invoice_incomplete",
+      "low_confidence"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1001",
+    "period": "2026-09",
+    "event": "e19",
+    "truth": "fuel",
+    "proposed": "fuel",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "memory",
+    "confidence": 0.769
+  },
+  {
+    "client": "a-1001",
+    "period": "2026-09",
+    "event": "r14",
+    "truth": "equipment",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.012
+  },
+  {
+    "client": "a-1001",
+    "period": "2026-09",
+    "event": "e08",
+    "truth": "wage_tax",
+    "proposed": "vat_payment",
+    "route": "review",
+    "flags": [],
+    "source": "memory",
+    "confidence": 0.003
+  },
+  {
+    "client": "a-1001",
+    "period": "2026-09",
+    "event": "e09",
+    "truth": "private_withdrawal",
+    "proposed": "vat_payment",
+    "route": "review",
+    "flags": [],
+    "source": "memory",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f11",
+    "truth": "private_withdrawal",
+    "proposed": "meals",
+    "route": "client",
+    "flags": [
+      "meals_details"
+    ],
+    "source": "classifier",
+    "confidence": 0.002
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f16",
+    "truth": "travel_transport",
+    "proposed": "travel_transport",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f23",
+    "truth": "subcontractor",
+    "proposed": "goods",
+    "route": "client",
+    "flags": [
+      "invoice_incomplete"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f06",
+    "truth": "training",
+    "proposed": "travel_transport",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f09",
+    "truth": "software",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f12",
+    "truth": "private_withdrawal",
+    "proposed": "vat_payment",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f25",
+    "truth": "office_supplies",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [
+      "low_confidence"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1002",
+    "period": "2026-09",
+    "event": "f22",
+    "truth": "private_withdrawal",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [
+      "low_confidence"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1003",
+    "period": "2026-09",
+    "event": "k21",
+    "truth": "private_deposit",
+    "proposed": "revenue",
+    "route": "client",
+    "flags": [
+      "unknown_credit"
+    ],
+    "source": "classifier",
+    "confidence": 0.899
+  },
+  {
+    "client": "a-1003",
+    "period": "2026-09",
+    "event": "k26",
+    "truth": "transfer",
+    "proposed": "revenue",
+    "route": "client",
+    "flags": [
+      "unknown_credit"
+    ],
+    "source": "classifier",
+    "confidence": 0.476
+  },
+  {
+    "client": "a-1003",
+    "period": "2026-09",
+    "event": "k16",
+    "truth": "private_withdrawal",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [
+      "low_confidence"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "a-1003",
+    "period": "2026-09",
+    "event": "k17",
+    "truth": "equipment",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.001
+  },
+  {
+    "client": "a-1003",
+    "period": "2026-09",
+    "event": "k20",
+    "truth": "equipment",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [
+      "low_confidence"
+    ],
+    "source": "classifier",
+    "confidence": 0.001
+  },
+  {
+    "client": "a-1003",
+    "period": "2026-09",
+    "event": "k23",
+    "truth": "repairs",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.004
+  },
+  {
+    "client": "b-2001",
+    "period": "2026-09",
+    "event": "p21",
+    "truth": "goods",
+    "proposed": "meals",
+    "route": "client",
+    "flags": [
+      "missing_receipt",
+      "meals_details",
+      "low_confidence"
+    ],
+    "source": "classifier",
+    "confidence": 0.001
+  },
+  {
+    "client": "b-2001",
+    "period": "2026-09",
+    "event": "p25",
+    "truth": "insurance",
+    "proposed": "revenue",
+    "route": "client",
+    "flags": [
+      "unknown_credit"
+    ],
+    "source": "classifier",
+    "confidence": 0.006
+  },
+  {
+    "client": "b-2001",
+    "period": "2026-09",
+    "event": "p19",
+    "truth": "equipment",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.096
+  },
+  {
+    "client": "b-2001",
+    "period": "2026-09",
+    "event": "p23",
+    "truth": "private_withdrawal",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "b-2002",
+    "period": "2026-09",
+    "event": "s15",
+    "truth": "travel_transport",
+    "proposed": "goods",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "b-2002",
+    "period": "2026-09",
+    "event": "s16",
+    "truth": "equipment",
+    "proposed": "goods",
+    "route": "client",
+    "flags": [
+      "missing_receipt"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "b-2002",
+    "period": "2026-09",
+    "event": "s09",
+    "truth": "software",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.0
+  },
+  {
+    "client": "b-2002",
+    "period": "2026-09",
+    "event": "s08",
+    "truth": "wage_tax",
+    "proposed": "vat_payment",
+    "route": "review",
+    "flags": [],
+    "source": "memory",
+    "confidence": 0.002
+  },
+  {
+    "client": "b-2002",
+    "period": "2026-09",
+    "event": "s14",
+    "truth": "meals",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [
+      "low_confidence"
+    ],
+    "source": "classifier",
+    "confidence": 0.0
+  }
+]

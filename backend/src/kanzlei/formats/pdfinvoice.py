@@ -71,6 +71,49 @@ _LINE = re.compile(
     + AMOUNT
     + r"(?:\s*€)?(?:\s+(\d{1,2})\s*%)?$"
 )
+COUNTRIES = {
+    "österreich": "AT",
+    "austria": "AT",
+    "belgien": "BE",
+    "belgium": "BE",
+    "schweiz": "CH",
+    "switzerland": "CH",
+    "tschechien": "CZ",
+    "dänemark": "DK",
+    "denmark": "DK",
+    "spanien": "ES",
+    "spain": "ES",
+    "frankreich": "FR",
+    "france": "FR",
+    "irland": "IE",
+    "ireland": "IE",
+    "italien": "IT",
+    "italy": "IT",
+    "luxemburg": "LU",
+    "luxembourg": "LU",
+    "niederlande": "NL",
+    "netherlands": "NL",
+    "polen": "PL",
+    "poland": "PL",
+    "schweden": "SE",
+    "sweden": "SE",
+    "usa": "US",
+    "united states": "US",
+    "vereinigte staaten": "US",
+    "vereinigtes königreich": "GB",
+    "united kingdom": "GB",
+    "portugal": "PT",
+    "finnland": "FI",
+    "finland": "FI",
+}
+_RECEIPT_LINE = re.compile(
+    r"^(?!.*(?:Summe|MwSt|USt|Umsatzsteuer|Datum|Beleg|Gesamt|Steuer|IBAN|Netto|Brutto|Zahl))(.{3,60}?)\s+"
+    + AMOUNT
+    + r"(?:\s*(?:€|EUR))?$"
+)
+_IGL = re.compile(r"innergemeinschaftliche Lieferung", re.I)
+_OUTSIDE = re.compile(r"nicht (?:im Inland )?steuerbar|not subject to (?:german )?vat|outside the scope", re.I)
+_EXEMPT = re.compile(r"steuerfreie Leistung|steuerbefreit|umsatzsteuerfrei|§\s*4 Nr\.", re.I)
 _RC = re.compile(r"Steuerschuldnerschaft des Leistungsempfängers|reverse charge|§\s*13b", re.I)
 _CREDIT = re.compile(r"\bGutschrift\b|\bRechnungskorrektur\b|\bStornorechnung\b", re.I)
 
@@ -113,6 +156,12 @@ def read_invoice_text(raw: str) -> Invoice:
         seller.country = country_of_vat_id(seller.vat_id) or "DE"
     if (m3 := _TAX_NO.search(body)) is not None:
         seller.tax_no = m3.group(1)
+    if not seller.country or seller.country == "DE":
+        for ln in lines[1:6]:
+            c = COUNTRIES.get(ln.strip().lower())
+            if c:
+                seller.country = c
+                break
     if not seller.country:
         seller.country = "DE"
     inv.seller = seller
@@ -124,6 +173,11 @@ def read_invoice_text(raw: str) -> Invoice:
             pc = _POSTCODE.search(lines[i + 3]) if i + 3 < len(lines) else None
             if pc:
                 inv.buyer.postcode, inv.buyer.city = pc.group(1), pc.group(2).strip()
+            for ln in lines[i + 2 : i + 6]:
+                c = COUNTRIES.get(ln.strip().lower())
+                if c:
+                    inv.buyer.country = c
+                    break
             break
 
     for ln in lines:
@@ -162,12 +216,19 @@ def read_invoice_text(raw: str) -> Invoice:
             if base is None:
                 base = round(tax * 100 / rate) if rate else 0
             inv.taxes.append(TaxBreakdown(category="S", rate=rate, base_cents=base, tax_cents=tax))
-    if rc and not inv.taxes:
+    if not inv.taxes:
         base = inv.net_cents if inv.net_cents is not None else inv.gross_cents
-        if base is not None:
-            inv.taxes.append(
-                TaxBreakdown(category="AE", rate=0, base_cents=base, tax_cents=0, exemption="Reverse charge")
+        cat = (
+            "AE"
+            if rc
+            else (
+                "K"
+                if _IGL.search(body)
+                else ("O" if _OUTSIDE.search(body) else ("E" if _EXEMPT.search(body) else None))
             )
+        )
+        if base is not None and cat:
+            inv.taxes.append(TaxBreakdown(category=cat, rate=0, base_cents=base, tax_cents=0, exemption=cat))
     if inv.taxes:
         inv.tax_cents = sum(t.tax_cents for t in inv.taxes)
         if inv.net_cents is None:
@@ -190,6 +251,12 @@ def read_invoice_text(raw: str) -> Invoice:
                     quantity=float(m.group(2).replace(",", ".")),
                 )
             )
+    if not inv.lines:
+        # A till receipt: "Kaffee 3,50" lines name what was bought.
+        for ln in lines[3:]:
+            rm = _RECEIPT_LINE.match(ln)
+            if rm:
+                inv.lines.append(InvoiceLine(description=rm.group(1).strip(), net_cents=0, rate=None, category=None))
     if not inv.lines:
         # No table found: keep the words around the amounts as the description.
         desc = [ln for ln in lines[3:] if not re.search(AMOUNT, ln) and len(ln) > 3][:3]

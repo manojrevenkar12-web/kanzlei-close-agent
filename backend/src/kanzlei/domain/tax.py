@@ -131,18 +131,21 @@ def decide(
     fam = families()[family]
     d = TaxDecision(portions=[])
 
-    if client.vat_regime == "klein":
+    if fam.side == "balance":
+        # Wages, taxes, social security, private and own-account transfers are not VAT events,
+        # whatever a receipt says (a private purchase's VAT is never input VAT).
         d.portions = [Portion("NONE", amount_cents)]
-        d.reasons.append(
-            Reason("kleinunternehmer", "Kleinunternehmer (§ 19 UStG): keine Vorsteuer, keine Umsatzsteuer")
-        )
+        d.reasons.append(Reason("kein_ust", f"{fam.label}: kein umsatzsteuerlicher Vorgang"))
         d.source = "rule"
-    elif client.vat_regime == "befreit" and fam.side != "balance":
-        code = "FREI" if fam.side == "revenue" else "NONE"
-        d.portions = [Portion(code, amount_cents)]
-        d.reasons.append(Reason("steuerfrei", "Steuerfreie Umsätze ohne Vorsteuerabzug (§ 4 Nr. 14, § 15 Abs. 2 UStG)"))
-        d.source = "rule"
-    elif inv is not None and inv.gross_cents is not None:
+        return d
+    # Kleinunternehmer and tax-free practices: the regime decides the tax code, but whether an
+    # invoice exists still matters (the expense must be proven, the income explained).
+    regime_code: str | None = None
+    if client.vat_regime == "klein":
+        regime_code = "NONE"
+    elif client.vat_regime == "befreit":
+        regime_code = "FREI" if fam.side == "revenue" else "NONE"
+    if inv is not None and inv.gross_cents is not None:
         parts, problems = _from_invoice(inv, fam, client, cfg)
         d.flags += problems
         whole = sum(p for _, p in parts)
@@ -171,7 +174,7 @@ def decide(
         code = memory_tax or fam.tax
         d.source = "memory" if memory_tax else "default"
         d.portions = [Portion(code, amount_cents)]
-        needs_doc = fam.receipt and code not in ("NONE", "FREI")
+        needs_doc = fam.receipt and (regime_code is not None or code not in ("NONE", "FREI"))
         if needs_doc and not (fam.recurring_ok and recurring):
             if has_receipt_answer == "no_receipt":
                 d.portions = [Portion("NONE", amount_cents)]
@@ -182,6 +185,20 @@ def decide(
                 d.flags.append("missing_receipt")
         elif needs_doc:
             d.reasons.append(Reason("dauerrechnung", "Laufender Vertrag: Vertrag gilt als Rechnung"))
+
+    if regime_code is not None:
+        d.portions = [Portion(regime_code, p.gross_cents, p.role, p.note) for p in d.portions]
+        d.flags = [f for f in d.flags if f not in ("invoice_incomplete", "unsupported_tax")]
+        d.reasons = [r for r in d.reasons if r.code not in ("tax_from_invoice", "pflichtangaben")]
+        if client.vat_regime == "klein":
+            d.reasons.append(
+                Reason("kleinunternehmer", "Kleinunternehmer (§ 19 UStG): keine Vorsteuer, keine Umsatzsteuer")
+            )
+        else:
+            d.reasons.append(
+                Reason("steuerfrei", "Steuerfreie Umsätze ohne Vorsteuerabzug (§ 4 Nr. 14, § 15 Abs. 2 UStG)")
+            )
+        d.source = "rule" if d.source in ("default", "memory") else d.source
 
     # Family rules that split an amount between accounts.
     if family == "meals":

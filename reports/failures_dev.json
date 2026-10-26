@@ -10,7 +10,7 @@
       "missing_receipt"
     ],
     "source": "classifier",
-    "confidence": 0.297
+    "confidence": 0.14
   },
   {
     "client": "bs-20201",
@@ -23,7 +23,7 @@
       "missing_receipt"
     ],
     "source": "memory",
-    "confidence": 0.086
+    "confidence": 0.002
   },
   {
     "client": "bs-20202",
@@ -36,18 +36,7 @@
       "missing_receipt"
     ],
     "source": "memory",
-    "confidence": 0.025
-  },
-  {
-    "client": "bs-20202",
-    "period": "2026-07",
-    "event": "bs-20202-00314",
-    "truth": "advertising",
-    "proposed": "clearing",
-    "route": "review",
-    "flags": [],
-    "source": "rule",
-    "confidence": 0.75
+    "confidence": 0.0
   },
   {
     "client": "ys-30301",
@@ -61,7 +50,7 @@
       "unsupported_tax"
     ],
     "source": "memory",
-    "confidence": 0.189
+    "confidence": 0.144
   },
   {
     "client": "hp-10102",
@@ -74,7 +63,7 @@
       "missing_receipt"
     ],
     "source": "classifier",
-    "confidence": 0.011
+    "confidence": 0.0
   },
   {
     "client": "hp-10103",
@@ -87,32 +76,21 @@
       "meals_details"
     ],
     "source": "memory",
-    "confidence": 0.137
+    "confidence": 0.045
   },
   {
     "client": "bs-20202",
     "period": "2026-08",
     "event": "bs-20202-00327",
     "truth": "private_withdrawal",
-    "proposed": "private_withdrawal",
+    "proposed": "meals",
     "route": "client",
     "flags": [
-      "private_or_business",
-      "no_account"
+      "meals_details",
+      "low_confidence"
     ],
     "source": "classifier",
-    "confidence": 0.002
-  },
-  {
-    "client": "bs-20202",
-    "period": "2026-08",
-    "event": "bs-20202-00342",
-    "truth": "advertising",
-    "proposed": "clearing",
-    "route": "review",
-    "flags": [],
-    "source": "rule",
-    "confidence": 0.75
+    "confidence": 0.018
   },
   {
     "client": "ys-30301",
@@ -126,21 +104,7 @@
       "unsupported_tax"
     ],
     "source": "memory",
-    "confidence": 0.191
-  },
-  {
-    "client": "ys-30302",
-    "period": "2026-08",
-    "event": "ys-30302-00281",
-    "truth": "meals",
-    "proposed": "private_withdrawal",
-    "route": "client",
-    "flags": [
-      "private_or_business",
-      "no_account"
-    ],
-    "source": "classifier",
-    "confidence": 0.002
+    "confidence": 0.143
   },
   {
     "client": "hp-10101",
@@ -153,7 +117,7 @@
       "meals_details"
     ],
     "source": "classifier",
-    "confidence": 0.062
+    "confidence": 0.081
   },
   {
     "client": "bs-20201",
@@ -166,7 +130,7 @@
       "missing_receipt"
     ],
     "source": "classifier",
-    "confidence": 0.471
+    "confidence": 0.51
   },
   {
     "client": "bs-20201",
@@ -179,6 +143,6 @@
       "invoice_incomplete"
     ],
     "source": "memory",
-    "confidence": 0.633
+    "confidence": 0.517
   }
 ]

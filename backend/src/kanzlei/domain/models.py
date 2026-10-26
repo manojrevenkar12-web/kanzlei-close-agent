@@ -91,6 +91,7 @@ REVIEW_FLAGS = {
     "unsupported_tax": "Steuerfall nicht automatisiert",
     "client_answer": "Antwort des Mandanten prüfen",
     "low_confidence": "Vorschlag unsicher",
+    "memory_conflict": "Text widerspricht bisherigen Buchungen",
 }
 
 

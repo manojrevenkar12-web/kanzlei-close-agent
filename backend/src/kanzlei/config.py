@@ -117,6 +117,10 @@ class CloseConfig:
     decision_model_file: str
     never_auto_new_counterparty: bool
     new_counterparty_min_classifier_p: float
+    memory_overruled_by_classifier_p: float
+    memory_overruled_if_memory_family_p_below: float
+    ask_private_min_p: float
+    opos_paid_within_days: int
     answer_days: int
     plaus_months: int
     plaus_min_months: int
@@ -140,6 +144,10 @@ def close_config() -> CloseConfig:
         decision_model_file=str(d["decision"]["model_file"]),
         never_auto_new_counterparty=bool(d["decision"]["never_auto_new_counterparty"]),
         new_counterparty_min_classifier_p=float(d["decision"]["new_counterparty_min_classifier_p"]),
+        memory_overruled_by_classifier_p=float(d["decision"]["memory_overruled_by_classifier_p"]),
+        memory_overruled_if_memory_family_p_below=float(d["decision"]["memory_overruled_if_memory_family_p_below"]),
+        ask_private_min_p=float(d["decision"]["ask_private_min_p"]),
+        opos_paid_within_days=int(d["opos"]["paid_within_days"]),
         answer_days=int(d["queries"]["answer_days"]),
         plaus_months=int(d["plausibility"]["months"]),
         plaus_min_months=int(d["plausibility"]["min_months"]),
