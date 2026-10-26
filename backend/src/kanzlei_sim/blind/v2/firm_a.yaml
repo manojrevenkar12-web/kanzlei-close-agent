@@ -1,0 +1,1389 @@
+firm: {id: kanzlei-roth-weiland, name: "Roth & Weiland Steuerberatungsgesellschaft mbH", city: "Kassel", chart: SKR03, berater_nr: 47213}
+staff:
+  - {login: c.roth, name: "Cordula Roth", role: berater}
+  - {login: t.yilmaz, name: "Tamara Yilmaz", role: buchhaltung}
+  - {login: j.brenner, name: "Jonas Brenner", role: buchhaltung}
+clients:
+  # ---------------------------------------------------------------------------------------------
+  # Electrician, GmbH, OPOS, Soll, monthly
+  # ---------------------------------------------------------------------------------------------
+  - id: rw-2101
+    mandant_nr: 2101
+    name: "Elektro Hainbach GmbH"
+    legal_form: GmbH
+    industry: "Elektroinstallation (Handwerk), Neubau und Bestand"
+    booking_method: opos
+    vat_regime: soll
+    vat_period: monat
+    iban: auto
+    vat_id: auto
+    contact_name: "Sven Hainbach"
+    contact_email: "sven.hainbach@elektro-hainbach.example"
+    assigned: [t.yilmaz]
+    parties:
+      - {key: grosshandel, name: "Nordhessische Elektro-Großhandel KG", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Leipziger Straße 210", postcode: "34123", city: "Kassel"}
+      - {key: kabel_nl, name: "Van Dijk Kabeltechniek B.V.", role: supplier, iban: auto, vat_id: auto, country: NL, street: "Industrieweg 14", postcode: "7556 BG", city: "Hengelo"}
+      - {key: subunt, name: "Kraus Montageservice e.K.", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Am Rammelsberg 3", postcode: "34233", city: "Fuldatal"}
+      - {key: werkstatt, name: "Kfz-Meisterbetrieb Erdmann", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Rengershäuser Straße 41", postcode: "34225", city: "Baunatal"}
+      - {key: messtechnik, name: "Messtechnik Direkt Versand GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Gutenbergring 18", postcode: "22848", city: "Norderstedt"}
+      - {key: werkzeughof, name: "Werkzeughof Lohfelden GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Ochshäuser Straße 92", postcode: "34253", city: "Lohfelden"}
+      - {key: baumarkt, name: "Bau- und Gartenmarkt Fuldabrück GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Dörnhagener Straße 5", postcode: "34277", city: "Fuldabrück"}
+      - {key: miete, name: "Grundstücksgemeinschaft Hassenpflug", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Wilhelmshöher Allee 301", postcode: "34131", city: "Kassel"}
+      - {key: strom, name: "Energieversorgung Ahnatal GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Kasseler Straße 77", postcode: "34292", city: "Ahnatal"}
+      - {key: telefon, name: "Telnova Kommunikation GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Speicherstraße 12", postcode: "60327", city: "Frankfurt am Main"}
+      - {key: leasing, name: "Autoleasing Mitte GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Industriestraße 60", postcode: "36041", city: "Fulda"}
+      - {key: kfzvers, name: "Hessische Kraftfahrt-Versicherung AG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Ständeplatz 20", postcode: "34117", city: "Kassel"}
+      - {key: betrvers, name: "Mittelland Versicherung AG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Schlossplatz 3", postcode: "30159", city: "Hannover"}
+      - {key: tanke, name: "Tankstelle Lohfelden Süd", role: supplier, iban: null, vat_id: auto, country: DE, street: "Crumbacher Straße 120", postcode: "34253", city: "Lohfelden"}
+      - {key: autohof, name: "Autohof Kirchheim-Mitte GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Am Autohof 2", postcode: "36275", city: "Kirchheim"}
+      - {key: software, name: "Baulogix Software GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Weststraße 41", postcode: "33615", city: "Bielefeld"}
+      - {key: seminar, name: "Fachseminare Ampere GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Pfarrgasse 4", postcode: "35390", city: "Gießen"}
+      - {key: innung, name: "Innung des Elektrohandwerks Habichtswald", role: supplier, iban: auto, vat_id: null, country: DE, street: "Schäferberg 6", postcode: "34314", city: "Espenau"}
+      - {key: restaurant, name: "Ristorante Il Gabbiano", role: supplier, iban: null, vat_id: auto, country: DE, street: "Friedrich-Ebert-Straße 98", postcode: "34119", city: "Kassel"}
+      - {key: stb, name: "Roth & Weiland Steuerberatungsgesellschaft mbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Kölnische Straße 44", postcode: "34117", city: "Kassel"}
+      - {key: hausbank, name: "Raiffeisenbank Habichtswald eG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Marktplatz 1", postcode: "34317", city: "Habichtswald"}
+      - {key: finanzamt, name: "Finanzamt Habichtswald", role: other, iban: auto, vat_id: null, country: DE, street: "Goethestraße 43", postcode: "34119", city: "Kassel"}
+      - {key: bkk, name: "BKK Fuldatal", role: other, iban: auto, vat_id: null, country: DE, street: "Weserstraße 12", postcode: "34233", city: "Fuldatal"}
+      - {key: gf, name: "Sven Hainbach", role: other, iban: auto, vat_id: null, country: DE, street: "Lindenweg 7", postcode: "34225", city: "Baunatal"}
+      - {key: monteur1, name: "Dennis Kowalczyk", role: other, iban: auto, vat_id: null, country: DE, street: "Bergstraße 22", postcode: "34260", city: "Kaufungen"}
+      - {key: monteur2, name: "Marvin Opitz", role: other, iban: auto, vat_id: null, country: DE, street: "Am Feldrain 5", postcode: "34270", city: "Schauenburg"}
+      - {key: azubi, name: "Leon Brückner", role: other, iban: auto, vat_id: null, country: DE, street: "Hauptstraße 101", postcode: "34266", city: "Niestetal"}
+      - {key: gu, name: "Bauunternehmung Ostheim GmbH & Co. KG", role: customer, iban: auto, vat_id: auto, country: DE, street: "Industriepark 14", postcode: "34134", city: "Kassel"}
+      - {key: wohnbau, name: "Wohnungsbaugenossenschaft Fasanenhof eG", role: customer, iban: auto, vat_id: auto, country: DE, street: "Fasanenhofstraße 30", postcode: "34125", city: "Kassel"}
+      - {key: privat1, name: "Annette Vogelsang", role: customer, iban: auto, vat_id: null, country: DE, street: "Am Hange 12", postcode: "34225", city: "Baunatal"}
+      - {key: praxis, name: "Augenarztpraxis Dr. Okafor", role: customer, iban: auto, vat_id: auto, country: DE, street: "Obere Königsstraße 15", postcode: "34117", city: "Kassel"}
+      - {key: gasthaus, name: "Gasthaus Zur Linde, Inh. Petra Schöne", role: customer, iban: auto, vat_id: auto, country: DE, street: "Dorfstraße 3", postcode: "34295", city: "Edermünde"}
+    history:
+      - {party: grosshandel, family: goods, tax: V19, amount: -2600.00, months: 12, per_month: 2, vary: 0.5}
+      - {party: kabel_nl, family: goods, tax: IGE19, amount: -2400.00, months: 4, vary: 0.4}
+      - {party: subunt, family: subcontractor, tax: RC_BAU19, amount: -3800.00, months: 6, vary: 0.4}
+      - {party: gu, family: revenue, tax: RC_OUT, amount: 16000.00, months: 6, vary: 0.4}
+      - {party: wohnbau, family: revenue, tax: U19, amount: 1600.00, months: 12, vary: 0.5}
+      - {party: miete, family: rent, tax: V19, amount: -2380.00, months: 12}
+      - {party: strom, family: utilities, tax: V19, amount: -357.00, months: 12}
+      - {party: telefon, family: telecom, tax: V19, amount: -89.25, months: 12, vary: 0.05}
+      - {party: leasing, family: vehicle_leasing, tax: V19, amount: -999.60, months: 12}
+      - {party: kfzvers, family: vehicle_insurance, tax: NONE, amount: -312.40, months: 12}
+      - {party: betrvers, family: insurance, tax: NONE, amount: -148.70, months: 12}
+      - {party: tanke, family: fuel, tax: V19, amount: -95.00, months: 12, per_month: 3, vary: 0.3}
+      - {party: software, family: software, tax: V19, amount: -70.21, months: 12}
+      - {party: stb, family: advice, tax: V19, amount: -452.20, months: 12, vary: 0.1}
+      - {party: hausbank, family: bank_fees, tax: NONE, amount: -38.50, months: 12, vary: 0.1}
+      - {party: finanzamt, family: vat_payment, tax: NONE, amount: -3900.00, months: 12, vary: 0.4}
+      - {party: finanzamt, family: wage_tax, tax: NONE, amount: -1236.48, months: 12, vary: 0.05}
+      - {party: bkk, family: social_security, tax: NONE, amount: -5214.60, months: 12, vary: 0.03}
+      - {party: gf, family: payroll, tax: NONE, amount: -3412.80, months: 12}
+      - {party: monteur1, family: payroll, tax: NONE, amount: -2284.15, months: 12, vary: 0.02}
+      - {party: monteur2, family: payroll, tax: NONE, amount: -2105.90, months: 12, vary: 0.02}
+      - {party: azubi, family: payroll, tax: NONE, amount: -812.44, months: 12}
+    months:
+      "2026-09":
+        # --- purchase invoices and their payments (OPOS) ---
+        - id: r01
+          kind: invoice
+          party: grosshandel
+          document:
+            format: zugferd
+            number: "RE-2026-14872"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-01
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 10 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Installationsmaterial BV Ostheim Haus B (NYM-J 3x1,5 und 5x2,5, Schalterdosen, Hohlwanddosen)", net: 3412.60, rate: 19, category: S}
+          truth: {family: goods, tax: V19}
+        - id: z01
+          party: grosshandel
+          on: 2026-09-10
+          method: ueberweisung
+          settles: [r01]
+          skonto: true
+          reference: "RE-2026-14872 KdNr 30911 abzgl. 2 % Skonto"
+          truth: {family: clearing}
+        - id: r02
+          kind: invoice
+          party: grosshandel
+          document:
+            format: zugferd
+            number: "RE-2026-15230"
+            issue_date: 2026-09-09
+            delivery_date: 2026-09-08
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 10 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Zählerschrank 5-feldrig, Leitungsschutzschalter, FI/LS-Schalter", net: 1846.30, rate: 19, category: S}
+              - {text: "Frachtpauschale", net: 25.00, rate: 19, category: S}
+          truth: {family: goods, tax: V19}
+        - id: r03
+          kind: invoice
+          party: grosshandel
+          document:
+            format: zugferd
+            number: "RE-2026-15611"
+            issue_date: 2026-09-16
+            delivery_date: 2026-09-15
+            payment_terms: "2 % Skonto bei Zahlung innerhalb von 10 Tagen, 30 Tage netto"
+            lines:
+              - {text: "Leerrohr, Kabelkanal, Abzweigkästen", net: 968.40, rate: 19, category: S}
+          truth: {family: goods, tax: V19}
+        - id: z03
+          party: grosshandel
+          on: 2026-09-25
+          method: ueberweisung
+          settles: [r02, r03]
+          reference: "RE-2026-15230 RE-2026-15611 KdNr 30911"
+          truth: {family: clearing}
+        - id: r04
+          kind: invoice
+          party: kabel_nl
+          document:
+            format: pdf
+            number: "VDK-26-0917"
+            issue_date: 2026-09-07
+            delivery_date: 2026-09-04
+            notes: "Intracommunautaire levering / steuerfreie innergemeinschaftliche Lieferung (Art. 138 MwStSystRL)"
+            lines:
+              - {text: "Erdkabel NYY-J 5x16 mm², 500 m", net: 2750.00, rate: 0, category: K}
+          truth: {family: goods, tax: IGE19}
+        - id: z04
+          party: kabel_nl
+          on: 2026-09-18
+          method: ueberweisung
+          settles: [r04]
+          reference: "Invoice VDK-26-0917"
+          truth: {family: clearing}
+        - id: r05
+          kind: invoice
+          party: subunt
+          document:
+            format: pdf
+            number: "2026-087"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-11
+            notes: "Steuerschuldnerschaft des Leistungsempfängers (§ 13b Abs. 2 Nr. 4 UStG)"
+            lines:
+              - {text: "Kabelverlegung und Schlitzarbeiten BV Ostheim Haus B, 31.08.-11.09.2026", net: 4200.00, rate: 0, category: AE}
+          truth: {family: subcontractor, tax: RC_BAU19}
+        - id: z05
+          party: subunt
+          on: 2026-09-22
+          method: ueberweisung
+          settles: [r05]
+          reference: "Rg 2026-087 BV Ostheim"
+          truth: {family: clearing}
+        - id: r11
+          kind: invoice
+          party: werkstatt
+          document:
+            format: pdf
+            number: "W-4471"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-14
+            missing: [seller_tax_id]
+            lines:
+              - {text: "Bremsscheiben und -beläge VA erneuert, Transporter KS-EH 214", net: 512.00, rate: 19, category: S}
+              - {text: "Inspektion nach Herstellervorgabe", net: 172.00, rate: 19, category: S}
+          says:
+            invoice_incomplete: {choice: upload}
+          truth: {family: vehicle_repair, tax: V19}
+        - id: z11
+          party: werkstatt
+          on: 2026-09-28
+          method: ueberweisung
+          settles: [r11]
+          reference: "Rg W-4471 KS-EH 214"
+          truth: {family: clearing}
+        # --- invoices issued and customer payments (OPOS) ---
+        - id: r06
+          kind: invoice
+          party: gu
+          document:
+            format: xrechnung-cii
+            direction: out
+            number: "AR-2026-0911"
+            issue_date: 2026-09-11
+            delivery_date: 2026-09-10
+            notes: "Steuerschuldnerschaft des Leistungsempfängers (§ 13b Abs. 2 Nr. 4 UStG)"
+            payment_terms: "zahlbar innerhalb von 14 Tagen ohne Abzug"
+            lines:
+              - {text: "Elektroinstallation BV Ostheim Haus B, Bauabschnitt 1 (Rohinstallation EG bis 2. OG), abgenommen am 10.09.2026", net: 18500.00, rate: 0, category: AE}
+          truth: {family: revenue, tax: RC_OUT}
+        - id: z06
+          party: gu
+          on: 2026-09-25
+          method: gutschrift
+          settles: [r06]
+          reference: "AR-2026-0911 BV Ostheim Haus B"
+          truth: {family: clearing}
+        - id: r07
+          kind: invoice
+          party: wohnbau
+          document:
+            format: zugferd
+            direction: out
+            number: "AR-2026-0904"
+            issue_date: 2026-09-04
+            delivery_date: 2026-09-03
+            lines:
+              - {text: "Instandsetzung Unterverteilung, Ludwigstraße 12, 3. OG links (8 Std.)", net: 640.00, rate: 19, category: S}
+              - {text: "Material", net: 182.50, rate: 19, category: S}
+          truth: {family: revenue, tax: U19}
+        - id: r08
+          kind: invoice
+          party: wohnbau
+          document:
+            format: zugferd
+            direction: out
+            number: "AR-2026-0914"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-11
+            lines:
+              - {text: "E-Check Treppenhausbeleuchtung Fasanenhofstraße 26-32", net: 1120.00, rate: 19, category: S}
+          truth: {family: revenue, tax: U19}
+        - id: z08
+          party: wohnbau
+          on: 2026-09-24
+          method: gutschrift
+          settles: [r07, r08]
+          reference: "AR-2026-0904 AR-2026-0914"
+          truth: {family: clearing}
+        - id: r09
+          kind: invoice
+          party: privat1
+          document:
+            format: pdf
+            direction: out
+            number: "AR-2026-0915"
+            issue_date: 2026-09-15
+            delivery_date: 2026-09-15
+            notes: "Im Rechnungsbetrag enthaltene Arbeitskosten: 1.480,00 EUR netto"
+            lines:
+              - {text: "Wallbox 11 kW inkl. Montagematerial", net: 690.00, rate: 19, category: S}
+              - {text: "Montage, Zuleitung 5x6 mm², Anmeldung beim Netzbetreiber", net: 1480.00, rate: 19, category: S}
+          truth: {family: revenue, tax: U19}
+        - id: z09
+          party: privat1
+          on: 2026-09-23
+          method: gutschrift
+          settles: [r09]
+          reference: "Rechnung AR-2026-0915 Wallbox Vogelsang"
+          truth: {family: clearing}
+        - id: r10
+          kind: invoice
+          party: praxis
+          document:
+            format: zugferd
+            direction: out
+            number: "AR-2026-0917"
+            issue_date: 2026-09-17
+            delivery_date: 2026-09-16
+            lines:
+              - {text: "Umrüstung Beleuchtung Behandlungsräume 1-4 auf LED-Panels", net: 860.00, rate: 19, category: S}
+          truth: {family: revenue, tax: U19}
+        - id: e12
+          party: gasthaus
+          on: 2026-09-21
+          method: gutschrift
+          amount: 595.00
+          reference: "Notdienst 02.09. Sicherungskasten"
+          says:
+            unknown_credit: {choice: customer, invoice_no: "AR-2026-0902"}
+          truth: {family: revenue, tax: U19}
+        # --- bank items booked directly ---
+        - id: e13
+          party: miete
+          on: 2026-09-01
+          method: ueberweisung
+          amount: -2380.00
+          reference: "Miete 09/2026 Halle und Büro Am Wasserturm 7"
+          truth: {family: rent, tax: V19}
+        - id: e14
+          party: strom
+          on: 2026-09-15
+          method: lastschrift
+          reference: "Abschlag September Vertragskonto 4402211"
+          document:
+            format: zugferd
+            number: "AB-2026-09-55102"
+            issue_date: 2026-09-05
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Abschlag Strom September 2026", net: 300.00, rate: 19, category: S}
+          truth: {family: utilities, tax: V19}
+        - id: e15
+          party: telefon
+          on: 2026-09-03
+          method: lastschrift
+          reference: "Kd-Nr 7710384 Rechnung 09/2026"
+          document:
+            format: pdf
+            number: "TK-0926-381104"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Business Festnetz/Internet 09/2026", net: 49.95, rate: 19, category: S}
+              - {text: "Mobilfunk 3 Karten 09/2026", net: 25.05, rate: 19, category: S}
+          truth: {family: telecom, tax: V19}
+        - id: e16
+          party: leasing
+          on: 2026-09-01
+          method: lastschrift
+          amount: -999.60
+          reference: "Leasingrate 09/2026 Vertr. 77810-2 / 77811-2"
+          truth: {family: vehicle_leasing, tax: V19}
+        - id: e17
+          party: kfzvers
+          on: 2026-09-01
+          method: lastschrift
+          amount: -312.40
+          reference: "Kfz-Versicherung 09/2026 KS-EH 214, KS-EH 215"
+          truth: {family: vehicle_insurance, tax: NONE}
+        - id: e18
+          party: stb
+          on: 2026-09-08
+          method: lastschrift
+          reference: "Rechnung 2026-1854 Mandant 2101"
+          document:
+            format: pdf
+            number: "2026-1854"
+            issue_date: 2026-09-04
+            delivery_date: 2026-08-31
+            lines:
+              - {text: "Finanzbuchhaltung 08/2026", net: 260.00, rate: 19, category: S}
+              - {text: "Lohnabrechnung 4 Arbeitnehmer 08/2026", net: 120.00, rate: 19, category: S}
+          truth: {family: advice, tax: V19}
+        - id: e19
+          party: tanke
+          on: 2026-09-04
+          method: karte
+          reference: "TANKSTELLE LOHFELDEN SUED 03.09."
+          document:
+            format: pdf
+            number: "0451-22"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-03
+            lines:
+              - {text: "Diesel 52,17 l", net: 84.00, rate: 19, category: S}
+          truth: {family: fuel, tax: V19}
+        - id: e20
+          party: autohof
+          on: 2026-09-22
+          method: karte
+          reference: "AUTOHOF KIRCHHEIM 21.09."
+          document:
+            format: pdf
+            number: "K-7781-0921"
+            issue_date: 2026-09-21
+            delivery_date: 2026-09-21
+            lines:
+              - {text: "Diesel 65,2 l", net: 105.00, rate: 19, category: S}
+          truth: {family: fuel, tax: V19}
+        - id: e21
+          party: hausbank
+          on: 2026-09-30
+          method: lastschrift
+          amount: -38.50
+          reference: "Kontoführungsentgelt 09/2026"
+          truth: {family: bank_fees, tax: NONE}
+        - id: e22
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -4182.37
+          reference: "USt-VA 08/2026 StNr 026 233 41087"
+          truth: {family: vat_payment, tax: NONE}
+        - id: e23
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -1236.48
+          reference: "LSt 08/2026 StNr 026 233 41087"
+          truth: {family: wage_tax, tax: NONE}
+        - id: e24
+          party: bkk
+          on: 2026-09-28
+          method: lastschrift
+          amount: -5214.60
+          reference: "Beitragsnachweis 09/2026 BN 41557802"
+          truth: {family: social_security, tax: NONE}
+        - id: e25
+          party: gf
+          on: 2026-09-29
+          method: ueberweisung
+          amount: -3412.80
+          reference: "Gehalt 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e26
+          party: monteur1
+          on: 2026-09-29
+          method: ueberweisung
+          amount: -2291.37
+          reference: "Lohn 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e27
+          party: monteur2
+          on: 2026-09-29
+          method: ueberweisung
+          amount: -2105.90
+          reference: "Lohn 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e28
+          party: azubi
+          on: 2026-09-29
+          method: ueberweisung
+          amount: -812.44
+          reference: "Ausbildungsvergütung 09/2026"
+          truth: {family: payroll, tax: NONE}
+        - id: e29
+          party: restaurant
+          on: 2026-09-18
+          method: karte
+          reference: "RISTORANTE IL GABBIANO KASSEL 17.09."
+          document:
+            format: pdf
+            number: "1187"
+            issue_date: 2026-09-17
+            delivery_date: 2026-09-17
+            lines:
+              - {text: "Speisen", net: 98.00, rate: 19, category: S}
+              - {text: "Getränke", net: 31.50, rate: 19, category: S}
+          says:
+            meals_details: {choice: details, occasion: "Baubesprechung Abrechnung BV Ostheim Haus B", participants: "Sven Hainbach; Rainer Ostheim (Bauunternehmung Ostheim GmbH & Co. KG)"}
+          truth: {family: meals, tax: V19}
+        - id: e30
+          party: messtechnik
+          on: 2026-09-08
+          method: karte
+          reference: "MESSTECHNIK DIREKT Best. 118734"
+          document:
+            format: pdf
+            number: "MD-2026-118734"
+            issue_date: 2026-09-07
+            delivery_date: 2026-09-09
+            lines:
+              - {text: "Installationstester VDE 0100 mit Zubehör und Kalibrierschein", net: 1690.00, rate: 19, category: S}
+          truth: {family: equipment, tax: V19}
+        - id: e31
+          party: werkzeughof
+          on: 2026-09-11
+          method: karte
+          reference: "WERKZEUGHOF LOHFELDEN 10.09."
+          document:
+            format: pdf
+            number: "BON 22-4410"
+            issue_date: 2026-09-10
+            delivery_date: 2026-09-10
+            arrives: on_request
+            lines:
+              - {text: "Dübel, Schrauben, Kabelbinder, Montageschaum", net: 54.44, rate: 19, category: S}
+          says:
+            missing_receipt: {choice: upload}
+          truth: {family: goods, tax: V19}
+        - id: e32
+          party: baumarkt
+          on: 2026-09-03
+          method: karte
+          reference: "BAU- UND GARTENMARKT FULDABRUECK 02.09."
+          document:
+            format: pdf
+            number: "BON 0902-118"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-02
+            arrives: never
+            lines:
+              - {text: "Leitungsschutzschalter, Verbindungsklemmen, Aderendhülsen", net: 122.86, rate: 19, category: S}
+          says:
+            missing_receipt: {choice: no_receipt, purpose: "Kleinmaterial für den Notdienst im Gasthaus Zur Linde am 02.09."}
+          truth: {family: goods, tax: NONE}
+        - id: e33
+          party: innung
+          on: 2026-09-15
+          method: lastschrift
+          reference: "Innungsbeitrag 2. Halbjahr 2026 Mitgl. 0418"
+          document:
+            format: pdf
+            number: "BB-2026-II-0418"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Innungsbeitrag 2. Halbjahr 2026", net: 186.00, rate: 0, category: O}
+          truth: {family: memberships, tax: NONE}
+        - id: e34
+          party: software
+          on: 2026-09-02
+          method: lastschrift
+          reference: "Baulogix Pro 09/2026 Kd 55120"
+          document:
+            format: zugferd
+            number: "BLX-2026-09-2231"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Handwerkersoftware Baulogix Pro, 3 Nutzer, 09/2026", net: 59.00, rate: 19, category: S}
+          truth: {family: software, tax: V19}
+        - id: e35
+          party: seminar
+          on: 2026-09-16
+          method: ueberweisung
+          reference: "Rechnung FS-26-0412 Teilnehmer Opitz"
+          document:
+            format: pdf
+            number: "FS-26-0412"
+            issue_date: 2026-09-09
+            delivery_date: 2026-09-15
+            lines:
+              - {text: "Seminar Prüfung ortsveränderlicher Geräte nach DGUV V3, 15.09.2026, Teilnehmer Marvin Opitz", net: 390.00, rate: 19, category: S}
+          truth: {family: training, tax: V19}
+
+  # ---------------------------------------------------------------------------------------------
+  # IT freelancer, sole trader, direct, Ist, quarterly
+  # ---------------------------------------------------------------------------------------------
+  - id: rw-2102
+    mandant_nr: 2102
+    name: "Niklas Brandauer Softwareentwicklung"
+    legal_form: Einzelunternehmen
+    industry: "IT-Freelancer (Softwareentwicklung, DevOps- und Cloud-Beratung)"
+    booking_method: direkt
+    vat_regime: ist
+    vat_period: quartal
+    iban: auto
+    vat_id: auto
+    contact_name: "Niklas Brandauer"
+    contact_email: "kontakt@brandauer-devops.example"
+    assigned: [j.brenner]
+    parties:
+      - {key: kunde_at, name: "Alpenblick Versicherungs-IT GmbH", role: customer, iban: auto, vat_id: auto, country: AT, street: "Landstraße 88", postcode: "4020", city: "Linz"}
+      - {key: kunde_de, name: "Fuldaer Logistiksysteme GmbH", role: customer, iban: auto, vat_id: auto, country: DE, street: "Am Rosengarten 5", postcode: "36037", city: "Fulda"}
+      - {key: medienhaus, name: "Medienhaus Grünberg KG", role: customer, iban: auto, vat_id: auto, country: DE, street: "Marktgasse 2", postcode: "35305", city: "Grünberg"}
+      - {key: hofgut, name: "Hofgut Weidenbach Agrar GmbH", role: customer, iban: auto, vat_id: auto, country: DE, street: "Weidenbacher Hof 1", postcode: "34393", city: "Grebenstein"}
+      - {key: coworking, name: "Kontor 21 Coworking UG (haftungsbeschränkt)", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Untere Königsstraße 21", postcode: "34117", city: "Kassel"}
+      - {key: telefon, name: "Funkwerk Mobil GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Lahnstraße 3", postcode: "35037", city: "Marburg"}
+      - {key: cloud_us, name: "Stratocumulus Cloud Inc.", role: supplier, iban: null, vat_id: auto, country: US, street: "500 Harbor Boulevard", postcode: "94107", city: "San Francisco"}
+      - {key: saas_ie, name: "Codeforge Collaboration Ltd.", role: supplier, iban: null, vat_id: auto, country: IE, street: "9 Grand Canal Quay", postcode: "D02 X285", city: "Dublin"}
+      - {key: ide_cz, name: "Prague Toolsmiths s.r.o.", role: supplier, iban: null, vat_id: auto, country: CZ, street: "Na Poříčí 12", postcode: "110 00", city: "Praha"}
+      - {key: kurs_us, name: "LearnStack Inc.", role: supplier, iban: null, vat_id: auto, country: US, street: "1200 Congress Avenue", postcode: "78701", city: "Austin"}
+      - {key: hosting, name: "Netzhafen Hosting GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Am Speicher 4", postcode: "28217", city: "Bremen"}
+      - {key: stb, name: "Roth & Weiland Steuerberatungsgesellschaft mbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Kölnische Straße 44", postcode: "34117", city: "Kassel"}
+      - {key: bank, name: "Kasseler Direktbank AG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Rathausplatz 2", postcode: "34117", city: "Kassel"}
+      - {key: haftpflicht, name: "Mittelland Versicherung AG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Schlossplatz 3", postcode: "30159", city: "Hannover"}
+      - {key: pkv, name: "Hanse Privatkrankenversicherung a.G.", role: other, iban: auto, vat_id: null, country: DE, street: "Ballindamm 30", postcode: "20095", city: "Hamburg"}
+      - {key: gym, name: "Fitnessstudio Kraftwerk Kassel GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Leipziger Straße 50", postcode: "34123", city: "Kassel"}
+      - {key: inhaber, name: "Niklas Brandauer (Privatkonto)", role: other, iban: auto, vat_id: null, country: DE, street: "Goethestraße 70", postcode: "34119", city: "Kassel"}
+      - {key: finanzamt, name: "Finanzamt Habichtswald", role: other, iban: auto, vat_id: null, country: DE, street: "Goethestraße 43", postcode: "34119", city: "Kassel"}
+      - {key: bahn, name: "Intercity Fernreisen GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Europaplatz 1", postcode: "10557", city: "Berlin"}
+      - {key: hotel, name: "Hotel Spreebogen Mitte", role: supplier, iban: null, vat_id: auto, country: DE, street: "Reinhardtstraße 40", postcode: "10117", city: "Berlin"}
+      - {key: konferenz, name: "Konferenzhaus Container & Cloud GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Revaler Straße 99", postcode: "10245", city: "Berlin"}
+      - {key: taxi, name: "Funktaxi Spreeufer", role: supplier, iban: null, vat_id: auto, country: DE, street: "Gotlindestraße 20", postcode: "10365", city: "Berlin"}
+      - {key: brasserie, name: "Brasserie Am Kupferhof", role: supplier, iban: null, vat_id: auto, country: DE, street: "Wolfsschlucht 9", postcode: "34117", city: "Kassel"}
+      - {key: notebook, name: "Notebookwelt Online GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Hansaring 120", postcode: "50670", city: "Köln"}
+      - {key: elektronik, name: "Elektronikmarkt Wilhelmshöhe GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Wilhelmshöher Allee 250", postcode: "34131", city: "Kassel"}
+      - {key: spielwaren, name: "Spielwarenhaus Kunterbunt", role: supplier, iban: null, vat_id: auto, country: DE, street: "Obere Königsstraße 30", postcode: "34117", city: "Kassel"}
+      - {key: buerobedarf, name: "Papier & Toner Direkt GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Gewerbering 8", postcode: "37077", city: "Göttingen"}
+      - {key: grafik, name: "Studio Lenz Grafikdesign", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Bebelplatz 6", postcode: "34119", city: "Kassel"}
+      - {key: parkhaus, name: "Parkhaus Am Ständeplatz GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Ständeplatz 9", postcode: "34117", city: "Kassel"}
+      - {key: druckerei, name: "Pixelpresse Druck GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Holländische Straße 155", postcode: "34127", city: "Kassel"}
+    history:
+      - {party: kunde_at, family: revenue, tax: EU_SVC, amount: 9200.00, months: 10, vary: 0.2}
+      - {party: kunde_de, family: revenue, tax: U19, amount: 6900.00, months: 12, vary: 0.3}
+      - {party: coworking, family: rent, tax: V19, amount: -297.50, months: 12}
+      - {party: telefon, family: telecom, tax: V19, amount: -34.95, months: 12}
+      - {party: cloud_us, family: software, tax: RC_DRITT19, amount: -80.00, months: 12, vary: 0.3}
+      - {party: saas_ie, family: software, tax: RC_EU19, amount: -21.00, months: 12}
+      - {party: hosting, family: software, tax: V19, amount: -11.90, months: 12}
+      - {party: stb, family: advice, tax: V19, amount: -95.20, months: 12}
+      - {party: bank, family: bank_fees, tax: NONE, amount: -9.90, months: 12}
+      - {party: haftpflicht, family: insurance, tax: NONE, amount: -42.30, months: 12}
+      - {party: pkv, family: private_withdrawal, tax: NONE, amount: -612.40, months: 12}
+      - {party: gym, family: private_withdrawal, tax: NONE, amount: -39.90, months: 12}
+      - {party: inhaber, family: private_withdrawal, tax: NONE, amount: -3500.00, months: 12}
+      - {party: bahn, family: travel_transport, tax: V7, amount: -95.00, months: 4, vary: 0.4}
+    months:
+      "2026-09":
+        - id: e01
+          party: kunde_at
+          on: 2026-09-15
+          method: gutschrift
+          reference: "Invoice NB-2026-031 Softwareentwicklung 08/2026"
+          document:
+            format: pdf
+            direction: out
+            number: "NB-2026-031"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-31
+            notes: "Reverse Charge - Steuerschuldnerschaft des Leistungsempfängers (Art. 196 MwStSystRL)"
+            lines:
+              - {text: "Softwareentwicklung Schadenportal, August 2026, 84 Std. à 115,00 EUR", net: 9660.00, rate: 0, category: AE}
+          truth: {family: revenue, tax: EU_SVC}
+        - id: e02
+          party: kunde_de
+          on: 2026-09-11
+          method: gutschrift
+          reference: "RE NB-2026-032 DevOps August"
+          document:
+            format: xrechnung-ubl
+            direction: out
+            number: "NB-2026-032"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-31
+            lines:
+              - {text: "DevOps-Beratung und Pipeline-Migration, August 2026, 52 Std. à 110,00 EUR", net: 5720.00, rate: 19, category: S}
+          truth: {family: revenue, tax: U19}
+        - id: e03
+          party: medienhaus
+          on: 2026-09-24
+          method: gutschrift
+          amount: 1428.00
+          reference: "Rg 2026-017 Danke"
+          says:
+            unknown_credit: {choice: customer, invoice_no: "NB-2026-017"}
+          truth: {family: revenue, tax: U19}
+        - id: e04
+          party: hofgut
+          on: 2026-09-29
+          method: gutschrift
+          reference: "Rechnung NB-2026-034"
+          document:
+            format: pdf
+            direction: out
+            number: "NB-2026-034"
+            issue_date: 2026-09-18
+            delivery_date: 2026-09-17
+            lines:
+              - {text: "Einrichtung Schnittstelle Webshop - Warenwirtschaft (Pauschale)", net: 1350.00, rate: 19, category: S}
+          truth: {family: revenue, tax: U19}
+        - id: e05
+          party: coworking
+          on: 2026-09-01
+          method: ueberweisung
+          amount: -297.50
+          reference: "Miete Fixdesk 09/2026"
+          truth: {family: rent, tax: V19}
+        - id: e06
+          party: telefon
+          on: 2026-09-07
+          method: lastschrift
+          reference: "Kd 30118220 Rechnung 09/2026"
+          document:
+            format: pdf
+            number: "FM-2609-118220"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Mobilfunktarif Business M 09/2026", net: 29.37, rate: 19, category: S}
+          truth: {family: telecom, tax: V19}
+        - id: e07
+          party: cloud_us
+          on: 2026-09-03
+          method: karte
+          reference: "STRATOCUMULUS CLOUD INV-88231407"
+          document:
+            format: pdf
+            number: "INV-88231407"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-31
+            notes: "Customer is liable for VAT (reverse charge)"
+            lines:
+              - {text: "Cloud compute and storage usage, August 2026", net: 92.18, rate: 0, category: O}
+          truth: {family: software, tax: RC_DRITT19}
+        - id: e08
+          party: saas_ie
+          on: 2026-09-02
+          method: karte
+          reference: "CODEFORGE TEAM PLAN 09/2026"
+          document:
+            format: pdf
+            number: "CF-IE-2026-0904421"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            notes: "Reverse charge: VAT to be accounted for by the recipient (Art. 196 VAT Directive)"
+            lines:
+              - {text: "Team plan, 1 seat, September 2026", net: 21.00, rate: 0, category: AE}
+          truth: {family: software, tax: RC_EU19}
+        - id: e09
+          party: ide_cz
+          on: 2026-09-09
+          method: karte
+          reference: "PRAGUE TOOLSMITHS PT-2026-55120"
+          document:
+            format: pdf
+            number: "PT-2026-55120"
+            issue_date: 2026-09-09
+            delivery_date: 2026-09-09
+            notes: "Reverse charge - Art. 196 VAT Directive"
+            lines:
+              - {text: "IDE All-Products licence, annual subscription 09/2026-08/2027", net: 289.00, rate: 0, category: AE}
+          truth: {family: software, tax: RC_EU19}
+        - id: e10
+          party: kurs_us
+          on: 2026-09-21
+          method: karte
+          reference: "LEARNSTACK LS-1029384"
+          document:
+            format: pdf
+            number: "LS-1029384"
+            issue_date: 2026-09-19
+            delivery_date: 2026-09-19
+            lines:
+              - {text: "Online course: Kubernetes Security Specialist", net: 21.40, rate: 0, category: O}
+          truth: {family: training, tax: RC_DRITT19}
+        - id: e11
+          party: hosting
+          on: 2026-09-01
+          method: lastschrift
+          reference: "NH Kd 44817 09/2026"
+          document:
+            format: zugferd
+            number: "NH-2026-0901-7781"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "vServer M und Mailpaket 09/2026", net: 10.00, rate: 19, category: S}
+          truth: {family: software, tax: V19}
+        - id: e12
+          party: hosting
+          on: 2026-09-14
+          method: lastschrift
+          reference: "NH Kd 44817 Domainverlängerung"
+          document:
+            format: zugferd
+            number: "NH-2026-0914-0193"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-14
+            lines:
+              - {text: "Domainverlängerung 4 Domains 09/2026-08/2027", net: 48.00, rate: 19, category: S}
+          truth: {family: software, tax: V19}
+        - id: e13
+          party: stb
+          on: 2026-09-08
+          method: lastschrift
+          reference: "Rechnung 2026-1861 Mandant 2102"
+          document:
+            format: pdf
+            number: "2026-1861"
+            issue_date: 2026-09-04
+            delivery_date: 2026-08-31
+            lines:
+              - {text: "Laufende Buchführung und EÜR 08/2026", net: 80.00, rate: 19, category: S}
+          truth: {family: advice, tax: V19}
+        - id: e14
+          party: bank
+          on: 2026-09-30
+          method: lastschrift
+          amount: -9.90
+          reference: "Kontoführung 09/2026"
+          truth: {family: bank_fees, tax: NONE}
+        - id: e15
+          party: haftpflicht
+          on: 2026-09-01
+          method: lastschrift
+          amount: -42.30
+          reference: "IT-Berufshaftpflicht 09/2026 Vers.-Nr. 88-4410273"
+          truth: {family: insurance, tax: NONE}
+        - id: e16
+          party: pkv
+          on: 2026-09-01
+          method: lastschrift
+          amount: -612.40
+          reference: "Beitrag 09/2026 Tarif Komfort 2"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e17
+          party: gym
+          on: 2026-09-01
+          method: lastschrift
+          amount: -39.90
+          reference: "Mitgliedsbeitrag 09/2026"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e18
+          party: inhaber
+          on: 2026-09-01
+          method: ueberweisung
+          amount: -3500.00
+          reference: "Privatentnahme 09/2026"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e19
+          party: inhaber
+          on: 2026-09-21
+          method: ueberweisung
+          amount: -800.00
+          reference: "Umbuchung privat"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e20
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -2870.00
+          reference: "ESt-VZ III/2026 StNr 026 815 30492"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e21
+          party: konferenz
+          on: 2026-09-01
+          method: ueberweisung
+          reference: "CC-2026-1187 Ticket Brandauer"
+          document:
+            format: pdf
+            number: "CC-2026-1187"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-15
+            lines:
+              - {text: "Konferenzticket DevOps & Cloud Days Berlin, 15.-16.09.2026, inkl. Workshop", net: 590.00, rate: 19, category: S}
+          truth: {family: training, tax: V19}
+        - id: e22
+          party: bahn
+          on: 2026-09-03
+          method: karte
+          reference: "INTERCITY FERNREISEN 8C4F2Q"
+          document:
+            format: pdf
+            number: "8C4F2Q"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-14
+            lines:
+              - {text: "Flexpreis Kassel-Wilhelmshöhe - Berlin Hbf und zurück, 14.09./17.09.2026", net: 112.15, rate: 7, category: S}
+          truth: {family: travel_transport, tax: V7}
+        - id: e23
+          party: taxi
+          on: 2026-09-15
+          method: karte
+          amount: -23.40
+          reference: "FUNKTAXI SPREEUFER BERLIN 14.09."
+          says:
+            missing_receipt: {choice: no_receipt, purpose: "Taxi Berlin Hbf - Hotel Spreebogen am 14.09., Konferenz DevOps & Cloud Days"}
+          truth: {family: travel_transport, tax: NONE}
+        - id: e24
+          party: hotel
+          on: 2026-09-18
+          method: karte
+          reference: "HOTEL SPREEBOGEN MITTE 17.09."
+          document:
+            format: pdf
+            number: "H-2026-09-4471"
+            issue_date: 2026-09-17
+            delivery_date: 2026-09-17
+            lines:
+              - {text: "Übernachtung 3 Nächte 14.-17.09.2026", net: 387.00, rate: 7, category: S}
+              - {text: "Frühstück 3 x", net: 54.00, rate: 19, category: S}
+          truth: {family: travel_lodging}
+        - id: e25
+          party: brasserie
+          on: 2026-09-25
+          method: karte
+          reference: "BRASSERIE AM KUPFERHOF 24.09."
+          document:
+            format: pdf
+            number: "2209"
+            issue_date: 2026-09-24
+            delivery_date: 2026-09-24
+            notes: "Anlass: Projektabschluss Release 4.2; Teilnehmer: Niklas Brandauer, Dr. Heike Rumpf (Fuldaer Logistiksysteme GmbH)"
+            lines:
+              - {text: "Speisen", net: 74.00, rate: 19, category: S}
+              - {text: "Getränke", net: 18.50, rate: 19, category: S}
+          truth: {family: meals, tax: V19}
+        - id: e26
+          party: notebook
+          on: 2026-09-22
+          method: karte
+          reference: "NOTEBOOKWELT ONLINE NW-2026-448120"
+          document:
+            format: pdf
+            number: "NW-2026-448120"
+            issue_date: 2026-09-21
+            delivery_date: 2026-09-22
+            lines:
+              - {text: "Notebook 14 Zoll, 32 GB RAM, 1 TB SSD", net: 1899.00, rate: 19, category: S}
+              - {text: "USB-C-Dockingstation", net: 189.00, rate: 19, category: S}
+          truth: {family: equipment, tax: V19}
+        - id: e27
+          party: elektronik
+          on: 2026-09-04
+          method: karte
+          reference: "ELEKTRONIKMARKT WILHELMSHOEHE 03.09."
+          document:
+            format: pdf
+            number: "BON 7734-0903"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-03
+            lines:
+              - {text: "Externe SSD 2 TB", net: 109.00, rate: 19, category: S}
+          truth: {family: equipment, tax: V19}
+        - id: e28
+          party: spielwaren
+          on: 2026-09-14
+          method: karte
+          reference: "SPIELWARENHAUS KUNTERBUNT 12.09."
+          document:
+            format: pdf
+            number: "BON 5521"
+            issue_date: 2026-09-12
+            delivery_date: 2026-09-12
+            lines:
+              - {text: "Konstruktionsbaukasten Feuerwehrstation", net: 67.22, rate: 19, category: S}
+          says:
+            private_or_business: {choice: private}
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e29
+          party: buerobedarf
+          on: 2026-09-16
+          method: karte
+          reference: "PAPIER UND TONER DIREKT Best. 33817"
+          document:
+            format: pdf
+            number: "PT-33817"
+            issue_date: 2026-09-15
+            delivery_date: 2026-09-16
+            arrives: on_request
+            lines:
+              - {text: "Toner schwarz, Druckerpapier 5 x 500 Blatt", net: 32.76, rate: 19, category: S}
+          says:
+            missing_receipt: {choice: upload}
+          truth: {family: office_supplies, tax: V19}
+        - id: e30
+          party: grafik
+          on: 2026-09-17
+          method: ueberweisung
+          reference: "Rechnung 2026-23 App-Icons"
+          document:
+            format: pdf
+            number: "2026-23"
+            issue_date: 2026-09-10
+            delivery_date: 2026-09-09
+            missing: [seller_tax_id]
+            lines:
+              - {text: "App-Icons und Splashscreen für Kundenprojekt Fuldaer Logistiksysteme", net: 480.00, rate: 19, category: S}
+          says:
+            invoice_incomplete: {choice: not_available}
+          truth: {family: subcontractor, tax: NONE}
+        - id: e31
+          party: parkhaus
+          on: 2026-09-24
+          method: karte
+          reference: "PARKHAUS AM STAENDEPLATZ 24.09."
+          document:
+            format: pdf
+            number: "P-0924-1188"
+            issue_date: 2026-09-24
+            delivery_date: 2026-09-24
+            lines:
+              - {text: "Parkentgelt 3 Std.", net: 5.04, rate: 19, category: S}
+          truth: {family: travel_transport, tax: V19}
+        - id: e32
+          party: druckerei
+          on: 2026-09-28
+          method: karte
+          reference: "PIXELPRESSE DRUCK 25.09."
+          document:
+            format: pdf
+            number: "PP-26-09-412"
+            issue_date: 2026-09-25
+            delivery_date: 2026-09-25
+            lines:
+              - {text: "Visitenkarten 500 Stück, 4/4-farbig", net: 64.00, rate: 19, category: S}
+          truth: {family: advertising, tax: V19}
+
+  # ---------------------------------------------------------------------------------------------
+  # Translator, Kleinunternehmerin, direct
+  # ---------------------------------------------------------------------------------------------
+  - id: rw-2103
+    mandant_nr: 2103
+    name: "Ilona Marek Übersetzungen"
+    legal_form: Einzelunternehmen
+    industry: "Übersetzerin und Dolmetscherin Polnisch-Deutsch (freiberuflich)"
+    booking_method: direkt
+    vat_regime: klein
+    vat_period: quartal
+    iban: auto
+    vat_id: null
+    contact_name: "Ilona Marek"
+    contact_email: "ilona.marek@marek-uebersetzungen.example"
+    assigned: [j.brenner]
+    parties:
+      - {key: agentur, name: "Lingua Bridge Übersetzungen GmbH", role: customer, iban: auto, vat_id: auto, country: DE, street: "Podbielskistraße 140", postcode: "30177", city: "Hannover"}
+      - {key: kanzlei_pl, name: "Kancelaria Prawna Nowicki i Wspólnicy sp.k.", role: customer, iban: auto, vat_id: auto, country: PL, street: "ul. Długa 44", postcode: "80-827", city: "Gdańsk"}
+      - {key: gericht, name: "Amtsgericht Werratal", role: customer, iban: auto, vat_id: null, country: DE, street: "Gerichtsplatz 1", postcode: "34346", city: "Hann. Münden"}
+      - {key: wolff, name: "Katarzyna Wolff", role: customer, iban: auto, vat_id: null, country: DE, street: "Am Plan 4", postcode: "34346", city: "Hann. Münden"}
+      - {key: lewandowski, name: "Tomasz Lewandowski", role: customer, iban: auto, vat_id: null, country: DE, street: "Weender Straße 77", postcode: "37073", city: "Göttingen"}
+      - {key: mobil, name: "Mobilnetz Weserbergland GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Bahnhofstraße 9", postcode: "37603", city: "Holzminden"}
+      - {key: cat, name: "Wortwerk Software GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Theaterstraße 15", postcode: "52062", city: "Aachen"}
+      - {key: lexikon, name: "Lexikonnetz GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Prinzregentenstraße 22", postcode: "80538", city: "München"}
+      - {key: haselbach, name: "Petra Haselbach Fachübersetzungen", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Rote Straße 9", postcode: "37073", city: "Göttingen"}
+      - {key: verband, name: "Verband freier Sprachmittler Niedersachsen e.V.", role: supplier, iban: auto, vat_id: null, country: DE, street: "Calenberger Straße 3", postcode: "30169", city: "Hannover"}
+      - {key: akademie, name: "Akademie für Fachübersetzung GmbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Neusser Straße 25", postcode: "50670", city: "Köln"}
+      - {key: haftpflicht, name: "Weserbergland Versicherungsverein a.G.", role: supplier, iban: auto, vat_id: null, country: DE, street: "Am Wall 5", postcode: "37603", city: "Holzminden"}
+      - {key: kv, name: "Weserland Krankenkasse", role: other, iban: auto, vat_id: null, country: DE, street: "Ritterstraße 2", postcode: "37073", city: "Göttingen"}
+      - {key: bank, name: "Weserbergland Bank eG", role: supplier, iban: auto, vat_id: null, country: DE, street: "Marktstraße 5", postcode: "34346", city: "Hann. Münden"}
+      - {key: stb, name: "Roth & Weiland Steuerberatungsgesellschaft mbH", role: supplier, iban: auto, vat_id: auto, country: DE, street: "Kölnische Straße 44", postcode: "34117", city: "Kassel"}
+      - {key: finanzamt, name: "Finanzamt Südniedersachsen-Werra", role: other, iban: auto, vat_id: null, country: DE, street: "Wilhelmsplatz 2", postcode: "37073", city: "Göttingen"}
+      - {key: inhaber, name: "Ilona Marek (Privatkonto)", role: other, iban: auto, vat_id: null, country: DE, street: "Lange Straße 18", postcode: "34346", city: "Hann. Münden"}
+      - {key: halina, name: "Halina Marek", role: other, iban: auto, vat_id: null, country: PL, street: "ul. Ogrodowa 7", postcode: "60-101", city: "Poznań"}
+      - {key: post, name: "Postagentur Schreibwaren Hornbostel", role: supplier, iban: null, vat_id: auto, country: DE, street: "Kirchplatz 2", postcode: "34346", city: "Hann. Münden"}
+      - {key: elektronik, name: "Elektronikmarkt Göttingen-Weende GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Hannoversche Straße 50", postcode: "37075", city: "Göttingen"}
+      - {key: bahn, name: "Regionalbahn Weser-Fulda GmbH", role: supplier, iban: null, vat_id: auto, country: DE, street: "Bahnhofstraße 1", postcode: "34346", city: "Hann. Münden"}
+      - {key: drogerie, name: "Drogerie Sonnenschein", role: supplier, iban: null, vat_id: auto, country: DE, street: "Lange Straße 40", postcode: "34346", city: "Hann. Münden"}
+      - {key: copyshop, name: "Copyshop Druckpunkt", role: supplier, iban: null, vat_id: auto, country: DE, street: "Burgstraße 12", postcode: "34346", city: "Hann. Münden"}
+      - {key: cafe, name: "Café Werraterrasse", role: supplier, iban: null, vat_id: auto, country: DE, street: "Tanzwerder 1", postcode: "34346", city: "Hann. Münden"}
+    history:
+      - {party: agentur, family: revenue, tax: NONE, amount: 650.00, months: 12, per_month: 2, vary: 0.5}
+      - {party: gericht, family: revenue, tax: NONE, amount: 300.00, months: 10, vary: 0.5}
+      - {party: kanzlei_pl, family: revenue, tax: NONE, amount: 400.00, months: 5, vary: 0.5}
+      - {party: mobil, family: telecom, tax: NONE, amount: -24.99, months: 12}
+      - {party: cat, family: software, tax: NONE, amount: -29.75, months: 12}
+      - {party: lexikon, family: software, tax: NONE, amount: -9.98, months: 12}
+      - {party: haselbach, family: subcontractor, tax: NONE, amount: -300.00, months: 3, vary: 0.4}
+      - {party: kv, family: private_withdrawal, tax: NONE, amount: -398.00, months: 12}
+      - {party: inhaber, family: private_withdrawal, tax: NONE, amount: -1200.00, months: 12}
+      - {party: bank, family: bank_fees, tax: NONE, amount: -6.50, months: 12}
+      - {party: stb, family: advice, tax: NONE, amount: -59.50, months: 12}
+      - {party: haftpflicht, family: insurance, tax: NONE, amount: -18.90, months: 12}
+    months:
+      "2026-09":
+        - id: e01
+          party: agentur
+          on: 2026-09-04
+          method: gutschrift
+          reference: "RE IM-2026-041 Auftrag LB-77812"
+          document:
+            format: pdf
+            direction: out
+            number: "IM-2026-041"
+            issue_date: 2026-09-01
+            delivery_date: 2026-08-28
+            notes: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."
+            lines:
+              - {text: "Übersetzung Gesellschaftsvertrag und Handelsregisterauszug PL>DE, 412 Normzeilen à 1,70 EUR", net: 700.40, rate: 0, category: E}
+          truth: {family: revenue, tax: NONE}
+        - id: e02
+          party: agentur
+          on: 2026-09-18
+          method: gutschrift
+          reference: "RE IM-2026-044 Auftrag LB-78130"
+          document:
+            format: pdf
+            direction: out
+            number: "IM-2026-044"
+            issue_date: 2026-09-10
+            delivery_date: 2026-09-09
+            notes: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."
+            lines:
+              - {text: "Übersetzung Produktdokumentation DE>PL, 286 Normzeilen à 1,60 EUR", net: 457.60, rate: 0, category: E}
+          truth: {family: revenue, tax: NONE}
+        - id: e03
+          party: agentur
+          on: 2026-09-29
+          method: gutschrift
+          reference: "RE IM-2026-046 Auftrag LB-78402"
+          document:
+            format: pdf
+            direction: out
+            number: "IM-2026-046"
+            issue_date: 2026-09-21
+            delivery_date: 2026-09-18
+            notes: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."
+            lines:
+              - {text: "Lektorat Website-Texte Polnisch (Pauschale)", net: 240.00, rate: 0, category: E}
+          truth: {family: revenue, tax: NONE}
+        - id: e04
+          party: kanzlei_pl
+          on: 2026-09-14
+          method: gutschrift
+          reference: "Faktura IM-2026-042"
+          document:
+            format: pdf
+            direction: out
+            number: "IM-2026-042"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-02
+            notes: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."
+            lines:
+              - {text: "Übersetzung Klageschrift DE>PL, 190 Normzeilen à 1,80 EUR", net: 342.00, rate: 0, category: E}
+          truth: {family: revenue, tax: NONE}
+        - id: e05
+          party: gericht
+          on: 2026-09-08
+          method: gutschrift
+          amount: 412.30
+          reference: "Kassenzeichen 7300-2026-08815 JVEG Dolmetscherleistung 20.08.2026"
+          truth: {family: revenue, tax: NONE}
+        - id: e06
+          party: gericht
+          on: 2026-09-25
+          method: gutschrift
+          amount: 186.50
+          reference: "Kassenzeichen 7300-2026-09102 JVEG Dolmetscherleistung 10.09.2026"
+          truth: {family: revenue, tax: NONE}
+        - id: e07
+          party: wolff
+          on: 2026-09-09
+          method: gutschrift
+          reference: "Rechnung IM-2026-043 Geburtsurkunde"
+          document:
+            format: pdf
+            direction: out
+            number: "IM-2026-043"
+            issue_date: 2026-09-07
+            delivery_date: 2026-09-07
+            notes: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."
+            lines:
+              - {text: "Beglaubigte Übersetzung Geburtsurkunde PL>DE", net: 68.00, rate: 0, category: E}
+          truth: {family: revenue, tax: NONE}
+        - id: e08
+          party: lewandowski
+          on: 2026-09-23
+          method: gutschrift
+          reference: "IM-2026-045"
+          document:
+            format: pdf
+            direction: out
+            number: "IM-2026-045"
+            issue_date: 2026-09-16
+            delivery_date: 2026-09-16
+            notes: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."
+            lines:
+              - {text: "Beglaubigte Übersetzung Zeugnis und Diplom PL>DE", net: 95.00, rate: 0, category: E}
+          truth: {family: revenue, tax: NONE}
+        - id: e09
+          party: halina
+          on: 2026-09-17
+          method: gutschrift
+          amount: 500.00
+          reference: "Dla Ilonki"
+          says:
+            unknown_credit: {choice: private_deposit}
+          truth: {family: private_deposit, tax: NONE}
+        - id: e10
+          party: mobil
+          on: 2026-09-07
+          method: lastschrift
+          reference: "Kd 4410889 Rechnung 09/2026"
+          document:
+            format: pdf
+            number: "MW-2609-55301"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Mobilfunk und DSL 09/2026", net: 21.00, rate: 19, category: S}
+          truth: {family: telecom, tax: NONE}
+        - id: e11
+          party: mobil
+          on: 2026-09-22
+          method: gutschrift
+          amount: 12.50
+          reference: "Gutschrift Rechnungskorrektur 08/2026 Kd 4410889"
+          says:
+            unknown_credit: {choice: refund}
+          truth: {family: telecom, tax: NONE}
+        - id: e12
+          party: cat
+          on: 2026-09-01
+          method: lastschrift
+          reference: "Wortwerk Studio Freelance 09/2026"
+          document:
+            format: zugferd
+            number: "WW-2026-09-11873"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "CAT-Tool Wortwerk Studio Freelance, Lizenz 09/2026", net: 25.00, rate: 19, category: S}
+          truth: {family: software, tax: NONE}
+        - id: e13
+          party: lexikon
+          on: 2026-09-03
+          method: karte
+          reference: "LEXIKONNETZ ABO 09/2026"
+          document:
+            format: pdf
+            number: "LN-26-0903-2201"
+            issue_date: 2026-09-03
+            delivery_date: 2026-09-03
+            lines:
+              - {text: "Online-Fachwörterbuch Recht/Wirtschaft PL-DE, Monatsabo 09/2026", net: 8.39, rate: 19, category: S}
+          truth: {family: software, tax: NONE}
+        - id: e14
+          party: kv
+          on: 2026-09-01
+          method: lastschrift
+          amount: -398.00
+          reference: "Beitrag freiwillige Versicherung 09/2026"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e15
+          party: inhaber
+          on: 2026-09-02
+          method: ueberweisung
+          amount: -1200.00
+          reference: "Privat"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e16
+          party: inhaber
+          on: 2026-09-21
+          method: ueberweisung
+          amount: -300.00
+          reference: "Privat"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e17
+          party: bank
+          on: 2026-09-30
+          method: lastschrift
+          amount: -6.50
+          reference: "Kontoführung 09/2026"
+          truth: {family: bank_fees, tax: NONE}
+        - id: e18
+          party: stb
+          on: 2026-09-08
+          method: lastschrift
+          reference: "Rechnung 2026-1870 Mandant 2103"
+          document:
+            format: pdf
+            number: "2026-1870"
+            issue_date: 2026-09-04
+            delivery_date: 2026-08-31
+            lines:
+              - {text: "Laufende Buchführung 08/2026", net: 50.00, rate: 19, category: S}
+          truth: {family: advice, tax: NONE}
+        - id: e19
+          party: verband
+          on: 2026-09-15
+          method: ueberweisung
+          reference: "Mitgliedsbeitrag 2026/2027 Mitgl.-Nr. 0718"
+          document:
+            format: pdf
+            number: "M-2026-0718"
+            issue_date: 2026-09-01
+            delivery_date: 2026-09-01
+            lines:
+              - {text: "Mitgliedsbeitrag 09/2026-08/2027", net: 245.00, rate: 0, category: O}
+          truth: {family: memberships, tax: NONE}
+        - id: e20
+          party: post
+          on: 2026-09-11
+          method: karte
+          reference: "POSTAGENTUR HORNBOSTEL 10.09."
+          document:
+            format: pdf
+            number: "BON 4471"
+            issue_date: 2026-09-10
+            delivery_date: 2026-09-10
+            lines:
+              - {text: "Briefmarken und Einschreiben, 4 Sendungen", net: 14.40, rate: 0, category: E}
+          truth: {family: postage, tax: NONE}
+        - id: e21
+          party: post
+          on: 2026-09-24
+          method: karte
+          reference: "POSTAGENTUR HORNBOSTEL 23.09."
+          document:
+            format: pdf
+            number: "BON 4630"
+            issue_date: 2026-09-23
+            delivery_date: 2026-09-23
+            lines:
+              - {text: "Druckerpapier, Ordner, Stempelkissen", net: 26.39, rate: 19, category: S}
+          truth: {family: office_supplies, tax: NONE}
+        - id: e22
+          party: elektronik
+          on: 2026-09-16
+          method: karte
+          reference: "ELEKTRONIKMARKT GOETTINGEN 15.09."
+          document:
+            format: pdf
+            number: "BON 88-0915-33"
+            issue_date: 2026-09-15
+            delivery_date: 2026-09-15
+            lines:
+              - {text: "Monitor 27 Zoll", net: 209.24, rate: 19, category: S}
+          truth: {family: equipment, tax: NONE}
+        - id: e23
+          party: akademie
+          on: 2026-09-10
+          method: ueberweisung
+          reference: "AF-2026-3381 Marek"
+          document:
+            format: pdf
+            number: "AF-2026-3381"
+            issue_date: 2026-09-02
+            delivery_date: 2026-09-09
+            lines:
+              - {text: "Webinar Gerichtsdolmetschen im Strafverfahren, 09.09.2026", net: 120.00, rate: 19, category: S}
+          truth: {family: training, tax: NONE}
+        - id: e24
+          party: bahn
+          on: 2026-09-10
+          method: karte
+          reference: "REGIONALBAHN WESER-FULDA 09.09."
+          document:
+            format: pdf
+            number: "RB-0909-77120"
+            issue_date: 2026-09-09
+            delivery_date: 2026-09-09
+            lines:
+              - {text: "Hann. Münden - Göttingen und zurück", net: 13.08, rate: 7, category: S}
+          truth: {family: travel_transport, tax: NONE}
+        - id: e25
+          party: drogerie
+          on: 2026-09-15
+          method: karte
+          reference: "DROGERIE SONNENSCHEIN 14.09."
+          document:
+            format: pdf
+            number: "BON 2291"
+            issue_date: 2026-09-14
+            delivery_date: 2026-09-14
+            lines:
+              - {text: "Shampoo, Zahnpasta, Sonnencreme, Waschmittel", net: 19.71, rate: 19, category: S}
+          says:
+            private_or_business: {choice: private}
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e26
+          party: copyshop
+          on: 2026-09-08
+          method: karte
+          amount: -18.60
+          reference: "COPYSHOP DRUCKPUNKT 07.09."
+          says:
+            missing_receipt: {choice: no_receipt, purpose: "Ausdrucke und Bindung der beglaubigten Übersetzung für Frau Wolff"}
+          truth: {family: office_supplies, tax: NONE}
+        - id: e27
+          party: cafe
+          on: 2026-09-21
+          method: karte
+          reference: "CAFE WERRATERRASSE 18.09."
+          document:
+            format: pdf
+            number: "1804"
+            issue_date: 2026-09-18
+            delivery_date: 2026-09-18
+            lines:
+              - {text: "Kaffee und Kuchen für 2 Personen", net: 23.36, rate: 19, category: S}
+          says:
+            meals_details: {choice: details, occasion: "Vorbesprechung Dolmetschauftrag Hauptverhandlung", participants: "Ilona Marek; Rechtsanwalt Jörg Steinmetz"}
+          truth: {family: meals, tax: NONE}
+        - id: e28
+          party: haselbach
+          on: 2026-09-25
+          method: ueberweisung
+          reference: "Rechnung PH-2026-019"
+          document:
+            format: pdf
+            number: "PH-2026-019"
+            issue_date: 2026-09-17
+            delivery_date: 2026-09-16
+            notes: "Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."
+            lines:
+              - {text: "Übersetzung Anlagen K1-K4 DE>PL (Unterauftrag), 200 Normzeilen à 1,70 EUR", net: 340.00, rate: 0, category: E}
+          truth: {family: subcontractor, tax: NONE}
+        - id: e29
+          party: finanzamt
+          on: 2026-09-10
+          method: lastschrift
+          amount: -310.00
+          reference: "ESt-VZ III/2026 StNr 21/105/33871"
+          truth: {family: private_withdrawal, tax: NONE}
+        - id: e30
+          party: haftpflicht
+          on: 2026-09-01
+          method: lastschrift
+          amount: -18.90
+          reference: "Vermögensschadenhaftpflicht 09/2026"
+          truth: {family: insurance, tax: NONE}
+        - id: e31
+          party: bank
+          on: 2026-09-15
+          method: lastschrift
+          amount: -29.00
+          reference: "Jahresentgelt Kreditkarte 09/2026-08/2027"
+          truth: {family: bank_fees, tax: NONE}
