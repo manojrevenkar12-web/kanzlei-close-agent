@@ -441,7 +441,7 @@ def build_app(deps: Deps) -> FastAPI:
                 {**h, "account": ch.fmt(h["debit"] if h["credit"] == ch.system["bank"] else h["credit"])}
                 for h in history
             ],
-            "decided_by": r["decided_by"],
+            "decided_by": _staff_name(conn, r["decided_by"]),
             "decided_at": r["decided_at"],
         }
 
@@ -524,8 +524,17 @@ def build_app(deps: Deps) -> FastAPI:
             (client_id, period),
         ).fetchone()
         u["close"] = dict(close) if close else {"status": "offen"}
+        if close:
+            u["close"]["signed_by"] = _staff_name(conn, close["signed_by"])
         u["history"] = _ustva_history(conn, client_id, period)
         return u
+
+    def _staff_name(conn: Conn, login: str | None) -> str | None:
+        """People read names; the database keeps logins for the audit trail."""
+        if not login:
+            return login
+        row = conn.execute("SELECT name FROM staff WHERE login = %s", (login,)).fetchone()
+        return row["name"] if row else login
 
     def _ustva_history(conn: Conn, client_id: str, period: str) -> list[dict[str, Any]]:
         from kanzlei.engine.close import prev_periods

@@ -1,0 +1,123 @@
+{
+  "id": 419,
+  "kind": "payment",
+  "state": "auto",
+  "decision": "auto",
+  "date": "2026-09-01",
+  "amount_cents": -125000,
+  "counterparty": "Vogel Hausverwaltung GmbH",
+  "remittance": "Miete 09/2026 Objekt 6169",
+  "family": "rent",
+  "family_label": "Miete und Pacht",
+  "tax": "V19",
+  "confidence": 0.989,
+  "source": "memory",
+  "flags": [],
+  "documents": [],
+  "accounts": ["4210"],
+  "client_id": "hp-10101",
+  "period": "2026-09",
+  "chart": "SKR03",
+  "iban": "DE75559296827677916314",
+  "proposal_lines": [
+    {
+      "tax": "V19",
+      "date": "2026-09-01",
+      "role": null,
+      "text": "Vogel Hausverwaltung GmbH",
+      "debit": 4210,
+      "credit": 1200,
+      "family": "rent",
+      "doc_ref": "",
+      "amount_cents": 125000,
+      "debit_label": "4210 Miete (unbewegliche Wirtschaftsgüter)",
+      "credit_label": "1200 Bank",
+      "bu": "9"
+    }
+  ],
+  "final_lines": [
+    {
+      "tax": "V19",
+      "date": "2026-09-01",
+      "role": null,
+      "text": "Vogel Hausverwaltung GmbH",
+      "debit": 4210,
+      "credit": 1200,
+      "family": "rent",
+      "doc_ref": "",
+      "amount_cents": 125000,
+      "debit_label": "4210 Miete (unbewegliche Wirtschaftsgüter)",
+      "credit_label": "1200 Bank",
+      "bu": "9"
+    }
+  ],
+  "reasons": [
+    {
+      "code": "memory",
+      "text": "Bisher 14× gebucht, davon 100 % als Miete und Pacht (Konto 4210)"
+    },
+    {
+      "code": "dauerrechnung",
+      "text": "Laufender Vertrag: Vertrag gilt als Rechnung"
+    }
+  ],
+  "questions": [],
+  "history": [
+    {
+      "booking_date": "2026-09-01",
+      "amount_cents": 125000,
+      "debit": 4210,
+      "credit": 1200,
+      "tax": "V19",
+      "family": "rent",
+      "account": "4210"
+    },
+    {
+      "booking_date": "2026-08-01",
+      "amount_cents": 125000,
+      "debit": 4210,
+      "credit": 1200,
+      "tax": "V19",
+      "family": "rent",
+      "account": "4210"
+    },
+    {
+      "booking_date": "2026-07-01",
+      "amount_cents": 125000,
+      "debit": 4210,
+      "credit": 1200,
+      "tax": "V19",
+      "family": "rent",
+      "account": "4210"
+    },
+    {
+      "booking_date": "2026-06-03",
+      "amount_cents": 125000,
+      "debit": 4210,
+      "credit": 1200,
+      "tax": "V19",
+      "family": "rent",
+      "account": "4210"
+    },
+    {
+      "booking_date": "2026-05-02",
+      "amount_cents": 125000,
+      "debit": 4210,
+      "credit": 1200,
+      "tax": "V19",
+      "family": "rent",
+      "account": "4210"
+    },
+    {
+      "booking_date": "2026-04-02",
+      "amount_cents": 125000,
+      "debit": 4210,
+      "credit": 1200,
+      "tax": "V19",
+      "family": "rent",
+      "account": "4210"
+    }
+  ],
+  "decided_by": "n.krause",
+  "decided_at": "2026-10-26T12:17:50.050078Z"
+}

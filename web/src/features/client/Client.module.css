@@ -359,6 +359,8 @@
 }
 .vatSheet {
   position: relative;
+  /* The sign-off stamp lands with a scale animation; keep it from widening the page meanwhile. */
+  overflow: hidden;
   padding: var(--s-6);
   background: var(--sheet);
   border: var(--border);
@@ -479,6 +481,14 @@
   }
   .correct {
     grid-template-columns: 1fr;
+  }
+  .vatTable th {
+    white-space: normal;
+  }
+  .vatTable th,
+  .vatTable td {
+    padding-left: var(--s-1);
+    padding-right: var(--s-1);
   }
   .docFacts {
     grid-template-columns: 1fr;

@@ -1,0 +1,151 @@
+{
+  "id": 431,
+  "kind": "payment",
+  "state": "client",
+  "decision": null,
+  "date": "2026-09-16",
+  "amount_cents": -16675,
+  "counterparty": "Café Ratskeller",
+  "remittance": "Kartenzahlung Café Ratskeller 16.09.",
+  "family": "meals",
+  "family_label": "Bewirtung",
+  "tax": "V19",
+  "confidence": 0.0814,
+  "source": "classifier",
+  "flags": [
+    {
+      "code": "meals_details",
+      "label": "Anlass und Teilnehmer der Bewirtung fehlen",
+      "client": true
+    }
+  ],
+  "documents": [
+    {
+      "id": 221,
+      "filename": "R96957.pdf",
+      "format": "pdf",
+      "direction": "in",
+      "source": "upload",
+      "invoice": {
+        "source": "pdf",
+        "invoice_no": "R96957",
+        "issue_date": "2026-09-13",
+        "delivery_from": null,
+        "seller": "Café Ratskeller",
+        "seller_vat_id": "DE664099846",
+        "seller_country": "DE",
+        "buyer": "",
+        "lines": [
+          {
+            "description": "Speisen",
+            "net_cents": 0,
+            "rate": null,
+            "category": null
+          }
+        ],
+        "taxes": [
+          {
+            "category": "S",
+            "rate": 19,
+            "base_cents": 14013,
+            "tax_cents": 2662
+          }
+        ],
+        "gross_cents": 16675,
+        "notes": [],
+        "issues": [],
+        "gross_label": "166,75 €"
+      }
+    }
+  ],
+  "accounts": ["4650", "4654"],
+  "client_id": "hp-10101",
+  "period": "2026-09",
+  "chart": "SKR03",
+  "iban": null,
+  "proposal_lines": [
+    {
+      "tax": "V19",
+      "date": "2026-09-16",
+      "role": null,
+      "text": "Café Ratskeller",
+      "debit": 4650,
+      "credit": 1200,
+      "family": "meals",
+      "doc_ref": "R96957",
+      "amount_cents": 11673,
+      "debit_label": "4650 Bewirtungskosten",
+      "credit_label": "1200 Bank",
+      "bu": "9"
+    },
+    {
+      "tax": "V19",
+      "date": "2026-09-16",
+      "role": "nondeductible",
+      "text": "Café Ratskeller",
+      "debit": 4654,
+      "credit": 1200,
+      "family": "meals",
+      "doc_ref": "R96957",
+      "amount_cents": 5002,
+      "debit_label": "4654 Nicht abzugsfähige Bewirtungskosten",
+      "credit_label": "1200 Bank",
+      "bu": "9"
+    }
+  ],
+  "final_lines": null,
+  "reasons": [
+    {
+      "code": "classifier",
+      "text": "Text deutet auf Bewirtung (77 %)"
+    },
+    {
+      "code": "memory_mixed",
+      "text": "Bisher uneinheitlich gebucht (1×)"
+    },
+    {
+      "code": "match",
+      "text": "Beleg zugeordnet: Betrag stimmt, Name stimmt"
+    },
+    {
+      "code": "tax_from_invoice",
+      "text": "Steuer laut Rechnung: V19"
+    },
+    {
+      "code": "bewirtung",
+      "text": "Bewirtung: 70 % abzugsfähig, Vorsteuer voll"
+    }
+  ],
+  "questions": [
+    {
+      "reason": "meals_details",
+      "question": "Zahlung vom 16.09.2026 über 166,75 € (Café Ratskeller): Für die Bewirtung brauchen wir den Anlass und die Teilnehmer.",
+      "answer": null,
+      "answered_at": null,
+      "status": "offen",
+      "sent_at": "2026-10-26T12:17:50.050078Z"
+    }
+  ],
+  "history": [
+    {
+      "booking_date": "2026-03-16",
+      "amount_cents": 3016,
+      "debit": 4650,
+      "credit": 1200,
+      "tax": "V19",
+      "family": "meals",
+      "account": "4650"
+    },
+    {
+      "booking_date": "2026-03-16",
+      "amount_cents": 1293,
+      "debit": 4654,
+      "credit": 1200,
+      "tax": "V19",
+      "family": "meals",
+      "account": "4654"
+    }
+  ],
+  "decided_by": null,
+  "decided_at": null
+}

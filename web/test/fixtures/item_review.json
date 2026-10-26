@@ -1,0 +1,160 @@
+{
+  "id": 416,
+  "kind": "invoice",
+  "state": "review",
+  "decision": null,
+  "date": "2026-09-02",
+  "amount_cents": -223450,
+  "counterparty": "Werkzeugzentrum Reuter GmbH",
+  "remittance": "",
+  "family": "equipment",
+  "family_label": "Anschaffung Ausstattung",
+  "tax": "V19",
+  "confidence": 0.3439,
+  "source": "memory",
+  "flags": [
+    {
+      "code": "asset_review",
+      "label": "Anlagegut über 800 € netto",
+      "client": false
+    }
+  ],
+  "documents": [
+    {
+      "id": 214,
+      "filename": "2026-12590.pdf",
+      "format": "pdf",
+      "direction": "in",
+      "source": "upload",
+      "invoice": {
+        "source": "pdf",
+        "invoice_no": "2026-12590",
+        "issue_date": "2026-09-02",
+        "delivery_from": "2026-09-02",
+        "seller": "Werkzeugzentrum Reuter GmbH",
+        "seller_vat_id": "DE654050686",
+        "seller_country": "DE",
+        "buyer": "Elektro Baumann GmbH",
+        "lines": [
+          {
+            "description": "Installationstester",
+            "net_cents": 187773,
+            "rate": 19,
+            "category": "S"
+          }
+        ],
+        "taxes": [
+          {
+            "category": "S",
+            "rate": 19,
+            "base_cents": 187773,
+            "tax_cents": 35677
+          }
+        ],
+        "gross_cents": 223450,
+        "notes": [],
+        "issues": [],
+        "gross_label": "2.234,50 €"
+      }
+    }
+  ],
+  "accounts": ["70005"],
+  "client_id": "hp-10101",
+  "period": "2026-09",
+  "chart": "SKR03",
+  "iban": null,
+  "proposal_lines": [
+    {
+      "tax": "V19",
+      "date": "2026-09-02",
+      "role": "asset",
+      "text": "Werkzeugzentrum Reuter GmbH",
+      "debit": 490,
+      "credit": 70005,
+      "family": "equipment",
+      "doc_ref": "2026-12590",
+      "amount_cents": 223450,
+      "debit_label": "0490 Sonstige Betriebs- und Geschäftsausstattung",
+      "credit_label": "70005 Kreditor",
+      "bu": "9"
+    }
+  ],
+  "final_lines": null,
+  "reasons": [
+    {
+      "code": "counterparty",
+      "text": "Kreditor 70005: Werkzeugzentrum Reuter GmbH"
+    },
+    {
+      "code": "memory",
+      "text": "Bisher 6× gebucht, davon 100 % als Anschaffung Ausstattung"
+    },
+    {
+      "code": "tax_from_invoice",
+      "text": "Steuer laut Rechnung: V19"
+    },
+    {
+      "code": "anlagegut",
+      "text": "Wirtschaftsgut über der GWG-Grenze: Anlagenverzeichnis"
+    }
+  ],
+  "questions": [],
+  "history": [
+    {
+      "booking_date": "2026-09-23",
+      "amount_cents": 223450,
+      "debit": 70005,
+      "credit": 1200,
+      "tax": "NONE",
+      "family": "clearing",
+      "account": "70005"
+    },
+    {
+      "booking_date": "2026-09-17",
+      "amount_cents": 17451,
+      "debit": 70005,
+      "credit": 1200,
+      "tax": "NONE",
+      "family": "clearing",
+      "account": "70005"
+    },
+    {
+      "booking_date": "2026-08-03",
+      "amount_cents": 17451,
+      "debit": 4985,
+      "credit": 70005,
+      "tax": "V19",
+      "family": "equipment",
+      "account": "70005"
+    },
+    {
+      "booking_date": "2026-05-01",
+      "amount_cents": 108773,
+      "debit": 490,
+      "credit": 70005,
+      "tax": "V19",
+      "family": "equipment",
+      "account": "70005"
+    },
+    {
+      "booking_date": "2026-04-11",
+      "amount_cents": 90860,
+      "debit": 480,
+      "credit": 70005,
+      "tax": "V19",
+      "family": "equipment",
+      "account": "70005"
+    },
+    {
+      "booking_date": "2026-04-11",
+      "amount_cents": 25016,
+      "debit": 4985,
+      "credit": 70005,
+      "tax": "V19",
+      "family": "equipment",
+      "account": "70005"
+    }
+  ],
+  "decided_by": null,
+  "decided_at": null
+}

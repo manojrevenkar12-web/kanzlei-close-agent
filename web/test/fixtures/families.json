@@ -1,0 +1,157 @@
+[
+  {
+    "code": "goods",
+    "label": "Wareneinkauf",
+    "side": "expense"
+  },
+  {
+    "code": "subcontractor",
+    "label": "Fremdleistungen",
+    "side": "expense"
+  },
+  {
+    "code": "rent",
+    "label": "Miete und Pacht",
+    "side": "expense"
+  },
+  {
+    "code": "utilities",
+    "label": "Strom, Gas, Wasser",
+    "side": "expense"
+  },
+  {
+    "code": "telecom",
+    "label": "Telefon und Internet",
+    "side": "expense"
+  },
+  {
+    "code": "office_supplies",
+    "label": "Bürobedarf",
+    "side": "expense"
+  },
+  {
+    "code": "software",
+    "label": "Software und IT-Dienste",
+    "side": "expense"
+  },
+  {
+    "code": "meals",
+    "label": "Bewirtung",
+    "side": "expense"
+  },
+  {
+    "code": "travel_lodging",
+    "label": "Übernachtung (Reise)",
+    "side": "expense"
+  },
+  {
+    "code": "travel_transport",
+    "label": "Fahrtkosten (Reise)",
+    "side": "expense"
+  },
+  {
+    "code": "fuel",
+    "label": "Kraftstoff",
+    "side": "expense"
+  },
+  {
+    "code": "vehicle_repair",
+    "label": "Kfz-Reparaturen",
+    "side": "expense"
+  },
+  {
+    "code": "vehicle_leasing",
+    "label": "Kfz-Leasing",
+    "side": "expense"
+  },
+  {
+    "code": "vehicle_insurance",
+    "label": "Kfz-Versicherung",
+    "side": "expense"
+  },
+  {
+    "code": "insurance",
+    "label": "Versicherungen",
+    "side": "expense"
+  },
+  {
+    "code": "memberships",
+    "label": "Beiträge (Kammer, Verbände)",
+    "side": "expense"
+  },
+  {
+    "code": "advertising",
+    "label": "Werbung",
+    "side": "expense"
+  },
+  {
+    "code": "advice",
+    "label": "Rechts- und Beratungskosten",
+    "side": "expense"
+  },
+  {
+    "code": "bank_fees",
+    "label": "Kontoführung und Zahlungsverkehr",
+    "side": "expense"
+  },
+  {
+    "code": "postage",
+    "label": "Porto und Versand",
+    "side": "expense"
+  },
+  {
+    "code": "training",
+    "label": "Fortbildung",
+    "side": "expense"
+  },
+  {
+    "code": "repairs",
+    "label": "Reparaturen und Instandhaltung",
+    "side": "expense"
+  },
+  {
+    "code": "equipment",
+    "label": "Anschaffung Ausstattung",
+    "side": "expense"
+  },
+  {
+    "code": "payroll",
+    "label": "Lohn- und Gehaltszahlung",
+    "side": "balance"
+  },
+  {
+    "code": "social_security",
+    "label": "Sozialversicherungsbeiträge",
+    "side": "balance"
+  },
+  {
+    "code": "wage_tax",
+    "label": "Lohnsteuer an das Finanzamt",
+    "side": "balance"
+  },
+  {
+    "code": "vat_payment",
+    "label": "Umsatzsteuer-Vorauszahlung",
+    "side": "balance"
+  },
+  {
+    "code": "private_withdrawal",
+    "label": "Privatentnahme",
+    "side": "balance"
+  },
+  {
+    "code": "private_deposit",
+    "label": "Privateinlage",
+    "side": "balance"
+  },
+  {
+    "code": "transfer",
+    "label": "Umbuchung zwischen eigenen Konten",
+    "side": "balance"
+  },
+  {
+    "code": "revenue",
+    "label": "Umsatzerlöse",
+    "side": "revenue"
+  }
+]

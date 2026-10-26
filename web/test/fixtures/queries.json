@@ -1,0 +1,22 @@
+[
+  {
+    "id": 22,
+    "status": "offen",
+    "subject": "Buchhaltung 09/2026: 1 offene Frage",
+    "message": "Guten Tag Frank Baumann,\n\nfür die Buchhaltung 09/2026 von Elektro Baumann GmbH brauchen wir noch Ihre Hilfe:\n\n1. Zahlung vom 16.09.2026 über 166,75 € (Café Ratskeller): Für die Bewirtung brauchen wir den Anlass und die Teilnehmer.\n\nSie können alles hier beantworten und Belege hochladen: http://localhost:5173/portal/ZzgSVHL0gaQAQhmCrRIPuAYDCXPWtE_d\nBitte bis zum 02.11.2026.\n\nVielen Dank\nSteuerkanzlei Hartmann & Partner",
+    "sent_at": "2026-10-26T12:17:50.050078Z",
+    "due_on": "2026-11-02",
+    "answered_at": null,
+    "items": [
+      {
+        "item_id": 431,
+        "reason": "meals_details",
+        "question": "Zahlung vom 16.09.2026 über 166,75 € (Café Ratskeller): Für die Bewirtung brauchen wir den Anlass und die Teilnehmer.",
+        "answer": null,
+        "answered_at": null,
+        "state": "client",
+        "reason_label": "Anlass und Teilnehmer der Bewirtung fehlen"
+      }
+    ]
+  }
+]

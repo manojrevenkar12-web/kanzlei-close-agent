@@ -1,0 +1,12 @@
+{
+  "login": "n.krause",
+  "name": "Nadine Krause",
+  "role": "buchhaltung",
+  "firm": {
+    "id": "hartmann",
+    "name": "Steuerkanzlei Hartmann & Partner",
+    "city": "Leipzig",
+    "chart": "SKR03"
+  },
+  "can_sign_off": false
+}

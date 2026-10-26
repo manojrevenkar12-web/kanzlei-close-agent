@@ -59,7 +59,7 @@ function Vat({ u, clientId, period }: { u: Ustva; clientId: string; period: stri
               <th scope="col">Kz</th>
               <th scope="col">Bezeichnung</th>
               <th scope="col" className={styles.num}>
-                Bemessungsgrundlage
+                Bemessungs&shy;grundlage
               </th>
               <th scope="col" className={styles.num}>
                 Steuer

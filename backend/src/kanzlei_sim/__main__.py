@@ -222,17 +222,31 @@ def cmd_gate() -> int:
     return 0
 
 
-def cmd_seed() -> None:
+def cmd_seed(links: Path | None = None, reset: bool = False) -> None:
     """The demo: three firms onboarded from their DATEV history, July and August closed the way a
     firm closes them (client answers, staff review, sign-off), September in progress."""
+    from urllib.parse import urlsplit
+
+    import psycopg
+
     from kanzlei.db import as_user, create_pool, principal
     from kanzlei.migrate import migrate
     from kanzlei.storage import store_from_url
     from kanzlei_sim import render
+    from kanzlei_sim.evaluate import _url
     from kanzlei_sim.run import close_month, opening_for, seed
 
     s = settings()
+    name = urlsplit(admin_url()).path.lstrip("/")
+    if reset:
+        with psycopg.connect(_url(admin_url(), "postgres"), autocommit=True) as c:
+            c.execute(f'DROP DATABASE IF EXISTS "{name}" WITH (FORCE)')
+            c.execute(f'CREATE DATABASE "{name}"')
     migrate(admin_url(), s.app_db_password)
+    with psycopg.connect(admin_url()) as c:
+        row = c.execute("SELECT count(*) FROM firms").fetchone()
+    if row and row[0]:
+        raise SystemExit(f"database {name} already holds firms; seed it again with --reset (drops it)")
     pool = create_pool(s.database_url, 4)
     eng = ev.Engine(
         store_from_url(s.storage_url),
@@ -247,6 +261,7 @@ def cmd_seed() -> None:
             for c in f.clients:
                 r = close_month(eng, pool, f, c, period, opening_for(c, period), "demo")
                 print(f"{period} {c.name}: {'festgeschrieben' if r.signed else r.error}")
+    portal: dict[str, str] = {}
     for f in firms:
         for c in f.clients:
             who = principal(pool, c.assigned[0])
@@ -264,7 +279,11 @@ def cmd_seed() -> None:
             q = summary.get("query")
             if q:
                 print(f"{current} {c.name}: portal /portal/{q['token']}")
+                portal[c.id] = q["token"]
     pool.close()
+    if links:
+        # Portal tokens are stored only as hashes; the end-to-end tests need the links themselves.
+        links.write_text(json.dumps({"period": current, "portal": portal}, indent=1))
     print(f"seeded {len(firms)} firms: {', '.join(closed)} signed off, {current} in progress")
 
 
@@ -273,7 +292,9 @@ def main(argv: list[str] | None = None) -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     e = sub.add_parser("export")
     e.add_argument("dir", type=Path)
-    sub.add_parser("seed")
+    sd = sub.add_parser("seed")
+    sd.add_argument("--links", type=Path, help="write the demo's portal links to this JSON file")
+    sd.add_argument("--reset", action="store_true", help="drop and recreate the demo database first")
     sub.add_parser("train")
     v = sub.add_parser("evaluate")
     v.add_argument("--sets", default="dev,blind")
@@ -306,7 +327,7 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd == "export":
         cmd_export(a.dir)
     elif a.cmd == "seed":
-        cmd_seed()
+        cmd_seed(a.links, a.reset)
     elif a.cmd == "train":
         cmd_train()
     elif a.cmd == "evaluate":

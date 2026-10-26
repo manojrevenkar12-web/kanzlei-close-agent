@@ -1,0 +1,48 @@
+{
+  "client": "Rechtsanwältin Dr. Lea Brenner",
+  "firm": "Kanzlei Yılmaz Steuerberatung",
+  "period": "2026-09",
+  "due_on": "2026-11-02",
+  "status": "offen",
+  "items": [
+    {
+      "item_id": 588,
+      "reason": "missing_receipt",
+      "question": "Zahlung vom 07.09.2026 über 83,31 € (Tankcenter West Hamburg): Uns fehlt der Beleg. Bitte laden Sie die Rechnung hoch.",
+      "options": [
+        {
+          "label": "Beleg hochladen",
+          "needs": ["file"],
+          "value": "upload"
+        },
+        {
+          "label": "Es gibt keinen Beleg",
+          "needs": ["purpose"],
+          "value": "no_receipt"
+        },
+        {
+          "label": "Das war privat",
+          "value": "private"
+        }
+      ],
+      "answer": null
+    },
+    {
+      "item_id": 599,
+      "reason": "private_or_business",
+      "question": "Zahlung vom 24.09.2026 über 52,13 € (Frischemarkt Hansen): War das privat oder betrieblich?",
+      "options": [
+        {
+          "label": "Privat",
+          "value": "private"
+        },
+        {
+          "label": "Betrieblich",
+          "needs": ["purpose"],
+          "value": "business"
+        }
+      ],
+      "answer": null
+    }
+  ]
+}

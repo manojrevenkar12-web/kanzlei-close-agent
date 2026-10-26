@@ -1,0 +1,61 @@
+{
+  "period": "2026-09",
+  "firms": [
+    {
+      "firm_id": "yilmaz",
+      "firm_name": "Kanzlei Yılmaz Steuerberatung",
+      "chart": "SKR03",
+      "clients": 3,
+      "items": 64,
+      "auto": 58,
+      "accepted": 0,
+      "corrected": 0,
+      "by_client": 0,
+      "open_review": 2,
+      "open_client": 4,
+      "parked": 0,
+      "signed_off": 0,
+      "unmapped_accounts": 0,
+      "automation_share": 0.9062,
+      "no_touch_share": 0.9062
+    },
+    {
+      "firm_id": "brandt",
+      "firm_name": "Steuerbüro Brandt",
+      "chart": "SKR04",
+      "clients": 3,
+      "items": 60,
+      "auto": 55,
+      "accepted": 0,
+      "corrected": 0,
+      "by_client": 0,
+      "open_review": 1,
+      "open_client": 4,
+      "parked": 0,
+      "signed_off": 0,
+      "unmapped_accounts": 0,
+      "automation_share": 0.9167,
+      "no_touch_share": 0.9167
+    },
+    {
+      "firm_id": "hartmann",
+      "firm_name": "Steuerkanzlei Hartmann & Partner",
+      "chart": "SKR03",
+      "clients": 3,
+      "items": 69,
+      "auto": 65,
+      "accepted": 0,
+      "corrected": 0,
+      "by_client": 0,
+      "open_review": 2,
+      "open_client": 2,
+      "parked": 0,
+      "signed_off": 0,
+      "unmapped_accounts": 0,
+      "automation_share": 0.942,
+      "no_touch_share": 0.942
+    }
+  ],
+  "corrections": [],
+  "unmapped_accounts": []
+}

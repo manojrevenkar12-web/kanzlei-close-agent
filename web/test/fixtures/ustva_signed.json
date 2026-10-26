@@ -1,0 +1,118 @@
+{
+  "period": "2026-08",
+  "rows": [
+    {
+      "kz": "81",
+      "label": "Steuerpflichtige Umsätze 19 %",
+      "base_cents": 283586,
+      "base_euros": 2835,
+      "tax_cents": 53881
+    },
+    {
+      "kz": "66",
+      "label": "Vorsteuer aus Rechnungen anderer Unternehmer",
+      "base_cents": 0,
+      "base_euros": 0,
+      "tax_cents": 125632
+    },
+    {
+      "kz": "83",
+      "label": "Verbleibende Umsatzsteuer-Vorauszahlung / Überschuss",
+      "base_cents": 0,
+      "base_euros": 0,
+      "tax_cents": -71751
+    }
+  ],
+  "flags": [],
+  "due_on": "2026-10-10",
+  "quarterly": false,
+  "files_this_month": true,
+  "history_months": 12,
+  "kleinunternehmer": false,
+  "checks": {
+    "open_review": 0,
+    "open_client": 0,
+    "bank_reconciled": true,
+    "bank_difference_cents": 0
+  },
+  "close": {
+    "status": "festgeschrieben",
+    "signed_by": "c.hartmann",
+    "signed_at": "2026-10-26T12:17:45.575060Z",
+    "export_sha256": "12235e2bc2a1c6e0c9212ea6ad7b6d6bfff967ce36c19613da076114f04c4cfa"
+  },
+  "history": [
+    {
+      "period": "2025-08",
+      "kz81": 390268,
+      "kz66": 163279,
+      "kz83": -89128
+    },
+    {
+      "period": "2025-09",
+      "kz81": 207767,
+      "kz66": 134237,
+      "kz83": -94761
+    },
+    {
+      "period": "2025-10",
+      "kz81": 414349,
+      "kz66": 135734,
+      "kz83": -57008
+    },
+    {
+      "period": "2025-11",
+      "kz81": 379140,
+      "kz66": 161254,
+      "kz83": -89218
+    },
+    {
+      "period": "2025-12",
+      "kz81": 168039,
+      "kz66": 230314,
+      "kz83": -198387
+    },
+    {
+      "period": "2026-01",
+      "kz81": 0,
+      "kz66": 245091,
+      "kz83": -245091
+    },
+    {
+      "period": "2026-02",
+      "kz81": 160866,
+      "kz66": 138428,
+      "kz83": -107863
+    },
+    {
+      "period": "2026-03",
+      "kz81": 239704,
+      "kz66": 161381,
+      "kz83": -115837
+    },
+    {
+      "period": "2026-04",
+      "kz81": 0,
+      "kz66": 209058,
+      "kz83": -209058
+    },
+    {
+      "period": "2026-05",
+      "kz81": 172717,
+      "kz66": 242696,
+      "kz83": -209879
+    },
+    {
+      "period": "2026-06",
+      "kz81": 276039,
+      "kz66": 160091,
+      "kz83": -107644
+    },
+    {
+      "period": "2026-07",
+      "kz81": 298898,
+      "kz66": 166901,
+      "kz83": -110110
+    }
+  ]
+}

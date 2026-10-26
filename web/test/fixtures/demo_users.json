@@ -1,0 +1,50 @@
+[
+  {
+    "login": "s.akin",
+    "name": "Selin Akın",
+    "role": "buchhaltung",
+    "firm": "Steuerbüro Brandt"
+  },
+  {
+    "login": "m.brandt",
+    "name": "Martin Brandt",
+    "role": "berater",
+    "firm": "Steuerbüro Brandt"
+  },
+  {
+    "login": "n.krause",
+    "name": "Nadine Krause",
+    "role": "buchhaltung",
+    "firm": "Steuerkanzlei Hartmann & Partner"
+  },
+  {
+    "login": "t.voss",
+    "name": "Tobias Voss",
+    "role": "buchhaltung",
+    "firm": "Steuerkanzlei Hartmann & Partner"
+  },
+  {
+    "login": "c.hartmann",
+    "name": "Claudia Hartmann",
+    "role": "berater",
+    "firm": "Steuerkanzlei Hartmann & Partner"
+  },
+  {
+    "login": "j.wagner",
+    "name": "Julia Wagner",
+    "role": "buchhaltung",
+    "firm": "Kanzlei Yılmaz Steuerberatung"
+  },
+  {
+    "login": "e.yilmaz",
+    "name": "Emre Yılmaz",
+    "role": "berater",
+    "firm": "Kanzlei Yılmaz Steuerberatung"
+  },
+  {
+    "login": "l.fde",
+    "name": "Lena Hoffmann",
+    "role": "gruppe",
+    "firm": null
+  }
+]
