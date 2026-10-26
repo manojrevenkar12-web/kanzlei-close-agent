@@ -350,17 +350,6 @@
   {
     "client": "b-2002",
     "period": "2026-09",
-    "event": "s09",
-    "truth": "software",
-    "proposed": "goods",
-    "route": "review",
-    "flags": [],
-    "source": "classifier",
-    "confidence": 0.0
-  },
-  {
-    "client": "b-2002",
-    "period": "2026-09",
     "event": "s08",
     "truth": "wage_tax",
     "proposed": "vat_payment",
@@ -368,6 +357,17 @@
     "flags": [],
     "source": "memory",
     "confidence": 0.002
+  },
+  {
+    "client": "b-2002",
+    "period": "2026-09",
+    "event": "s09",
+    "truth": "software",
+    "proposed": "goods",
+    "route": "review",
+    "flags": [],
+    "source": "classifier",
+    "confidence": 0.0
   },
   {
     "client": "b-2002",
